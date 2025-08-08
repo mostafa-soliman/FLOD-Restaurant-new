@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">FLOD-Restaurant</string>
+    <string name="tagline">On your diet,\nand your day off  ;)</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="sign_in_description">Sign in to continue your journey</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="login">Login</string>
+    <string name="signup_prompt">New user?</string>
+    <string name="signup_link">Sign Up</string>
 </resources>

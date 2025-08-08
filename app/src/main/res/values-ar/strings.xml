@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مطعم فلود</string>
+    <string name="tagline"> معاك في الدايت&#10; وأيام الراحة ؛)</string>
+    <string name="welcome_back">مرحبًا بعودتك</string>
+    <string name="sign_in_description">سجل الدخول لإكمال ما بداناه</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="signup_prompt">مستخدم جديد؟</string>
+    <string name="signup_link">إنشاء حساب</string>
+</resources>
