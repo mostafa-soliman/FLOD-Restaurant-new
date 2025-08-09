@@ -7,4 +7,9 @@
     <string name="login">Login</string>
     <string name="signup_prompt">New user?</string>
     <string name="signup_link">Sign Up</string>
+    <string name="lang_toggle_ar">ع</string>
+    <string name="lang_toggle_en">En</string>
+    <string name="app_logo">app_logo</string>
+    <string name="saudi_flag">saudi_flag</string>
+
 </resources>

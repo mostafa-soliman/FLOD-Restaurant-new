@@ -8,4 +8,9 @@
     <string name="login">تسجيل الدخول</string>
     <string name="signup_prompt">مستخدم جديد؟</string>
     <string name="signup_link">إنشاء حساب</string>
+    <string name="lang_toggle_ar">ع</string>
+    <string name="lang_toggle_en">En</string>
+    <string name="app_logo">app_logo</string>
+    <string name="saudi_flag">saudi_flag</string>
+
 </resources>
