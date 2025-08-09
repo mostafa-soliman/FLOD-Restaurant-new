@@ -35,7 +35,10 @@ import kotlinx.coroutines.launch
 fun OnboardScreen(navController: NavController) {
     OnboardScreenContent(
         onLoginClick = {
-            navController.navigate("home")
+            navController.navigate("verify_otp") {
+                // اختياري: لو عايز تمنع الرجوع لـ Onboard بعد التحقق
+                // popUpTo("login") { inclusive = false }
+            }
         },
         onSignUpClick = {
             navController.navigate("signup")
@@ -163,8 +166,10 @@ fun OnboardScreenContent(onLoginClick: () -> Unit = {}, onSignUpClick: () -> Uni
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Row(modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 OutlinedButton(
                     onClick = {},
                     shape = RoundedCornerShape(8.dp),
@@ -222,12 +227,16 @@ fun OnboardScreenContent(onLoginClick: () -> Unit = {}, onSignUpClick: () -> Uni
                     modifier = Modifier.alignBy(FirstBaseline)
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                TextButton( onClick = onSignUpClick,
+                TextButton(
+                    onClick = onSignUpClick,
                     modifier = Modifier.alignBy(FirstBaseline),
-                    contentPadding = PaddingValues(0.dp)) {
-                    Text(text = stringResource(id = R.string.signup_link),
+                    contentPadding = PaddingValues(0.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.signup_link),
                         color = Color.White,
-                        textDecoration = TextDecoration.Underline)
+                        textDecoration = TextDecoration.Underline
+                    )
                 }
             }
         }
