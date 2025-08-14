@@ -54,7 +54,7 @@ fun OnboardScreenContent(onLoginClick: () -> Unit = {}, onSignUpClick: () -> Uni
 
         Box(
             modifier = Modifier
-                .weight(0.55f)
+                .weight(0.5f)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.onboard),
@@ -86,7 +86,7 @@ fun OnboardScreenContent(onLoginClick: () -> Unit = {}, onSignUpClick: () -> Uni
 
         Column(
             modifier = Modifier
-                .weight(0.45f)
+                .weight(0.5f)
                 .fillMaxWidth()
                 .background(Color(0xFF700B18))
                 .padding(24.dp),
@@ -220,7 +220,11 @@ fun OnboardScreenContent(onLoginClick: () -> Unit = {}, onSignUpClick: () -> Uni
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row {
+            Row (
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .navigationBarsPadding()
+                ){
                 Text(
                     text = stringResource(id = R.string.signup_prompt),
                     color = Color.White,
