@@ -1,17 +1,47 @@
 package com.fadali.flod_restaurant.presentation.ui.screens.signup
 
+import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fadali.flod_restaurant.R
@@ -21,45 +51,65 @@ import com.fadali.flod_restaurant.util.UiDimensions
 fun SignUpScreen(
     onContinue: (name: String, phone: String, email: String, birthday: String, gender: Gender) -> Unit = { _,_,_,_,_ -> }
 ) {
+    val primaryRed = Color(0xFF700B18)
+    val accentBlue = Color(0xFF00A9B4)
+    val grayText   = Color(0xFF9E9E9E)
+
     // State
-    var name by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var birthday by remember { mutableStateOf("") }
-    var gender by remember { mutableStateOf(Gender.Female) }
+    var email by rememberSaveable { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
+    var phone by rememberSaveable { mutableStateOf("") }
+    var birthday by rememberSaveable { mutableStateOf("") }
+    var gender by rememberSaveable { mutableStateOf(Gender.Male) }
 
     val cs = MaterialTheme.colorScheme
+    val fieldShape = RoundedCornerShape(16.dp)
+    val fieldHeight = UiDimensions.TextFieldHeight
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 24.dp),
+            .background(Color.White)
+            .padding(horizontal = 24.dp, vertical = 84.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(
-            text = "Sign up",
-            color = cs.primary,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 8.dp, bottom = 24.dp)
-        )
+        Text("FLOD", color = primaryRed, fontSize = 32.sp, fontWeight = FontWeight.Bold)
+        Spacer(Modifier.height(12.dp))
+        Text("Sign Up", color = accentBlue, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
+        Spacer(Modifier.height(6.dp))
+        Text("Enter your personal information", color = grayText, fontSize = 14.sp)
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(24.dp))
 
-        // Name
         OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            placeholder = { Text("Name") },
+            value = email, onValueChange = { email = it },
+            label = { Text("Email") },
             singleLine = true,
-            shape = RoundedCornerShape(16.dp),
+            shape = fieldShape,
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = cs.surface,
-                unfocusedContainerColor = cs.surface,
-                focusedBorderColor = cs.primary.copy(alpha = .25f),
-                unfocusedBorderColor = cs.primary.copy(alpha = .15f),
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                focusedBorderColor = Color(0xFFE0E0E0),
+                unfocusedBorderColor = Color(0xFFEAEAEA),
+                cursorColor = cs.primary
+            )
+        )
+
+        Spacer(Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = name, onValueChange = { name = it },
+            label = { Text("Name") },
+            singleLine = true,
+            shape = fieldShape,
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                focusedBorderColor = Color(0xFFE0E0E0),
+                unfocusedBorderColor = Color(0xFFEAEAEA),
                 cursorColor = cs.primary
             )
         )
@@ -76,8 +126,10 @@ fun SignUpScreen(
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .width(110.dp)
-                    .height(UiDimensions.TextFieldHeight),
-                colors = ButtonDefaults.outlinedButtonColors(containerColor = cs.surface)
+                    .height(fieldHeight),
+                border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
+                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
+                contentPadding = PaddingValues(horizontal = 12.dp)
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.saudi_flag),
@@ -93,74 +145,42 @@ fun SignUpScreen(
 
             OutlinedTextField(
                 value = phone,
-                onValueChange = { phone = it.filter { ch -> ch.isDigit() }.take(10) },
-                placeholder = { Text("Phone Number") },
+                onValueChange = { phone = it.filter(Char::isDigit).take(10) },
+                label = { Text("Phone Number") },
                 singleLine = true,
-                shape = RoundedCornerShape(16.dp),
+                shape = fieldShape,
                 modifier = Modifier
                     .weight(1f)
-                    .height(UiDimensions.TextFieldHeight),
+                    .height(fieldHeight),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = cs.surface,
-                    unfocusedContainerColor = cs.surface,
-                    focusedBorderColor = cs.primary.copy(alpha = .25f),
-                    unfocusedBorderColor = cs.primary.copy(alpha = .15f),
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    focusedBorderColor = Color(0xFFE0E0E0),
+                    unfocusedBorderColor = Color(0xFFEAEAEA),
                     cursorColor = cs.primary
                 )
             )
         }
-
-        Spacer(Modifier.height(6.dp))
-
-        Text(
-            text = "*We will send you a verification code",
-            color = cs.secondary.copy(alpha = .8f),
-            fontSize = 12.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.align(Alignment.Start)
-        )
-
-        Spacer(Modifier.height(12.dp))
-
-        // Email
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            placeholder = { Text("Email") },
-            singleLine = true,
-            shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = cs.surface,
-                unfocusedContainerColor = cs.surface,
-                focusedBorderColor = cs.primary.copy(alpha = .25f),
-                unfocusedBorderColor = cs.primary.copy(alpha = .15f),
-                cursorColor = cs.primary
-            )
-        )
 
         Spacer(Modifier.height(12.dp))
 
         // Birthday with trailing icon -> DatePickerDialog
         val context = LocalContext.current
         val cal = remember { java.util.Calendar.getInstance() }
-
         val datePicker = remember(context) {
             android.app.DatePickerDialog(
                 context,
-                { _, y, m, d -> birthday = "%02d/%02d/%04d".format(d, m + 1, y) },
+                { _, y, m, d -> birthday = "%d / %d / %d".format(d, m + 1, y) },
                 cal.get(java.util.Calendar.YEAR),
                 cal.get(java.util.Calendar.MONTH),
                 cal.get(java.util.Calendar.DAY_OF_MONTH)
             )
         }
 
-
         OutlinedTextField(
             value = birthday,
-            onValueChange = { /* read-only via picker */ },
-            placeholder = { Text("Birthday") },
+            onValueChange = { /* read-only */ },
+            label = { Text("Birthday") },
             singleLine = true,
             readOnly = true,
             trailingIcon = {
@@ -172,16 +192,18 @@ fun SignUpScreen(
                     )
                 }
             },
-            shape = RoundedCornerShape(16.dp),
+            shape = fieldShape,
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = cs.surface,
-                unfocusedContainerColor = cs.surface,
-                focusedBorderColor = cs.primary.copy(alpha = .25f),
-                unfocusedBorderColor = cs.primary.copy(alpha = .15f),
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                focusedBorderColor = Color(0xFFE0E0E0),
+                unfocusedBorderColor = Color(0xFFEAEAEA),
                 cursorColor = cs.primary
             )
         )
+
+        Spacer(Modifier.height(16.dp))
 
         Spacer(Modifier.height(16.dp))
 
@@ -194,27 +216,52 @@ fun SignUpScreen(
 
         Spacer(Modifier.height(8.dp))
 
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.spacedBy(12.dp)
+//        ) {
+//            GenderPill(
+//                imageRes = R.drawable.male,
+//                label = "Male",
+//                selected = gender == Gender.Male,
+//                onClick = { gender = Gender.Male },
+//                modifier = Modifier.weight(1f)
+//            )
+//            GenderPill(
+//                imageRes = R.drawable.female,
+//                label = "Female",
+//                selected = gender == Gender.Female,
+//                onClick = { gender = Gender.Female },
+//                modifier = Modifier.weight(1f)
+//            )
+//
+//
+//        }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            GenderPill(
-                imageRes = R.drawable.male,
+            GenderChoice(
                 label = "Male",
+                iconRes = R.drawable.male,
                 selected = gender == Gender.Male,
                 onClick = { gender = Gender.Male },
+                accentBlue = accentBlue,
                 modifier = Modifier.weight(1f)
             )
-            GenderPill(
-                imageRes = R.drawable.female,
+            GenderChoice(
                 label = "Female",
+                iconRes = R.drawable.female,
                 selected = gender == Gender.Female,
                 onClick = { gender = Gender.Female },
+                accentBlue = accentBlue,
                 modifier = Modifier.weight(1f)
             )
-
-
         }
+
+        Spacer(Modifier.height(24.dp))
+
 
         Spacer(Modifier.height(24.dp))
 
@@ -225,15 +272,64 @@ fun SignUpScreen(
                 .fillMaxWidth()
                 .height(52.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = cs.primary,
-                contentColor = cs.onPrimary
+                containerColor = primaryRed,
+                contentColor = Color.White
             ),
-            enabled = name.isNotBlank() && phone.length >= 8
+            enabled = email.isNotBlank() && name.isNotBlank() && phone.length >= 8 && birthday.isNotBlank()
         ) {
-            Text("Continue", fontSize = 16.sp)
+            Text("Next", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
         }
     }
 }
+
+@Composable
+private fun GenderChoice(
+    label: String,
+    iconRes: Int,
+    selected: Boolean,
+    onClick: () -> Unit,
+    accentBlue: Color,
+    modifier: Modifier = Modifier
+) {
+    val borderColor = if (selected) accentBlue else Color(0xFFE0E0E0)
+    val pillShape   = RoundedCornerShape(12.dp)
+
+    Surface(
+        onClick = onClick,
+        shape = pillShape,
+        color = Color.White,
+        border = BorderStroke(1.dp, borderColor),
+        tonalElevation = 0.dp,
+        shadowElevation = 0.dp,
+        modifier = modifier
+            .height(56.dp)
+    ) {
+        Row(
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(20.dp)
+                    .border(BorderStroke(2.dp, borderColor), shape = RoundedCornerShape(50))
+            )
+            Text(label, fontWeight = FontWeight.Medium, fontSize = 14.sp)
+            Spacer(Modifier.weight(1f))
+            Image(
+                painter = painterResource(id = iconRes),
+                contentDescription = label,
+                modifier = Modifier.size(18.dp),
+                contentScale = ContentScale.Fit
+            )
+        }
+    }
+}
+
+
+enum class Gender { Male, Female }
 
 @Composable
 private fun GenderPill(
@@ -274,5 +370,38 @@ private fun GenderPill(
 }
 
 
+/* ========================= PREVIEWS ========================= */
 
-enum class Gender { Male, Female }
+@Preview(
+    name = "AR - Light",
+    showSystemUi = true,
+    locale = "ar",
+    device = "id:pixel_7_pro"
+)
+@Composable
+fun PreviewOnboardContent_Ar_Light() {
+    SignUpScreen()
+}
+
+@Preview(
+    name = "EN - Light",
+    showSystemUi = true,
+    locale = "en",
+    device = "id:pixel_7_pro"
+)
+@Composable
+fun PreviewOnboardContent_En_Light() {
+    SignUpScreen()
+}
+
+@Preview(
+    name = "AR - Dark",
+    showSystemUi = true,
+    locale = "ar",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    device = "id:pixel_7_pro"
+)
+@Composable
+fun PreviewOnboardContent_Ar_Dark() {
+    SignUpScreen()
+}
