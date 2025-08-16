@@ -9,6 +9,7 @@ import kotlinx.coroutines.runBlocking
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //  Light
 
         val savedTag = runBlocking { LanguageDataStore.getLanguage(this@MainApplication) }
 

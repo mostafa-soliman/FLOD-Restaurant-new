@@ -96,6 +96,7 @@ private fun LanguageIcon(
         shape = CircleShape,
         color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
         modifier = modifier
+            .padding(top = 38.dp)
             .size(44.dp)
            // .clickable { onClick() }
     ) {

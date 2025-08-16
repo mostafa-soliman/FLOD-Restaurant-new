@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.foundation)
+    implementation(libs.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,5 +77,5 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation ("androidx.compose.ui:ui-tooling-preview")
     debugImplementation ("androidx.compose.ui:ui-tooling")
-
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
 }
