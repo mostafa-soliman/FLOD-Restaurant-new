@@ -1,10 +1,9 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.kapt")
-    id("com.google.devtools.ksp") version "2.2.0-2.0.2"
-    id("com.google.dagger.hilt.android") version "2.52"
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -41,7 +40,11 @@ android {
         compose = true
     }
 }
-
+configurations.all {
+    resolutionStrategy {
+        force("com.squareup:javapoet:1.13.0")
+    }
+}
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -78,4 +81,6 @@ dependencies {
     implementation ("androidx.compose.ui:ui-tooling-preview")
     debugImplementation ("androidx.compose.ui:ui-tooling")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
+    implementation("com.squareup:javapoet:1.13.0")
+
 }

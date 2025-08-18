@@ -14,7 +14,9 @@ import androidx.navigation.compose.rememberNavController
 import com.fadali.flod_restaurant.presentation.ui.navigation.FLODNavGraph
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
