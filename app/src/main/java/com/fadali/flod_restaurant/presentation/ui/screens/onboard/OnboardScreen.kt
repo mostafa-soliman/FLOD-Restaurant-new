@@ -1,6 +1,8 @@
 package com.fadali.flod_restaurant.presentation.ui.screens.onboard
 
+import android.content.Context
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -69,7 +72,7 @@ fun OnboardScreen(
     val state = viewModel.loginState
     var responseText by rememberSaveable { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
-
+    val context = LocalContext.current
     OnboardScreenContent(
         onLoginClick = { phone ->
             viewModel.login(phone)
@@ -88,27 +91,33 @@ fun OnboardScreen(
 
         is LoginViewModel.LoginState.Success -> {
             isLoading = false
-            responseText =
-                "SUCCESS : userId=${state.data?.userId} | userName=${state.data?.userName}"
 
             LaunchedEffect(state) {
-                if (state is LoginViewModel.LoginState.Success) {
-                    delay(2000)
-                    navController.navigate(Route.VerifyOtp)
-                }
-            }
+                val response = state.data ?: return@LaunchedEffect
 
+                // ✅ show toast with message
+                val msg = response.message ?: "Login Success"
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+
+                // ✅ show full json object
+                val gson = com.google.gson.Gson()
+                val jsonString = gson.toJson(response)
+                Toast.makeText(context, jsonString, Toast.LENGTH_LONG).show()
+
+                delay(2000)
+                val mobile = response.data?.mobileNumber ?: ""
+                navController.navigate("${Route.VerifyOtp}/$mobile")
+            }
         }
 
         is LoginViewModel.LoginState.Error -> {
             isLoading = false
-            responseText = "ERROR : ${state.message}"
+            Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
         }
 
-        else -> {
-            isLoading = false
-        }
+        else -> {}
     }
+
 }
 
 @Composable

@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.compose.runtime.getValue
+import com.fadali.flod_restaurant.data.model.auth.LoginResponse
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -24,7 +25,7 @@ class LoginViewModel @Inject constructor(
         try {
             val res = loginUseCase(number)
             if (res.isSuccessful && res.body()?.success == true) {
-                loginState = LoginState.Success(res.body()?.data)
+                loginState = LoginState.Success(res.body()!!)
             } else {
                 loginState = LoginState.Error(res.body()?.message ?: "Error")
             }
@@ -36,7 +37,7 @@ class LoginViewModel @Inject constructor(
     sealed class LoginState {
         object Idle : LoginState()
         object Loading : LoginState()
-        data class Success(val data: UserData?) : LoginState()
+        data class Success(val data: LoginResponse?) : LoginState()
         data class Error(val message: String) : LoginState()
     }
 }

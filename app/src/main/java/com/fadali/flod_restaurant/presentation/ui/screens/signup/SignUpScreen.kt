@@ -312,9 +312,18 @@ fun SignUpScreen(
 
         when (state) {
             is SignupViewModel.SignUpState.Success -> {
-                LaunchedEffect(Unit) {
-                    Toast.makeText(context, "Account created", Toast.LENGTH_SHORT).show()
-                    navController.navigate(Route.VerifyOtp)
+                LaunchedEffect(state) {
+                    val response = state.data    // SignUpResponse object
+                    val msg = response.message ?: "Account Created"
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+
+                    // ✅ Show full JSON
+                    val gson = com.google.gson.Gson()
+                    val jsonString = gson.toJson(response)
+                    Toast.makeText(context, jsonString, Toast.LENGTH_LONG).show()
+
+                    val mobile = response.data?.mobileNumber ?: ""
+                    navController.navigate("${Route.VerifyOtp}/${mobile}")
                     viewModel.resetState()
                 }
             }

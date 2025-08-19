@@ -36,7 +36,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun VerifyOtpScreen(
-    maskedPhone: String = "+966xxxxxxxx87",
+    phone: String,
+    maskedPhone: String = maskPhone(phone),
     digitsCount: Int = 4,
     initialSeconds: Int = 60,
     onCodeComplete: (String) -> Unit = {},
@@ -237,6 +238,15 @@ fun VerifyOtpScreen(
     }
 }
 
+fun maskPhone(phone: String): String {
+    return if (phone.length >= 2) {
+        val lastTwo = phone.takeLast(2)
+        val hidden = "*".repeat(phone.length - 2)
+        "$hidden$lastTwo"
+    } else {
+        phone
+    }
+}
 
 @Preview(
     name = "AR - Light",
@@ -246,7 +256,14 @@ fun VerifyOtpScreen(
 )
 @Composable
 fun PreviewOnboardContent_Ar_Light() {
-    VerifyOtpScreen()
+    VerifyOtpScreen(
+        phone = TODO(),
+        maskedPhone = TODO(),
+        digitsCount = TODO(),
+        initialSeconds = TODO(),
+        onCodeComplete = TODO(),
+        onResend = TODO()
+    )
 }
 
 @Preview(
@@ -257,7 +274,14 @@ fun PreviewOnboardContent_Ar_Light() {
 )
 @Composable
 fun PreviewOnboardContent_En_Light() {
-    VerifyOtpScreen()
+    VerifyOtpScreen(
+        phone = TODO(),
+        maskedPhone = TODO(),
+        digitsCount = TODO(),
+        initialSeconds = TODO(),
+        onCodeComplete = TODO(),
+        onResend = TODO()
+    )
 }
 
 @Preview(
@@ -269,7 +293,14 @@ fun PreviewOnboardContent_En_Light() {
 )
 @Composable
 fun PreviewOnboardContent_Ar_Dark() {
-    VerifyOtpScreen()
+    VerifyOtpScreen(
+        phone = TODO(),
+        maskedPhone = TODO(),
+        digitsCount = TODO(),
+        initialSeconds = TODO(),
+        onCodeComplete = TODO(),
+        onResend = TODO()
+    )
 }
 
 
