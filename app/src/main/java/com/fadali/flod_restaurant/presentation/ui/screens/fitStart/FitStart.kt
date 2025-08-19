@@ -41,11 +41,10 @@ fun FitStartScreen(
     onLogin: (weightKg: String, heightCm: String, level: ActivityLevel) -> Unit = { _,_,_ -> },
     onSkip: () -> Unit = {}
 ) {
-    // ألوان التصميم
     val primaryRed = Color(0xFF700B18)
     val accentBlue = Color(0xFF00A9B4)
     val grayText   = Color(0xFF9E9E9E)
-    val fieldBorder = Color(0xFFE7E3F3) // حد خفيف بنفسجي فاتح زي الصورة
+    val fieldBorder = Color(0xFFE7E3F3)
 
     var weight by rememberSaveable { mutableStateOf("") }
     var height by rememberSaveable { mutableStateOf("") }
@@ -59,11 +58,9 @@ fun FitStartScreen(
                 .padding(horizontal = 24.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Title
             Text("Fit Start", color = accentBlue, fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(24.dp))
 
-            // Weight
             SectionLabel("Weight")
             UnitTextField(
                 value = weight,
@@ -75,7 +72,6 @@ fun FitStartScreen(
 
             Spacer(Modifier.height(16.dp))
 
-            // Height
             SectionLabel("Height")
             UnitTextField(
                 value = height,
@@ -114,7 +110,7 @@ fun FitStartScreen(
             )
             ActivityOption(
                 title = "Very Active",
-                emoji = "\uD83E\uDD3C", // 🤼/🏋 (ايموجي بديل)
+                emoji = "\uD83E\uDD3C", // 🤼/🏋 ( )
                 selected = level == ActivityLevel.VeryActive,
                 onClick = { level = ActivityLevel.VeryActive },
                 border = fieldBorder
@@ -176,9 +172,9 @@ private fun SectionLabel(text: String) {
         fontSize = 18.sp,
         fontWeight = FontWeight.SemiBold,
         modifier = Modifier
-            .fillMaxWidth()      // ياخد العرض كامل
+            .fillMaxWidth()
             .padding(bottom = 8.dp),
-        textAlign = TextAlign.Start // يحدد المحاذاة لليسار
+        textAlign = TextAlign.Start
     )
 }
 
@@ -200,10 +196,9 @@ private fun UnitTextField(
         shape = shape,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         trailingIcon = {
-            // شارة صغيرة للوحدة
             Surface(
                 shape = CircleShape,
-                color = Color(0xFF4E5BA6), // بنفسجي غامق بسيط مثل الصورة
+                color = Color(0xFF4E5BA6),
                 contentColor = Color.White
             ) {
                 Text(

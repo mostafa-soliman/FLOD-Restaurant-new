@@ -34,6 +34,7 @@ fun FLODNavGraph(navController: NavHostController) {
 
         composable(Route.SignUp) {
             SignUpScreen(
+                navController = navController,
                 onContinue = { name, fullPhone, email, bday, gender ->
                     // ابعت رقم مقنّع/حقيقي حسب لوجيكك:
                     val masked = maskPhone(fullPhone)

@@ -37,7 +37,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun VerifyOtpScreen(
     maskedPhone: String = "+966xxxxxxxx87",
-    digitsCount: Int = 4,                 // زي الصورة
+    digitsCount: Int = 4,
     initialSeconds: Int = 60,
     onCodeComplete: (String) -> Unit = {},
     onResend: () -> Unit = {}

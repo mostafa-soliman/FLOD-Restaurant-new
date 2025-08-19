@@ -1,6 +1,8 @@
 package com.fadali.flod_restaurant.presentation.ui.screens.signup
 
+import android.app.DatePickerDialog
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,8 +20,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +33,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,19 +46,30 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
+import com.fadali.flod_restaurant.presentation.ui.navigation.Route
+import com.fadali.flod_restaurant.presentation.viewmodel.SignupViewModel
 import com.fadali.flod_restaurant.util.UiDimensions
+import java.util.Calendar
 
 @Composable
 fun SignUpScreen(
-    onContinue: (name: String, phone: String, email: String, birthday: String, gender: Gender) -> Unit = { _,_,_,_,_ -> }
+    navController: NavController,
+    viewModel: SignupViewModel = hiltViewModel(),
+    onContinue: (name: String, phone: String, email: String, birthday: String, gender: Gender) -> Unit = { _, _, _, _, _ -> }
 ) {
     val primaryRed = Color(0xFF700B18)
     val accentBlue = Color(0xFF00A9B4)
-    val grayText   = Color(0xFF9E9E9E)
+    val grayText = Color(0xFF9E9E9E)
+
+    val state = viewModel.state
+    val context = LocalContext.current
 
     // State
     var email by rememberSaveable { mutableStateOf("") }
@@ -149,6 +165,7 @@ fun SignUpScreen(
                 label = { Text("Phone Number") },
                 singleLine = true,
                 shape = fieldShape,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 modifier = Modifier
                     .weight(1f)
                     .height(fieldHeight),
@@ -166,14 +183,14 @@ fun SignUpScreen(
 
         // Birthday with trailing icon -> DatePickerDialog
         val context = LocalContext.current
-        val cal = remember { java.util.Calendar.getInstance() }
+        val cal = remember { Calendar.getInstance() }
         val datePicker = remember(context) {
-            android.app.DatePickerDialog(
+            DatePickerDialog(
                 context,
                 { _, y, m, d -> birthday = "%d / %d / %d".format(d, m + 1, y) },
-                cal.get(java.util.Calendar.YEAR),
-                cal.get(java.util.Calendar.MONTH),
-                cal.get(java.util.Calendar.DAY_OF_MONTH)
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
             )
         }
 
@@ -266,18 +283,54 @@ fun SignUpScreen(
         Spacer(Modifier.height(24.dp))
 
         Button(
-            onClick = { onContinue(name, "+966$phone", email, birthday, gender) },
-            shape = RoundedCornerShape(12.dp),
+            onClick = {
+                viewModel.signUp(name, email, "+966$phone", birthday, gender)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = primaryRed,
-                contentColor = Color.White
-            ),
-            enabled = email.isNotBlank() && name.isNotBlank() && phone.length >= 8 && birthday.isNotBlank()
+            shape = RoundedCornerShape(12.dp),
+            enabled = state !is SignupViewModel.SignUpState.Loading
+                    && email.isNotBlank()
+                    && name.isNotBlank()
+                    && phone.length >= 8
+                    && birthday.isNotBlank()
+            ,
+            colors = ButtonDefaults.buttonColors(containerColor = primaryRed)
         ) {
-            Text("Next", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            Box(contentAlignment = Alignment.Center){
+                Text("Next", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                if (state is SignupViewModel.SignUpState.Loading) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                        strokeWidth = 2.dp,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+        }
+
+        when (state) {
+            is SignupViewModel.SignUpState.Success -> {
+                LaunchedEffect(Unit) {
+                    Toast.makeText(context, "Account created", Toast.LENGTH_SHORT).show()
+                    navController.navigate(Route.VerifyOtp)
+                    viewModel.resetState()
+                }
+            }
+
+            is SignupViewModel.SignUpState.Error -> {
+                LaunchedEffect(Unit) {
+                    Toast.makeText(
+                        context,
+                        (state as SignupViewModel.SignUpState.Error).message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    viewModel.resetState()
+                }
+            }
+
+            else -> {}
         }
     }
 }
@@ -292,7 +345,7 @@ private fun GenderChoice(
     modifier: Modifier = Modifier
 ) {
     val borderColor = if (selected) accentBlue else Color(0xFFE0E0E0)
-    val pillShape   = RoundedCornerShape(12.dp)
+    val pillShape = RoundedCornerShape(12.dp)
 
     Surface(
         onClick = onClick,
@@ -380,7 +433,11 @@ private fun GenderPill(
 )
 @Composable
 fun PreviewOnboardContent_Ar_Light() {
-    SignUpScreen()
+    SignUpScreen(
+        navController = TODO(),
+        viewModel = TODO(),
+        onContinue = TODO()
+    )
 }
 
 @Preview(
@@ -391,7 +448,11 @@ fun PreviewOnboardContent_Ar_Light() {
 )
 @Composable
 fun PreviewOnboardContent_En_Light() {
-    SignUpScreen()
+    SignUpScreen(
+        navController = TODO(),
+        viewModel = TODO(),
+        onContinue = TODO()
+    )
 }
 
 @Preview(
@@ -403,5 +464,9 @@ fun PreviewOnboardContent_En_Light() {
 )
 @Composable
 fun PreviewOnboardContent_Ar_Dark() {
-    SignUpScreen()
+    SignUpScreen(
+        navController = TODO(),
+        viewModel = TODO(),
+        onContinue = TODO()
+    )
 }
