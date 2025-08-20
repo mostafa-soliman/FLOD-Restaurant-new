@@ -30,7 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fadali.flod_restaurant.presentation.ui.screens.onboard.OnboardScreenContent
+import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
+import com.fadali.flod_restaurant.presentation.ui.theme.grayText
 import kotlinx.coroutines.delay
 
 
@@ -43,26 +44,20 @@ fun VerifyOtpScreen(
     onCodeComplete: (String) -> Unit = {},
     onResend: () -> Unit = {}
 ) {
-    val primaryRed = Color(0xFF700B18)
-    val accentBlue = Color(0xFF00A9B4)
-    val grayText = Color(0xFF9E9E9E)
-
     val cs = MaterialTheme.colorScheme
-    val surface = cs.surface
-    val onSurface = cs.onSurface
-    val background = cs.background
 
-    Surface(color = Color.White) {
+
+    Surface(color = cs.background) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background( cs.background)
                 .padding(horizontal = 24.dp, vertical = 84.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "FLOD",
-                color = primaryRed,
+                color = cs.primary,
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -71,7 +66,7 @@ fun VerifyOtpScreen(
 
             Text(
                 text = "Verification Code!",
-                color = accentBlue,
+                color = cs.accentBlue,
                 fontSize = 26.sp,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
@@ -81,7 +76,7 @@ fun VerifyOtpScreen(
 
             Text(
                 text = "We have sent the verification code to your mobile number $maskedPhone",
-                color = grayText,
+                color = cs.grayText,
                 fontSize = 14.sp,
                 lineHeight = 18.sp,
                 textAlign = TextAlign.Center
@@ -147,13 +142,13 @@ fun VerifyOtpScreen(
                             },
                         shape = boxShape,
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedContainerColor = surface,
-                            unfocusedContainerColor = surface,
-                            unfocusedBorderColor = Color(0xFFE0E0E0),
-                            focusedBorderColor = primaryRed,
-                            cursorColor = primaryRed,
-                            focusedTextColor = onSurface,
-                            unfocusedTextColor = onSurface
+                            focusedContainerColor = cs.surface,
+                            unfocusedContainerColor = cs.surface,
+                            unfocusedBorderColor = cs.outline,
+                            focusedBorderColor = cs.primary,
+                            cursorColor = cs.primary,
+                            focusedTextColor = cs.onSurface,
+                            unfocusedTextColor = cs.onSurface
                         )
                     )
                 }
@@ -184,19 +179,19 @@ fun VerifyOtpScreen(
                 Row {
                     Text(
                         text = "Don’t receive a code ? ",
-                        color = onSurface.copy(alpha = 0.7f),
+                        color = cs.onSurface.copy(alpha = 0.7f),
                         fontSize = 14.sp
                     )
                     if (seconds > 0) {
                         Text(
                             text = "Resend",
-                            color = primaryRed.copy(alpha = 0.45f),
+                            color = cs.primary.copy(alpha = 0.45f),
                             fontSize = 14.sp
                         )
                     } else {
                         Text(
                             text = "Resend",
-                            color = primaryRed,
+                            color = cs.primary,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.clickable {
@@ -209,7 +204,7 @@ fun VerifyOtpScreen(
 
                 Text(
                     text = timer,
-                    color = grayText.copy(alpha = 0.8f),
+                    color = cs.grayText.copy(alpha = 0.8f),
                     fontSize = 14.sp
                 )
             }
@@ -226,10 +221,10 @@ fun VerifyOtpScreen(
                     .fillMaxWidth()
                     .height(52.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primaryRed,
-                    contentColor = Color.White,
-                    disabledContainerColor = primaryRed.copy(alpha = 0.4f),
-                    disabledContentColor = Color.White.copy(alpha = 0.9f)
+                    containerColor = cs.primary,
+                    contentColor = cs.onPrimary,
+                    disabledContainerColor = cs.primary.copy(alpha = 0.4f),
+                    disabledContentColor = cs.onPrimary.copy(alpha = 0.9f)
                 )
             ) {
                 Text("Next", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)

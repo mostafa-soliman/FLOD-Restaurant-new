@@ -35,16 +35,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 
 @Composable
 fun FitStartScreen(
     onLogin: (weightKg: String, heightCm: String, level: ActivityLevel) -> Unit = { _,_,_ -> },
     onSkip: () -> Unit = {}
 ) {
-    val primaryRed = Color(0xFF700B18)
-    val accentBlue = Color(0xFF00A9B4)
-    val grayText   = Color(0xFF9E9E9E)
-    val fieldBorder = Color(0xFFE7E3F3)
+    val cs = androidx.compose.material3.MaterialTheme.colorScheme
+
 
     var weight by rememberSaveable { mutableStateOf("") }
     var height by rememberSaveable { mutableStateOf("") }
@@ -58,7 +57,7 @@ fun FitStartScreen(
                 .padding(horizontal = 24.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Fit Start", color = accentBlue, fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
+            Text("Fit Start", color = cs.accentBlue, fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(24.dp))
 
             SectionLabel("Weight")
@@ -67,7 +66,7 @@ fun FitStartScreen(
                 onChange = { weight = it.filter { ch -> ch.isDigit() || ch == '.' }.take(6) },
                 hint = "Enter Your Weight",
                 unit = "KG",
-                border = fieldBorder
+                border = cs.outline
             )
 
             Spacer(Modifier.height(16.dp))
@@ -78,7 +77,7 @@ fun FitStartScreen(
                 onChange = { height = it.filter { ch -> ch.isDigit() || ch == '.' }.take(6) },
                 hint = "Enter Your Height",
                 unit = "CM",
-                border = fieldBorder
+                border = cs.outline
             )
 
             Spacer(Modifier.height(20.dp))
@@ -92,35 +91,35 @@ fun FitStartScreen(
                 emoji = "—",
                 selected = level == ActivityLevel.NotActive,
                 onClick = { level = ActivityLevel.NotActive },
-                border = fieldBorder
+                border = cs.outline
             )
             ActivityOption(
                 title = "Lightly Active",
                 emoji = "\uD83D\uDEB6", // 🚶
                 selected = level == ActivityLevel.LightlyActive,
                 onClick = { level = ActivityLevel.LightlyActive },
-                border = fieldBorder
+                border = cs.outline
             )
             ActivityOption(
                 title = "Moderately Active",
                 emoji = "\uD83C\uDFC3", // 🏃
                 selected = level == ActivityLevel.ModeratelyActive,
                 onClick = { level = ActivityLevel.ModeratelyActive },
-                border = fieldBorder
+                border = cs.outline
             )
             ActivityOption(
                 title = "Very Active",
                 emoji = "\uD83E\uDD3C", // 🤼/🏋 ( )
                 selected = level == ActivityLevel.VeryActive,
                 onClick = { level = ActivityLevel.VeryActive },
-                border = fieldBorder
+                border = cs.outline
             )
             ActivityOption(
                 title = "Extra Active",
                 emoji = "\uD83C\uDFD4", // 🏔
                 selected = level == ActivityLevel.ExtraActive,
                 onClick = { level = ActivityLevel.ExtraActive },
-                border = fieldBorder
+                border = cs.outline
             )
 
             Spacer(Modifier.weight(1f))
@@ -133,8 +132,8 @@ fun FitStartScreen(
                     .height(54.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primaryRed,
-                    contentColor = Color.White
+                    containerColor = cs.primary,
+                    contentColor   = cs.onPrimary
                 ),
                 enabled = weight.isNotBlank() && height.isNotBlank()
             ) {
@@ -150,10 +149,10 @@ fun FitStartScreen(
                     .fillMaxWidth()
                     .height(54.dp),
                 shape = RoundedCornerShape(12.dp),
-                border = BorderStroke(1.5.dp, primaryRed),
+                border = BorderStroke(1.5.dp, cs.primary),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.White,
-                    contentColor = primaryRed
+                    containerColor = cs.surface,
+                    contentColor   = cs.primary
                 )
             ) {
                 Text("Skip", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)

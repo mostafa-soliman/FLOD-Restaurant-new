@@ -54,6 +54,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.presentation.ui.navigation.Route
+import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
+import com.fadali.flod_restaurant.presentation.ui.theme.grayText
 import com.fadali.flod_restaurant.presentation.viewmodel.SignupViewModel
 import com.fadali.flod_restaurant.util.UiDimensions
 import java.util.Calendar
@@ -64,9 +66,6 @@ fun SignUpScreen(
     viewModel: SignupViewModel = hiltViewModel(),
     onContinue: (name: String, phone: String, email: String, birthday: String, gender: Gender) -> Unit = { _, _, _, _, _ -> }
 ) {
-    val primaryRed = Color(0xFF700B18)
-    val accentBlue = Color(0xFF00A9B4)
-    val grayText = Color(0xFF9E9E9E)
 
     val state = viewModel.state
     val context = LocalContext.current
@@ -85,16 +84,16 @@ fun SignUpScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(cs.background)
             .padding(horizontal = 24.dp, vertical = 84.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text("FLOD", color = primaryRed, fontSize = 32.sp, fontWeight = FontWeight.Bold)
+        Text("FLOD", color = cs.primary, fontSize = 32.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(12.dp))
-        Text("Sign Up", color = accentBlue, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
+        Text("Sign Up", color = cs.accentBlue, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(6.dp))
-        Text("Enter your personal information", color = grayText, fontSize = 14.sp)
+        Text("Enter your personal information", color = cs.grayText, fontSize = 14.sp)
 
         Spacer(Modifier.height(24.dp))
 
@@ -105,10 +104,10 @@ fun SignUpScreen(
             shape = fieldShape,
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = Color(0xFFE0E0E0),
-                unfocusedBorderColor = Color(0xFFEAEAEA),
+                focusedContainerColor = cs.surface,
+                unfocusedContainerColor = cs.surface,
+                focusedBorderColor = cs.outline,
+                unfocusedBorderColor = cs.outline,
                 cursorColor = cs.primary
             )
         )
@@ -122,10 +121,10 @@ fun SignUpScreen(
             shape = fieldShape,
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = Color(0xFFE0E0E0),
-                unfocusedBorderColor = Color(0xFFEAEAEA),
+                focusedContainerColor = cs.surface,
+                unfocusedContainerColor = cs.surface,
+                focusedBorderColor = cs.outline,
+                unfocusedBorderColor = cs.outline,
                 cursorColor = cs.primary
             )
         )
@@ -143,8 +142,11 @@ fun SignUpScreen(
                 modifier = Modifier
                     .width(110.dp)
                     .height(fieldHeight),
-                border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
-                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
+                border = BorderStroke(1.dp, cs.outline),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = cs.surface,
+                    contentColor = cs.onSurface
+                ),
                 contentPadding = PaddingValues(horizontal = 12.dp)
             ) {
                 Image(
@@ -170,10 +172,10 @@ fun SignUpScreen(
                     .weight(1f)
                     .height(fieldHeight),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedBorderColor = Color(0xFFE0E0E0),
-                    unfocusedBorderColor = Color(0xFFEAEAEA),
+                    focusedContainerColor = cs.surface,
+                    unfocusedContainerColor = cs.surface,
+                    focusedBorderColor = cs.outline,
+                    unfocusedBorderColor = cs.outline,
                     cursorColor = cs.primary
                 )
             )
@@ -212,10 +214,10 @@ fun SignUpScreen(
             shape = fieldShape,
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = Color(0xFFE0E0E0),
-                unfocusedBorderColor = Color(0xFFEAEAEA),
+                focusedContainerColor = cs.surface,
+                unfocusedContainerColor = cs.surface,
+                focusedBorderColor = cs.outline,
+                unfocusedBorderColor = cs.outline,
                 cursorColor = cs.primary
             )
         )
@@ -233,28 +235,6 @@ fun SignUpScreen(
 
         Spacer(Modifier.height(8.dp))
 
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.spacedBy(12.dp)
-//        ) {
-//            GenderPill(
-//                imageRes = R.drawable.male,
-//                label = "Male",
-//                selected = gender == Gender.Male,
-//                onClick = { gender = Gender.Male },
-//                modifier = Modifier.weight(1f)
-//            )
-//            GenderPill(
-//                imageRes = R.drawable.female,
-//                label = "Female",
-//                selected = gender == Gender.Female,
-//                onClick = { gender = Gender.Female },
-//                modifier = Modifier.weight(1f)
-//            )
-//
-//
-//        }
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -264,7 +244,7 @@ fun SignUpScreen(
                 iconRes = R.drawable.male,
                 selected = gender == Gender.Male,
                 onClick = { gender = Gender.Male },
-                accentBlue = accentBlue,
+                accentBlue = cs.accentBlue,
                 modifier = Modifier.weight(1f)
             )
             GenderChoice(
@@ -272,7 +252,7 @@ fun SignUpScreen(
                 iconRes = R.drawable.female,
                 selected = gender == Gender.Female,
                 onClick = { gender = Gender.Female },
-                accentBlue = accentBlue,
+                accentBlue = cs.accentBlue,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -294,15 +274,17 @@ fun SignUpScreen(
                     && email.isNotBlank()
                     && name.isNotBlank()
                     && phone.length >= 8
-                    && birthday.isNotBlank()
-            ,
-            colors = ButtonDefaults.buttonColors(containerColor = primaryRed)
+                    && birthday.isNotBlank(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = cs.primary,
+                contentColor = cs.onPrimary
+            )
         ) {
-            Box(contentAlignment = Alignment.Center){
+            Box(contentAlignment = Alignment.Center) {
                 Text("Next", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                 if (state is SignupViewModel.SignUpState.Loading) {
                     CircularProgressIndicator(
-                        color = Color.White,
+                        color = cs.onPrimary,
                         strokeWidth = 2.dp,
                         modifier = Modifier.size(24.dp)
                     )
@@ -353,13 +335,14 @@ private fun GenderChoice(
     accentBlue: Color,
     modifier: Modifier = Modifier
 ) {
-    val borderColor = if (selected) accentBlue else Color(0xFFE0E0E0)
+    val cs = MaterialTheme.colorScheme
+    val borderColor = if (selected) cs.accentBlue else cs.outline
     val pillShape = RoundedCornerShape(12.dp)
 
     Surface(
         onClick = onClick,
         shape = pillShape,
-        color = Color.White,
+        color = cs.surface,
         border = BorderStroke(1.dp, borderColor),
         tonalElevation = 0.dp,
         shadowElevation = 0.dp,
@@ -392,45 +375,6 @@ private fun GenderChoice(
 
 
 enum class Gender { Male, Female }
-
-@Composable
-private fun GenderPill(
-    imageRes: Int,
-    label: String,
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val cs = MaterialTheme.colorScheme
-    Surface(
-        onClick = onClick,
-        shape = RoundedCornerShape(20.dp),
-        color = if (selected) cs.primary else cs.surface,
-        contentColor = if (selected) cs.onPrimary else cs.onSurface,
-        shadowElevation = 0.dp,
-        tonalElevation = 0.dp,
-        modifier = modifier
-            .height(56.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(id = imageRes),
-                contentDescription = label,
-                modifier = Modifier.size(22.dp),
-                contentScale = ContentScale.Fit
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(label, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
-        }
-    }
-}
-
 
 /* ========================= PREVIEWS ========================= */
 

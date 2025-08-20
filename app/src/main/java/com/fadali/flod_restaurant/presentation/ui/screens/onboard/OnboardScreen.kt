@@ -1,6 +1,5 @@
 package com.fadali.flod_restaurant.presentation.ui.screens.onboard
 
-import android.content.Context
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -55,13 +54,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.presentation.ui.navigation.Route
+import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
+import com.fadali.flod_restaurant.presentation.ui.theme.grayText
 import com.fadali.flod_restaurant.presentation.viewmodel.LoginViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-val primaryRed = Color(0xFF700B18)
-val accentBlue = Color(0xFF00A9B4)
-val grayText = Color(0xFF9E9E9E)
 
 @Composable
 fun OnboardScreen(
@@ -73,6 +70,7 @@ fun OnboardScreen(
     var responseText by rememberSaveable { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     val context = LocalContext.current
+
     OnboardScreenContent(
         onLoginClick = { phone ->
             viewModel.login(phone)
@@ -131,6 +129,7 @@ fun OnboardScreenContent(
 ) {
     val fieldHeight = 56.dp
     var phone by rememberSaveable { mutableStateOf("") }
+    val cs = androidx.compose.material3.MaterialTheme.colorScheme
 
     Column(
         modifier = Modifier
@@ -152,7 +151,7 @@ fun OnboardScreenContent(
             text = "FLOD",
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
-            color = primaryRed
+            color = cs.primary
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -161,7 +160,7 @@ fun OnboardScreenContent(
             text = stringResource(id = R.string.welcome_back),
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
-            color = accentBlue
+            color = cs.accentBlue
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -170,7 +169,7 @@ fun OnboardScreenContent(
             text = stringResource(id = R.string.sign_in_description),
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
-            color = grayText
+            color = cs.grayText
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -186,7 +185,8 @@ fun OnboardScreenContent(
                     .width(110.dp)
                     .height(fieldHeight),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.White
+                    containerColor = cs.surface,
+                    contentColor = cs.onSurface
                 )
             ) {
                 Image(
@@ -195,7 +195,7 @@ fun OnboardScreenContent(
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                Text("+966", color = Color.Black)
+                Text("+966", color = cs.onSurface)
             }
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -205,7 +205,12 @@ fun OnboardScreenContent(
                 onValueChange = { input ->
                     phone = input.filter { it.isDigit() }.take(11)
                 },
-                placeholder = { Text(text = stringResource(id = R.string.phone_number)) },
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.phone_number),
+                        color = cs.grayText
+                    )
+                },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 modifier = Modifier
@@ -213,8 +218,11 @@ fun OnboardScreenContent(
                     .height(fieldHeight),
                 shape = RoundedCornerShape(8.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White
+                    unfocusedContainerColor = cs.surface,
+                    focusedContainerColor = cs.surface,
+                    unfocusedBorderColor = cs.outline,
+                    focusedBorderColor = cs.outline,
+                    cursorColor = cs.onSurface
                 )
             )
         }
@@ -227,19 +235,22 @@ fun OnboardScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = primaryRed)
+            colors = ButtonDefaults.buttonColors(
+                containerColor = cs.primary,
+                contentColor = cs.onPrimary
+            )
         ) {
             Text(text = stringResource(id = R.string.login), color = Color.White)
         }
 
         if (isLoading) {
             Spacer(Modifier.height(16.dp))
-            CircularProgressIndicator()
+            CircularProgressIndicator(color = cs.primary)
         }
 
         if (responseMsg.isNotEmpty()) {
             Spacer(Modifier.height(12.dp))
-            Text(text = responseMsg, color = Color.Red, modifier = Modifier.fillMaxWidth())
+            Text(text = responseMsg, color = cs.error, modifier = Modifier.fillMaxWidth())
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -250,12 +261,14 @@ fun OnboardScreenContent(
         ) {
             Text(
                 text = stringResource(id = R.string.signup_prompt),
-                color = grayText,
+                color = cs.grayText,
                 modifier = Modifier.alignBy(FirstBaseline)
             )
-            Spacer(modifier = Modifier
-                .width(4.dp)
-                .alignBy(FirstBaseline))
+            Spacer(
+                modifier = Modifier
+                    .width(4.dp)
+                    .alignBy(FirstBaseline)
+            )
             TextButton(
                 onClick = onSignUpClick,
                 contentPadding = PaddingValues(0.dp),
@@ -263,7 +276,7 @@ fun OnboardScreenContent(
             ) {
                 Text(
                     text = stringResource(id = R.string.signup_link),
-                    color = primaryRed,
+                    color = cs.primary,
                     textDecoration = TextDecoration.None,
                     modifier = Modifier.alignBy(FirstBaseline)
                 )

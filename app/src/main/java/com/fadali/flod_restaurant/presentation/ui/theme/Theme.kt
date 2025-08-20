@@ -12,27 +12,18 @@ import androidx.compose.ui.graphics.Color
 //)
 
 private val LightColorScheme = lightColorScheme(
-    primary = Primary1,
-    secondary = Secondary1,
-    tertiary = Primary2,
-    background = BG2,
-    surface = Placeholder,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = BG1,
-    onSurface = Primary1
+    primary      = PrimaryRed,
+    onPrimary    = AppBackground,
+    secondary    = AccentBlue,
+    onSecondary  = AppBackground,
+    background   = AppBackground,
+    onBackground = AppText,
+    surface      = AppBackground,
+    onSurface    = AppText,
+    outline      = GrayText,
+    error        = ErrorRed,
+    onError      = OnErrorText
 
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable

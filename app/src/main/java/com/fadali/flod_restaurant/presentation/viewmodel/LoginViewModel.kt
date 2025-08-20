@@ -1,16 +1,15 @@
 package com.fadali.flod_restaurant.presentation.viewmodel
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fadali.flod_restaurant.data.model.auth.UserData
+import com.fadali.flod_restaurant.data.model.auth.LoginResponse
 import com.fadali.flod_restaurant.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.compose.runtime.getValue
-import com.fadali.flod_restaurant.data.model.auth.LoginResponse
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
