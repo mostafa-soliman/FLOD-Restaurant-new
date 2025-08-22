@@ -198,7 +198,7 @@ fun OnboardScreenContent(
             ) {
                 Image(
                     painter = painterResource(R.drawable.saudi_flag),
-                    contentDescription = null,
+                    contentDescription = LText(R.string.saudi_flag_desc),
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(4.dp))

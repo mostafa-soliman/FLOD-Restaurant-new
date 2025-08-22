@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
+import com.fadali.flod_restaurant.i18n.LText
 import com.fadali.flod_restaurant.presentation.ui.navigation.Route
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.grayText
@@ -80,7 +81,7 @@ fun SignUpScreen(
     val cs = MaterialTheme.colorScheme
     val fieldShape = RoundedCornerShape(16.dp)
     val fieldHeight = UiDimensions.TextFieldHeight
-
+    val signUpSuccessMsg = LText(R.string.sign_up_success)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -89,17 +90,17 @@ fun SignUpScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text("FLOD", color = cs.primary, fontSize = 32.sp, fontWeight = FontWeight.Bold)
+        Text(LText(R.string.brand), color = cs.primary, fontSize = 32.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(12.dp))
-        Text("Sign Up", color = cs.accentBlue, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
+        Text( LText(R.string.signup_title), color = cs.accentBlue, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(6.dp))
-        Text("Enter your personal information", color = cs.grayText, fontSize = 14.sp)
+        Text( LText(R.string.signup_subtitle), color = cs.grayText, fontSize = 14.sp)
 
         Spacer(Modifier.height(24.dp))
 
         OutlinedTextField(
             value = email, onValueChange = { email = it },
-            label = { Text("Email") },
+            label = { Text(LText(R.string.email_label)) },
             singleLine = true,
             shape = fieldShape,
             modifier = Modifier.fillMaxWidth(),
@@ -116,7 +117,7 @@ fun SignUpScreen(
 
         OutlinedTextField(
             value = name, onValueChange = { name = it },
-            label = { Text("Name") },
+            label = { Text(LText(R.string.name_label)) },
             singleLine = true,
             shape = fieldShape,
             modifier = Modifier.fillMaxWidth(),
@@ -151,12 +152,12 @@ fun SignUpScreen(
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.saudi_flag),
-                    contentDescription = null,
+                    contentDescription = LText(R.string.saudi_flag_desc),
                     contentScale = ContentScale.Fit,
                     modifier = Modifier.size(20.dp)
                 )
                 Spacer(Modifier.width(6.dp))
-                Text("+966", color = cs.onSurface)
+                Text(LText(R.string.saudi_country_code), color = cs.onSurface)
             }
 
             Spacer(Modifier.width(8.dp))
@@ -164,7 +165,7 @@ fun SignUpScreen(
             OutlinedTextField(
                 value = phone,
                 onValueChange = { phone = it.filter(Char::isDigit).take(10) },
-                label = { Text("Phone Number") },
+                label = { Text(LText(R.string.phone_number)) },
                 singleLine = true,
                 shape = fieldShape,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
@@ -199,14 +200,14 @@ fun SignUpScreen(
         OutlinedTextField(
             value = birthday,
             onValueChange = { /* read-only */ },
-            label = { Text("Birthday") },
+            label = { Text(LText(R.string.birthday_label)) },
             singleLine = true,
             readOnly = true,
             trailingIcon = {
                 IconButton(onClick = { datePicker.show() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_calendar),
-                        contentDescription = "Pick date",
+                        contentDescription =  LText(R.string.pick_date_cd),
                         tint = cs.onSurface
                     )
                 }
@@ -227,7 +228,7 @@ fun SignUpScreen(
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = "Gender",
+            text = LText(R.string.gender_label),
             color = cs.onBackground.copy(alpha = .85f),
             fontSize = 16.sp,
             modifier = Modifier.align(Alignment.Start)
@@ -240,7 +241,7 @@ fun SignUpScreen(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             GenderChoice(
-                label = "Male",
+                label = LText(R.string.gender_male),
                 iconRes = R.drawable.male,
                 selected = gender == Gender.Male,
                 onClick = { gender = Gender.Male },
@@ -248,7 +249,7 @@ fun SignUpScreen(
                 modifier = Modifier.weight(1f)
             )
             GenderChoice(
-                label = "Female",
+                label = LText(R.string.gender_female),
                 iconRes = R.drawable.female,
                 selected = gender == Gender.Female,
                 onClick = { gender = Gender.Female },
@@ -281,7 +282,7 @@ fun SignUpScreen(
             )
         ) {
             Box(contentAlignment = Alignment.Center) {
-                Text("Next", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                Text(LText(R.string.next), fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                 if (state is SignupViewModel.SignUpState.Loading) {
                     CircularProgressIndicator(
                         color = cs.onPrimary,
@@ -295,11 +296,11 @@ fun SignUpScreen(
         when (state) {
             is SignupViewModel.SignUpState.Success -> {
                 LaunchedEffect(state) {
-                    val response = state.data    // SignUpResponse object
-                    val msg = response.message ?: "Account Created"
+                    val response = state.data
+                    val msg = response.message ?: signUpSuccessMsg
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 
-                    // ✅ Show full JSON
+                    // TODO: Show full JSON
                     val gson = com.google.gson.Gson()
                     val jsonString = gson.toJson(response)
                     Toast.makeText(context, jsonString, Toast.LENGTH_LONG).show()

@@ -11,6 +11,19 @@
     <string name="lang_toggle_ar">ع</string>
     <string name="lang_toggle_en">En</string>
     <string name="app_logo">app_logo</string>
-    <string name="saudi_flag">saudi_flag</string>
+    <string name="brand">FLOD</string>
+    <string name="signup_title">إنشاء حساب</string>
+    <string name="signup_subtitle">أدخل بياناتك الشخصية</string>
+    <string name="email_label">البريد الإلكتروني</string>
+    <string name="name_label">الاسم</string>
+    <string name="birthday_label">تاريخ الميلاد</string>
+    <string name="pick_date_cd">اختر التاريخ</string>
+    <string name="gender_label">النوع</string>
+    <string name="gender_male">ذكر</string>
+    <string name="gender_female">أنثى</string>
+    <string name="next">التالي</string>
+    <string name="saudi_country_code">+966</string>
+    <string name="saudi_flag_desc">علم السعودية</string>
+    <string name="sign_up_success">تم إنشاء الحساب</string>
 
 </resources>
