@@ -1,5 +1,6 @@
 package com.fadali.flod_restaurant
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,28 +12,42 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
+import com.fadali.flod_restaurant.i18n.ContextUtils
+import com.fadali.flod_restaurant.i18n.LanguageStore
+import com.fadali.flod_restaurant.i18n.LocalizationProvider
 import com.fadali.flod_restaurant.presentation.ui.navigation.FLODNavGraph
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        // load saved language from DataStore
+        val lang = runBlocking { LanguageStore.load(newBase) } ?: "en"
+        val wrapped = ContextUtils.wrap(newBase, lang)
+        super.attachBaseContext(wrapped)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge()
         setContent {
             FLODRestaurantTheme {
-                val systemUi = rememberSystemUiController()
-                SideEffect {
-                    systemUi.setStatusBarColor(color = Color.White, darkIcons = true)
-                    systemUi.setNavigationBarColor(color = Color.White, darkIcons = true)
-                }
+                LocalizationProvider {
+                    val systemUi = rememberSystemUiController()
+                    SideEffect {
+                        systemUi.setStatusBarColor(color = Color.White, darkIcons = true)
+                        systemUi.setNavigationBarColor(color = Color.White, darkIcons = true)
+                    }
 
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    val navController = rememberNavController()
-                    FLODNavGraph(navController)
+                    Surface(modifier = Modifier.fillMaxSize()) {
+                        val navController = rememberNavController()
+                        FLODNavGraph(navController)
+                    }
                 }
             }
         }

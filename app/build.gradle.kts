@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.fadali.flod_restaurant"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.fadali.flod_restaurant"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -82,5 +82,7 @@ dependencies {
     debugImplementation ("androidx.compose.ui:ui-tooling")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
     implementation("com.squareup:javapoet:1.13.0")
+    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    implementation ("androidx.compose.foundation:foundation-layout")
 
 }

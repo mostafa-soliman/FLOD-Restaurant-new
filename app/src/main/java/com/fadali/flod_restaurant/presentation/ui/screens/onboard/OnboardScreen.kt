@@ -1,11 +1,12 @@
 package com.fadali.flod_restaurant.presentation.ui.screens.onboard
 
+import android.app.Activity
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -22,7 +23,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -39,11 +39,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
@@ -53,11 +53,18 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
+import com.fadali.flod_restaurant.i18n.LText
+import com.fadali.flod_restaurant.i18n.LanguageStore
+import com.fadali.flod_restaurant.i18n.LocalAppLocale
+import com.fadali.flod_restaurant.i18n.LocaleManager
+import com.fadali.flod_restaurant.i18n.LocaleUtils
+import com.fadali.flod_restaurant.i18n.rememberLanguageController
 import com.fadali.flod_restaurant.presentation.ui.navigation.Route
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.grayText
 import com.fadali.flod_restaurant.presentation.viewmodel.LoginViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -142,7 +149,7 @@ fun OnboardScreenContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
-            LanguageIcon { onLanguageToggle() }
+            LanguageIcon()
         }
 
         Spacer(modifier = Modifier.height(38.dp))
@@ -157,7 +164,7 @@ fun OnboardScreenContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = stringResource(id = R.string.welcome_back),
+            text = LText(R.string.welcome_back),
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
             color = cs.accentBlue
@@ -166,7 +173,7 @@ fun OnboardScreenContent(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = stringResource(id = R.string.sign_in_description),
+            text = LText( R.string.sign_in_description),
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
             color = cs.grayText
@@ -190,7 +197,7 @@ fun OnboardScreenContent(
                 )
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.saudi_flag),
+                    painter = painterResource(R.drawable.saudi_flag),
                     contentDescription = null,
                     modifier = Modifier.size(24.dp)
                 )
@@ -207,7 +214,7 @@ fun OnboardScreenContent(
                 },
                 placeholder = {
                     Text(
-                        text = stringResource(id = R.string.phone_number),
+                        text = LText(R.string.phone_number),
                         color = cs.grayText
                     )
                 },
@@ -240,7 +247,7 @@ fun OnboardScreenContent(
                 contentColor = cs.onPrimary
             )
         ) {
-            Text(text = stringResource(id = R.string.login), color = Color.White)
+            Text(text = LText(R.string.login), color = Color.White)
         }
 
         if (isLoading) {
@@ -260,7 +267,7 @@ fun OnboardScreenContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(id = R.string.signup_prompt),
+                text = LText(R.string.signup_prompt),
                 color = cs.grayText,
                 modifier = Modifier.alignBy(FirstBaseline)
             )
@@ -275,7 +282,7 @@ fun OnboardScreenContent(
                 modifier = Modifier.alignBy(FirstBaseline)
             ) {
                 Text(
-                    text = stringResource(id = R.string.signup_link),
+                    text = LText(R.string.signup_link),
                     color = cs.primary,
                     textDecoration = TextDecoration.None,
                     modifier = Modifier.alignBy(FirstBaseline)
@@ -286,26 +293,36 @@ fun OnboardScreenContent(
 }
 
 @Composable
-private fun LanguageIcon(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+fun LanguageIcon(
+    modifier: Modifier = Modifier.padding(16.dp)
 ) {
+//    val context = LocalContext.current
+//    val scope = rememberCoroutineScope()
+    val setLang = rememberLanguageController()
+    val current = LocalAppLocale.current
     Surface(
-        shape = CircleShape,
-        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
         modifier = modifier
-            .padding(top = 38.dp)
-            .size(44.dp)
+            .size(36.dp)
+            .clip(CircleShape)
+            .clickable {
+                val next = if (current.equals("ar", true)) "en" else "ar"
+                setLang(next)
+//                val next = LocaleUtils.toggled()
+//                scope.launch { LanguageStore.save(context, next) }
+//                LocaleManager.setAppLanguage(next, true, context as? Activity)
+
+            },
+        tonalElevation = 0.dp
     ) {
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_globe),
-                contentDescription = "Change Language",
-                modifier = Modifier.size(22.dp)
-            )
-        }
+        Image(
+            painter = painterResource(R.drawable.ic_globe),
+            contentDescription = "Change Language",
+            modifier = Modifier.size(22.dp)
+        )
     }
 }
+
+
 
 @Preview(name = "AR - Light", showSystemUi = true, locale = "ar", device = "id:pixel_7_pro")
 @Composable
