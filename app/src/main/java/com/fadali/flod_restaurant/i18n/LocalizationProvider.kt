@@ -41,7 +41,21 @@ fun LText(@StringRes resId: Int): String {
     val wrapped = remember(lang) { ContextUtils.wrap(base, lang) }
     return wrapped.resources.getString(resId)
 }
+@Composable
+fun LText(@StringRes resId: Int, vararg args: Any): String {
+    val base = LocalContext.current
+    val lang = LocalAppLocale.current
+    val wrapped = remember(lang) { ContextUtils.wrap(base, lang) }
+    return wrapped.resources.getString(resId, *args)
+}
 
+@Composable
+fun LPlural(@androidx.annotation.PluralsRes resId: Int, quantity: Int, vararg args: Any): String {
+    val base = LocalContext.current
+    val lang = LocalAppLocale.current
+    val wrapped = remember(lang) { ContextUtils.wrap(base, lang) }
+    return wrapped.resources.getQuantityString(resId, quantity, *args)
+}
 @Composable
 fun rememberLanguageController(): (String) -> Unit {
     val context = LocalContext.current

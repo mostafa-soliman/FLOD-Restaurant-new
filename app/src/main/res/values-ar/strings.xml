@@ -25,5 +25,9 @@
     <string name="saudi_country_code">+966</string>
     <string name="saudi_flag_desc">علم السعودية</string>
     <string name="sign_up_success">تم إنشاء الحساب</string>
+    <string name="verification_title">رمز التحقق!</string>
+    <string name="verification_message">أرسلنا رمز التحقق إلى رقم هاتفك %1$s</string>
+    <string name="didnt_receive_code">لم يصلك الرمز؟</string>
+    <string name="resend">إعادة الإرسال</string>
 
 </resources>

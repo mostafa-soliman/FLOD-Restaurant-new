@@ -30,6 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fadali.flod_restaurant.R
+import com.fadali.flod_restaurant.i18n.LText
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.grayText
 import kotlinx.coroutines.delay
@@ -56,7 +58,7 @@ fun VerifyOtpScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "FLOD",
+                text = LText(R.string.brand),
                 color = cs.primary,
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold
@@ -65,7 +67,7 @@ fun VerifyOtpScreen(
             Spacer(Modifier.height(24.dp))
 
             Text(
-                text = "Verification Code!",
+                text = LText(R.string.verification_title),
                 color = cs.accentBlue,
                 fontSize = 26.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -75,7 +77,7 @@ fun VerifyOtpScreen(
             Spacer(Modifier.height(8.dp))
 
             Text(
-                text = "We have sent the verification code to your mobile number $maskedPhone",
+                text = LText(R.string.verification_message, maskedPhone),
                 color = cs.grayText,
                 fontSize = 14.sp,
                 lineHeight = 18.sp,
@@ -178,19 +180,19 @@ fun VerifyOtpScreen(
             ) {
                 Row {
                     Text(
-                        text = "Don’t receive a code ? ",
+                        text = LText(R.string.didnt_receive_code),
                         color = cs.onSurface.copy(alpha = 0.7f),
                         fontSize = 14.sp
                     )
                     if (seconds > 0) {
                         Text(
-                            text = "Resend",
+                            text = LText(R.string.resend),
                             color = cs.primary.copy(alpha = 0.45f),
                             fontSize = 14.sp
                         )
                     } else {
                         Text(
-                            text = "Resend",
+                            text = LText(R.string.resend),
                             color = cs.primary,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.SemiBold,
@@ -227,7 +229,7 @@ fun VerifyOtpScreen(
                     disabledContentColor = cs.onPrimary.copy(alpha = 0.9f)
                 )
             ) {
-                Text("Next", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                Text(LText(R.string.next), fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
             }
         }
     }

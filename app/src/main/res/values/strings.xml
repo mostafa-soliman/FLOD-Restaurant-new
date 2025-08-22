@@ -24,4 +24,8 @@
     <string name="saudi_country_code">+966</string>
     <string name="saudi_flag_desc">Saudi flag</string>
     <string name="sign_up_success">Account Created</string>
+    <string name="verification_title">Verification Code!</string>
+    <string name="verification_message">We have sent the verification code to your mobile number %1$s</string>
+    <string name="didnt_receive_code">Didn’t receive a code?</string>
+    <string name="resend">Resend</string>
 </resources>
