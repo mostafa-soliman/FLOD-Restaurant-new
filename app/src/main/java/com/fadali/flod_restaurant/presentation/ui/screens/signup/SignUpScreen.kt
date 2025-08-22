@@ -7,6 +7,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +35,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,13 +44,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -90,11 +97,21 @@ fun SignUpScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(LText(R.string.brand), color = cs.primary, fontSize = 32.sp, fontWeight = FontWeight.Bold)
+        Text(
+            LText(R.string.brand),
+            color = cs.primary,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold
+        )
         Spacer(Modifier.height(12.dp))
-        Text( LText(R.string.signup_title), color = cs.accentBlue, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
+        Text(
+            LText(R.string.signup_title),
+            color = cs.accentBlue,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold
+        )
         Spacer(Modifier.height(6.dp))
-        Text( LText(R.string.signup_subtitle), color = cs.grayText, fontSize = 14.sp)
+        Text(LText(R.string.signup_subtitle), color = cs.grayText, fontSize = 14.sp)
 
         Spacer(Modifier.height(24.dp))
 
@@ -133,60 +150,66 @@ fun SignUpScreen(
         Spacer(Modifier.height(12.dp))
 
         // Phone row (flag + code + number)
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            OutlinedButton(
-                onClick = { /* TODO: choose country */ },
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .width(110.dp)
-                    .height(fieldHeight),
-                border = BorderStroke(1.dp, cs.outline),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = cs.surface,
-                    contentColor = cs.onSurface
-                ),
-                contentPadding = PaddingValues(horizontal = 12.dp)
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.saudi_flag),
-                    contentDescription = LText(R.string.saudi_flag_desc),
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.size(20.dp)
+                OutlinedButton(
+                    onClick = { /* TODO: choose country */ },
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .width(110.dp)
+                        .height(fieldHeight),
+                    border = BorderStroke(1.dp, cs.outline),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = cs.surface,
+                        contentColor = cs.onSurface
+                    ),
+                    contentPadding = PaddingValues(horizontal = 12.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.saudi_flag),
+                        contentDescription = LText(R.string.saudi_flag_desc),
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text(LText(R.string.saudi_country_code), color = cs.onSurface)
+                }
+
+                Spacer(Modifier.width(8.dp))
+
+                OutlinedTextField(
+                    value = phone,
+                    onValueChange = { input ->
+                        phone = toAsciiDigits(input).take(10)
+                    },
+                    label = { Text(LText(R.string.phone_number)) },
+                    singleLine = true,
+                    shape = fieldShape,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(fieldHeight),
+                    textStyle = androidx.compose.ui.text.TextStyle(textDirection = TextDirection.Ltr),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = cs.surface,
+                        unfocusedContainerColor = cs.surface,
+                        focusedBorderColor = cs.outline,
+                        unfocusedBorderColor = cs.outline,
+                        cursorColor = cs.primary
+                    )
                 )
-                Spacer(Modifier.width(6.dp))
-                Text(LText(R.string.saudi_country_code), color = cs.onSurface)
             }
-
-            Spacer(Modifier.width(8.dp))
-
-            OutlinedTextField(
-                value = phone,
-                onValueChange = { phone = it.filter(Char::isDigit).take(10) },
-                label = { Text(LText(R.string.phone_number)) },
-                singleLine = true,
-                shape = fieldShape,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                modifier = Modifier
-                    .weight(1f)
-                    .height(fieldHeight),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = cs.surface,
-                    unfocusedContainerColor = cs.surface,
-                    focusedBorderColor = cs.outline,
-                    unfocusedBorderColor = cs.outline,
-                    cursorColor = cs.primary
-                )
-            )
         }
-
         Spacer(Modifier.height(12.dp))
 
         // Birthday with trailing icon -> DatePickerDialog
         val context = LocalContext.current
         val cal = remember { Calendar.getInstance() }
+        var dateOpen by remember { mutableStateOf(false) }
+
         val datePicker = remember(context) {
             DatePickerDialog(
                 context,
@@ -194,9 +217,17 @@ fun SignUpScreen(
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            )
+            ).also { dlg ->
+                dlg.setOnDismissListener { dateOpen = false } // [ADDED]
+            }
         }
 
+        fun openDate() {
+            if (!dateOpen) {
+                dateOpen = true
+                datePicker.show()
+            }
+        }
         OutlinedTextField(
             value = birthday,
             onValueChange = { /* read-only */ },
@@ -204,16 +235,22 @@ fun SignUpScreen(
             singleLine = true,
             readOnly = true,
             trailingIcon = {
-                IconButton(onClick = { datePicker.show() }) {
+                IconButton(onClick = { openDate() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_calendar),
-                        contentDescription =  LText(R.string.pick_date_cd),
+                        contentDescription = LText(R.string.pick_date_cd),
                         tint = cs.onSurface
                     )
                 }
             },
             shape = fieldShape,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) { openDate() }
+                .onFocusChanged { if (it.isFocused) openDate() },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = cs.surface,
                 unfocusedContainerColor = cs.surface,
@@ -374,6 +411,13 @@ private fun GenderChoice(
     }
 }
 
+private fun toAsciiDigits(input: String): String =
+    buildString {
+        input.forEach { ch ->
+            val d = ch.digitToIntOrNull()
+            if (d != null) append(('0'.code + d).toChar())
+        }
+    }
 
 enum class Gender { Male, Female }
 

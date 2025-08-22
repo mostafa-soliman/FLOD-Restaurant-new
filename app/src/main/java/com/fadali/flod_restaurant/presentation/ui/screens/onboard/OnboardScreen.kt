@@ -30,6 +30,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,11 +44,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -181,57 +186,61 @@ fun OnboardScreenContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            OutlinedButton(
-                onClick = { /* TODO country pick */ },
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .width(110.dp)
-                    .height(fieldHeight),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = cs.surface,
-                    contentColor = cs.onSurface
-                )
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(R.drawable.saudi_flag),
-                    contentDescription = LText(R.string.saudi_flag_desc),
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text("+966", color = cs.onSurface)
-            }
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            OutlinedTextField(
-                value = phone,
-                onValueChange = { input ->
-                    phone = input.filter { it.isDigit() }.take(11)
-                },
-                placeholder = {
-                    Text(
-                        text = LText(R.string.phone_number),
-                        color = cs.grayText
+                OutlinedButton(
+                    onClick = { /* TODO country pick */ },
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .width(110.dp)
+                        .height(fieldHeight),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = cs.surface,
+                        contentColor = cs.onSurface
                     )
-                },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                modifier = Modifier
-                    .weight(1f)
-                    .height(fieldHeight),
-                shape = RoundedCornerShape(8.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = cs.surface,
-                    focusedContainerColor = cs.surface,
-                    unfocusedBorderColor = cs.outline,
-                    focusedBorderColor = cs.outline,
-                    cursorColor = cs.onSurface
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.saudi_flag),
+                        contentDescription = LText(R.string.saudi_flag_desc),
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("+966", color = cs.onSurface)
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+
+                OutlinedTextField(
+                    value = phone,
+                    onValueChange = { input ->
+                        phone = toAsciiDigits(input).take(11)
+                    },
+                    placeholder = {
+                        Text(
+                            text = LText(R.string.phone_number),
+                            color = cs.grayText
+                        )
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(fieldHeight),
+                    shape = RoundedCornerShape(8.dp),
+                    textStyle = TextStyle(textDirection = TextDirection.Ltr),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedContainerColor = cs.surface,
+                        focusedContainerColor = cs.surface,
+                        unfocusedBorderColor = cs.outline,
+                        focusedBorderColor = cs.outline,
+                        cursorColor = cs.onSurface
+                    )
                 )
-            )
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -292,6 +301,12 @@ fun OnboardScreenContent(
     }
 }
 
+private fun toAsciiDigits(input: String): String = buildString {
+    input.forEach { ch ->
+        val d = ch.digitToIntOrNull()
+        if (d != null) append(('0'.code + d).toChar())
+    }
+}
 @Composable
 fun LanguageIcon(
     modifier: Modifier = Modifier.padding(16.dp)

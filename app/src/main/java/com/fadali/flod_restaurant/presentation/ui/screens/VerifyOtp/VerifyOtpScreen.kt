@@ -23,11 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fadali.flod_restaurant.R
@@ -93,69 +96,71 @@ fun VerifyOtpScreen(
             LaunchedEffect(Unit) {
                 focusers.first().requestFocus()
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                repeat(digitsCount) { index ->
-                    val value = code[index]
-                    OutlinedTextField(
-                        value = value,
-                        onValueChange = { new ->
-                            val digits = new.filter { it.isDigit() }
-                            when {
-                                digits.isEmpty() -> {
-                                    code = code.toMutableList().also { it[index] = "" }
-                                }
 
-                                digits.length == 1 -> {
-                                    code = code.toMutableList().also { it[index] = digits }
-                                    if (index < digitsCount - 1) focusers[index + 1].requestFocus()
-                                }
-
-                                else -> {
-                                    var cursor = index
-                                    val next = code.toMutableList()
-                                    digits.forEach { ch ->
-                                        if (cursor < digitsCount) {
-                                            next[cursor] = ch.toString()
-                                            cursor++
-                                        }
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    repeat(digitsCount) { index ->
+                        val value = code[index]
+                        OutlinedTextField(
+                            value = value,
+                            onValueChange = { new ->
+                                val digits = toAsciiDigits(new)
+                                when {
+                                    digits.isEmpty() -> {
+                                        code = code.toMutableList().also { it[index] = "" }
                                     }
-                                    code = next
-                                    if (cursor < digitsCount) focusers[cursor].requestFocus()
+
+                                    digits.length == 1 -> {
+                                        code = code.toMutableList().also { it[index] = digits }
+                                        if (index < digitsCount - 1) focusers[index + 1].requestFocus()
+                                    }
+
+                                    else -> {
+                                        var cursor = index
+                                        val next = code.toMutableList()
+                                        digits.forEach { ch ->
+                                            if (cursor < digitsCount) {
+                                                next[cursor] = ch.toString()
+                                                cursor++
+                                            }
+                                        }
+                                        code = next
+                                        if (cursor < digitsCount) focusers[cursor].requestFocus()
+                                    }
                                 }
-                            }
-                        },
-                        singleLine = true,
-                        textStyle = TextStyle(fontSize = 22.sp, textAlign = TextAlign.Center),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                            .heightIn(min = 56.dp, max = 72.dp)
-                            .focusRequester(focusers[index])
-                            .onPreviewKeyEvent { e ->
-                                if (e.key == Key.Backspace && code[index].isEmpty() && index > 0) {
-                                    focusers[index - 1].requestFocus()
-                                }
-                                false
                             },
-                        shape = boxShape,
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedContainerColor = cs.surface,
-                            unfocusedContainerColor = cs.surface,
-                            unfocusedBorderColor = cs.outline,
-                            focusedBorderColor = cs.primary,
-                            cursorColor = cs.primary,
-                            focusedTextColor = cs.onSurface,
-                            unfocusedTextColor = cs.onSurface
+                            singleLine = true,
+                            textStyle = TextStyle(fontSize = 22.sp, textAlign = TextAlign.Center,textDirection = TextDirection.Ltr),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                            modifier = Modifier
+                                .weight(1f)
+                                .aspectRatio(1f)
+                                .heightIn(min = 56.dp, max = 72.dp)
+                                .focusRequester(focusers[index])
+                                .onPreviewKeyEvent { e ->
+                                    if (e.key == Key.Backspace && code[index].isEmpty() && index > 0) {
+                                        focusers[index - 1].requestFocus()
+                                    }
+                                    false
+                                },
+                            shape = boxShape,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedContainerColor = cs.surface,
+                                unfocusedContainerColor = cs.surface,
+                                unfocusedBorderColor = cs.outline,
+                                focusedBorderColor = cs.primary,
+                                cursorColor = cs.primary,
+                                focusedTextColor = cs.onSurface,
+                                unfocusedTextColor = cs.onSurface
+                            )
                         )
-                    )
+                    }
                 }
             }
-
             LaunchedEffect(code) {
                 val all = joined()
                 if (all.length == digitsCount) onCodeComplete(all)
@@ -244,6 +249,14 @@ fun maskPhone(phone: String): String {
         phone
     }
 }
+
+private fun toAsciiDigits(input: String): String =
+    buildString {
+        input.forEach { ch ->
+            val d = ch.digitToIntOrNull()
+            if (d != null) append(('0'.code + d).toChar())
+        }
+    }
 
 @Preview(
     name = "AR - Light",
