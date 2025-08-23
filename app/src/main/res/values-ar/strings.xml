@@ -29,5 +29,24 @@
     <string name="verification_message">أرسلنا رمز التحقق إلى رقم هاتفك %1$s</string>
     <string name="didnt_receive_code">لم يصلك الرمز؟</string>
     <string name="resend">إعادة الإرسال</string>
-
+    <string name="fit_start_title">بداية مناسبة</string>
+    <string name="weight_label">الوزن</string>
+    <string name="height_label">الطول</string>
+    <string name="activity_level_label">مستوى النشاط</string>
+    <string name="goals_label">الأهداف</string>
+    <string name="enter_weight_hint">أدخل وزنك</string>
+    <string name="enter_height_hint">أدخل طولك</string>
+    <string name="kg_unit">KG</string>
+    <string name="cm_unit">CM</string>
+    <string name="continue_label">التالي</string>
+    <string name="skip_label">تخطّي</string>
+    <string name="activity_not_active">غير نشط</string>
+    <string name="activity_lightly_active">نشط قليلاً</string>
+    <string name="activity_moderately_active">نشط بشكل معتدل</string>
+    <string name="activity_very_active">نشط للغاية</string>
+    <string name="activity_extra_active">نشاط إضافي</string>
+    <string name="goal_lose_weight">فقدان الوزن</string>
+    <string name="goal_maintain_weight">الحفاظ على الوزن</string>
+    <string name="goal_gain_weight">زيادة الوزن</string>
+    <string name="goal_gain_muscle">اكتساب العضلات</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.fadali.flod_restaurant.presentation.ui.screens.fitstart.FitStartScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.onboard.OnboardScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.signup.SignUpScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.splash.SplashScreen
@@ -23,6 +24,7 @@ object Route {
     const val Login = "login"
     const val SignUp = "signup"
     const val VerifyOtp = "verify_otp"
+    const val FitStart = "fit_start"
 }
 
 @Composable
@@ -45,6 +47,7 @@ fun FLODNavGraph(navController: NavHostController) {
                 onContinue = { name, fullPhone, email, bday, gender ->
                     val masked = maskPhone(fullPhone)
                     navController.navigate("${Route.VerifyOtp}?phone=${Uri.encode(masked)}")
+
                 }
             )
         }
@@ -75,7 +78,12 @@ fun FLODNavGraph(navController: NavHostController) {
                         val response = state.data      // VerifyResponse
                         val msg = response.message ?: "Verify Success"
                         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        navController.navigate(Route.FitStart) {
+                            popUpTo(Route.SignUp) { inclusive = true }
+                            launchSingleTop = true
+                        }
 
+                        verifyViewModel.state = VerifyViewModel.VerifyState.Idle
                         // ✅ show full json
                         val gson = com.google.gson.Gson()
                         Toast.makeText(context, gson.toJson(response), Toast.LENGTH_LONG).show()
@@ -97,6 +105,12 @@ fun FLODNavGraph(navController: NavHostController) {
                 }
                 else -> { /* Loading / Idle */ }
             }
+        }
+        composable(Route.FitStart) {
+            FitStartScreen(
+                onLogin = { _,_,_ -> /* TODO: أكمل الخطوة التالية (حفظ وإلى الهوم) */ },
+                onSkip  = { /* optional */ }
+            )
         }
 
     }

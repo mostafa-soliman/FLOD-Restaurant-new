@@ -84,5 +84,6 @@ dependencies {
     implementation("com.squareup:javapoet:1.13.0")
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     implementation ("androidx.compose.foundation:foundation-layout")
-
+    implementation("androidx.compose.material:material-icons-extended:<latest>")
+    implementation("androidx.emoji2:emoji2-bundled:1.5.0")
 }
