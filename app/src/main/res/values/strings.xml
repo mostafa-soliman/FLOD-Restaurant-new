@@ -48,4 +48,11 @@
     <string name="goal_maintain_weight">Maintain Weight</string>
     <string name="goal_gain_weight">Gain Weight</string>
     <string name="goal_gain_muscle">Gain Muscle</string>
+    <string name="allergies_title_line1">Are you allergic</string>
+    <string name="allergies_title_line2">to any of those?</string>
+    <string name="search_allergens_hint">Search Your Allergens</string>
+    <string name="start_label">Start</string>
+    <string name="preparing_profile">We are now preparing your profile</string>
+    <string name="calculating_calories">Calculating your calories</string>
+    <string name="getting_plans">Getting suitable plans for you</string>
 </resources>

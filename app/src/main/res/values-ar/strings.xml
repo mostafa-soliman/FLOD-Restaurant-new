@@ -49,4 +49,11 @@
     <string name="goal_maintain_weight">الحفاظ على الوزن</string>
     <string name="goal_gain_weight">زيادة الوزن</string>
     <string name="goal_gain_muscle">اكتساب العضلات</string>
+    <string name="allergies_title_line1">هل تعاني من أي</string>
+    <string name="allergies_title_line2">مسببات حساسية؟</string>
+    <string name="search_allergens_hint">إبحث عن مسببات الحساسية</string>
+    <string name="start_label">ابدأ</string>
+    <string name="preparing_profile">نحن الآن نقوم بإعداد ملفك الشخصي</string>
+    <string name="calculating_calories">حساب السعرات الحرارية الخاصة بك</string>
+    <string name="getting_plans">الحصول على الخطط المناسبة لك</string>
 </resources>

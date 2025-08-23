@@ -4,6 +4,12 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -12,7 +18,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.fadali.flod_restaurant.presentation.ui.screens.allergies.AllergiesScreen
+import com.fadali.flod_restaurant.presentation.ui.screens.allergies.Allergy
 import com.fadali.flod_restaurant.presentation.ui.screens.fitstart.FitStartScreen
+import com.fadali.flod_restaurant.presentation.ui.screens.loading.PreparingScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.onboard.OnboardScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.signup.SignUpScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.splash.SplashScreen
@@ -25,6 +34,9 @@ object Route {
     const val SignUp = "signup"
     const val VerifyOtp = "verify_otp"
     const val FitStart = "fit_start"
+    const val Allergies = "allergies"
+    const val Preparing = "preparing"
+
 }
 
 @Composable
@@ -84,7 +96,7 @@ fun FLODNavGraph(navController: NavHostController) {
                         }
 
                         verifyViewModel.state = VerifyViewModel.VerifyState.Idle
-                        // ✅ show full json
+                        // TODO: show full json
                         val gson = com.google.gson.Gson()
                         Toast.makeText(context, gson.toJson(response), Toast.LENGTH_LONG).show()
 
@@ -108,11 +120,72 @@ fun FLODNavGraph(navController: NavHostController) {
         }
         composable(Route.FitStart) {
             FitStartScreen(
-                onLogin = { _,_,_ -> /* TODO: أكمل الخطوة التالية (حفظ وإلى الهوم) */ },
-                onSkip  = { /* optional */ }
+                onLogin = { _, _, _ ->
+                    navController.navigate(Route.Allergies) {
+                        popUpTo(Route.SignUp) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onSkip = {
+                    navController.navigate(Route.Allergies) {
+                        popUpTo(Route.SignUp) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
             )
         }
+        composable(Route.Allergies) {
 
+            // مؤقتًا: بيانات محلية — بدّلها بتحميل من ViewModel لاحقًا
+            val demoItems = listOf(
+                Allergy("eggs", "Eggs", "🥚"),
+                Allergy("milk", "Lactose", "🥛"),
+                Allergy("chicken", "Chicken", "🍗"),
+                Allergy("spice", "Spice", "🌶️"),
+                Allergy("meat", "Meat", "🥩"),
+                Allergy("gluten", "Gluten", "🍞"),
+                Allergy("fish", "Fish", "🐟"),
+                Allergy("peanuts", "Peanuts", "🥜"),
+                Allergy("tree_nuts", "Tree Nuts", "🌰"),
+                Allergy("shellfish", "Shellfish", "🦐"),
+                Allergy("soy", "Soy", "🌱"),
+                Allergy("mold", "Mold", "🍄"),
+                Allergy("peach", "Peach", "🍑"),
+                Allergy("corn", "Corn", "🌽"),
+                Allergy("apple", "Apple", "🍎"),
+                Allergy("broccoli", "Broccoli", "🥦"),
+                Allergy("strawberries", "Strawberries", "🍓"),
+            )
+
+            AllergiesScreen(
+                items = demoItems,
+                onStart = { selected ->
+                    // TODO: احفظ الاختيارات ووجّه للهوم الحقيقي
+                    // navController.navigate(Route.Home) { popUpTo(Route.Splash){ inclusive = true } }
+                    navController.navigate(Route.Preparing) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+
+
+
+        }
+        composable(Route.Preparing) {
+            PreparingScreen(
+                // لو حابب تقرا اللست المختارة من الشاشة السابقة:
+                // val selected = navController.previousBackStackEntry
+                //     ?.savedStateHandle?.get<List<Allergy>>("selected_allergies")
+
+                onFinish = {
+                    // TODO: غيّر الوجهة إلى Home لما تبقى جاهزة
+                    navController.navigate(Route.Login) {
+                        popUpTo(Route.Splash) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
     }
 }
 
