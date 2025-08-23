@@ -173,7 +173,6 @@ fun FLODNavGraph(navController: NavHostController) {
         }
         composable(Route.Preparing) {
             PreparingScreen(
-                // لو حابب تقرا اللست المختارة من الشاشة السابقة:
                 // val selected = navController.previousBackStackEntry
                 //     ?.savedStateHandle?.get<List<Allergy>>("selected_allergies")
 
