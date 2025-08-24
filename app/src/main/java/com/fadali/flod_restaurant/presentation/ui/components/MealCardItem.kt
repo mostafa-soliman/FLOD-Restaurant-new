@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,6 +34,7 @@ fun MealCardItem(
     modifier: Modifier = Modifier
 ) {
     val shape = RoundedCornerShape(Dimens.CardRadius)
+    val cs = MaterialTheme.colorScheme
 
     Box(
         modifier = modifier
@@ -62,16 +64,16 @@ fun MealCardItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(title, color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    Text(title, color = cs.onPrimary, fontSize = 22.sp, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(4.dp))
-                    Text(ratingText, color = Color(0xFFE6E6E6), fontSize = 14.sp)
+                    Text(ratingText, color = cs.onPrimary, fontSize = 14.sp)
                 }
                 Button(
                     onClick = onCtaClick,
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF700B18),
-                        contentColor = Color.White
+                        containerColor = cs.primary,
+                        contentColor = cs.onPrimary
                     )
                 ) {
                     Text(ctaText, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)

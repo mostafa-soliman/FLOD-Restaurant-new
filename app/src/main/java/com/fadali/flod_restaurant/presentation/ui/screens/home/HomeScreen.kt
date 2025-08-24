@@ -10,7 +10,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.fadali.flod_restaurant.R
 import androidx.compose.ui.tooling.preview.Preview
+import com.fadali.flod_restaurant.i18n.LText
 import com.fadali.flod_restaurant.presentation.ui.components.AutoSwitcherHero
 import com.fadali.flod_restaurant.presentation.ui.components.BottomNavBar
 import com.fadali.flod_restaurant.presentation.ui.components.HomeTopBar
@@ -24,8 +26,8 @@ fun HomeScreen() {
         "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200"
     )
     val meals = listOf(
-        Triple("https://picsum.photos/500/250?3", "Diet Meal", "Select a plan"),
-        Triple("https://picsum.photos/500/250?4", "Avocado Salad", "Order now")
+        Triple("https://picsum.photos/500/250?3", LText(R.string.meal_diet), LText(R.string.cta_select_plan)),
+        Triple("https://picsum.photos/500/250?4", LText(R.string.meal_avocado_salad), LText(R.string.cta_order_now))
     )
 
     Scaffold(

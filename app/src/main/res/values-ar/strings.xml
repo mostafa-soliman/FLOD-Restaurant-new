@@ -56,4 +56,16 @@
     <string name="preparing_profile">نحن الآن نقوم بإعداد ملفك الشخصي</string>
     <string name="calculating_calories">حساب السعرات الحرارية الخاصة بك</string>
     <string name="getting_plans">الحصول على الخطط المناسبة لك</string>
+    <string name="hello_user">مرحبًا %1$s</string>
+    <string name="hero_welcome">مرحبًا بك في FLOD !</string>
+    <string name="nav_home"> الصفخة الرئيسية</string>
+    <string name="nav_plans">الخطط</string>
+    <string name="nav_profile">ملف شخصي</string>
+    <string name="nav_settings">الإعدادات</string>
+    <string name="meal_diet">وجبة دايت</string>
+    <string name="meal_avocado_salad">سلطة أفوكادو</string>
+    <string name="cta_select_plan">اختر خطة</string>
+    <string name="cta_order_now">اطلب الآن</string>
+
+
 </resources>
