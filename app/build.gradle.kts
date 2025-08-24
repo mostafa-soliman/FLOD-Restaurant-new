@@ -92,4 +92,8 @@ dependencies {
     implementation("io.coil-kt:coil-svg:2.6.0")
     implementation("com.google.accompanist:accompanist-placeholder-material3:0.34.0")
 
+    // Koin
+    implementation(project.dependencies.platform(libs.koin.bom))
+    implementation(libs.bundles.koin)
+
 }

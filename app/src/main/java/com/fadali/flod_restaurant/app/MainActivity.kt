@@ -1,4 +1,4 @@
-package com.fadali.flod_restaurant
+package com.fadali.flod_restaurant.app
 
 import android.content.Context
 import android.os.Bundle
