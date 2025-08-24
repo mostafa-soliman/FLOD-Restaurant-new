@@ -4,15 +4,8 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,6 +14,7 @@ import androidx.navigation.navArgument
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.AllergiesScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.Allergy
 import com.fadali.flod_restaurant.presentation.ui.screens.fitstart.FitStartScreen
+import com.fadali.flod_restaurant.presentation.ui.screens.home.HomeScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.loading.PreparingScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.onboard.OnboardScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.signup.SignUpScreen
@@ -36,7 +30,7 @@ object Route {
     const val FitStart = "fit_start"
     const val Allergies = "allergies"
     const val Preparing = "preparing"
-
+    const val Home = "home"
 }
 
 @Composable
@@ -66,8 +60,8 @@ fun FLODNavGraph(navController: NavHostController) {
 
         composable(
             route = "${Route.VerifyOtp}/{phone}",
-            arguments = listOf(navArgument("phone"){ type = NavType.StringType })
-        ){ backStackEntry ->
+            arguments = listOf(navArgument("phone") { type = NavType.StringType })
+        ) { backStackEntry ->
 
             val phone = backStackEntry.arguments?.getString("phone") ?: ""
             val verifyViewModel: VerifyViewModel = hiltViewModel()
@@ -84,7 +78,7 @@ fun FLODNavGraph(navController: NavHostController) {
                 }
             )
 
-            when(state){
+            when (state) {
                 is VerifyViewModel.VerifyState.Success -> {
                     LaunchedEffect(state) {
                         val response = state.data      // VerifyResponse
@@ -107,6 +101,7 @@ fun FLODNavGraph(navController: NavHostController) {
 //                        popUpTo(Route.Login){ inclusive = true }
 //                    }
                 }
+
                 is VerifyViewModel.VerifyState.Error -> {
                     Toast.makeText(
                         LocalContext.current,
@@ -115,7 +110,9 @@ fun FLODNavGraph(navController: NavHostController) {
                     ).show()
                     verifyViewModel.state = VerifyViewModel.VerifyState.Idle
                 }
-                else -> { /* Loading / Idle */ }
+
+                else -> { /* Loading / Idle */
+                }
             }
         }
         composable(Route.FitStart) {
@@ -169,7 +166,6 @@ fun FLODNavGraph(navController: NavHostController) {
             )
 
 
-
         }
         composable(Route.Preparing) {
             PreparingScreen(
@@ -177,14 +173,18 @@ fun FLODNavGraph(navController: NavHostController) {
                 //     ?.savedStateHandle?.get<List<Allergy>>("selected_allergies")
 
                 onFinish = {
-                    // TODO: غيّر الوجهة إلى Home لما تبقى جاهزة
-                    navController.navigate(Route.Login) {
+                    navController.navigate(Route.Home) {
                         popUpTo(Route.Splash) { inclusive = true }
                         launchSingleTop = true
                     }
+
                 }
             )
         }
+        composable(Route.Home) {
+            HomeScreen()
+        }
+
     }
 }
 

@@ -65,7 +65,7 @@ import com.fadali.flod_restaurant.presentation.ui.navigation.Route
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.grayText
 import com.fadali.flod_restaurant.presentation.viewmodel.SignupViewModel
-import com.fadali.flod_restaurant.util.UiDimensions
+import com.fadali.flod_restaurant.util.Dimens
 import java.util.Calendar
 
 @Composable
@@ -87,7 +87,7 @@ fun SignUpScreen(
 
     val cs = MaterialTheme.colorScheme
     val fieldShape = RoundedCornerShape(16.dp)
-    val fieldHeight = UiDimensions.TextFieldHeight
+    val fieldHeight = Dimens.TextFieldHeight
     val signUpSuccessMsg = LText(R.string.sign_up_success)
     Column(
         modifier = Modifier
