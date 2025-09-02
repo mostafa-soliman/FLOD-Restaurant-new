@@ -4,6 +4,10 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.kapt")
     id("com.google.dagger.hilt.android")
+
+    /** === CORE BEGIN === */
+    alias(libs.plugins.kotlin.serialization)
+    /** === CORE END === */
 }
 
 android {
@@ -39,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 configurations.all {
@@ -93,8 +98,8 @@ dependencies {
     implementation("io.coil-kt:coil-svg:2.6.0")
     implementation("com.google.accompanist:accompanist-placeholder-material3:0.34.0")
 
-    // Koin
-    implementation(project.dependencies.platform(libs.koin.bom))
-    implementation(libs.bundles.koin)
-
+    /** === CORE BEGIN === */
+    implementation(project(":app:core"))
+    implementation(libs.bundles.koin.android)
+    /** === CORE END === */
 }

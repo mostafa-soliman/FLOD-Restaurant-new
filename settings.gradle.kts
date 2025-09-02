@@ -1,4 +1,6 @@
 pluginManagement {
+    includeBuild("build-logic")
+
     repositories {
         google {
             content {
@@ -24,3 +26,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "FLOD-Restaurant"
 include(":app")
+include(":app:core")
+include(":app:core:network")
+include(":app:core:utils")
