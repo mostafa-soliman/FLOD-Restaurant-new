@@ -5,13 +5,28 @@ coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.9.2"
 activityCompose = "1.10.1"
-composeBom = "2024.04.01"
+composeBom = "2025.08.01"
 foundationLayoutAndroid = "1.7.2"
 foundation = "1.9.0"
-material3 = "1.3.2"
-composeMaterial = "1.4.1"
+# Hilt/Dagger
+hilt = "2.52"
+hiltNavigationCompose = "1.2.0"
+# Retrofit
+retrofit = "2.11.0"
+retrofitConverterGson = "2.9.0"
+# Lifecycle
+lifecycle = "2.9.2"
+# Navigation
+navigationCompose = "2.9.3"
+# DataStore
+datastorePreferences = "1.1.1"
+# AppCompat
+appcompat = "1.7.0"
+# Accompanist
+accompanist = "0.34.0"
+# Coil
+coil = "2.6.0"
 # == BEGIN Core Module ==
 # Koin
 koin = "4.0.0"
@@ -26,7 +41,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -38,8 +53,31 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
-androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
+# Hilt/Dagger
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+# Retrofit
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitConverterGson" }
+# Lifecycle
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+# Navigation
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+# DataStore
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferences" }
+# AppCompat
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+# Accompanist
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanist-placeholder-material3 = { group = "com.google.accompanist", name = "accompanist-placeholder-material3", version.ref = "accompanist" }
+# Coil
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+coil-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coil" }
+coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
+# Compose BOM and foundation layout
+compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
 # == BEGIN Core Module==
 # Build plugins (for build-logic)
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -67,6 +105,8 @@ ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 # == BEGIN Core Module ==
 android-library = { id = "com.android.library", version.ref = "agp" }
 java-library = { id = "java-library" }
@@ -97,4 +137,79 @@ ktor = [
 # Koin Android
 koin-android = [
     "koin-android"
+]
+# Compose UI Core
+compose-ui = [
+    "androidx-ui",
+    "androidx-ui-graphics",
+    "androidx-ui-tooling-preview"
+]
+# Compose Material
+compose-material = [
+    "androidx-material3"
+]
+# Compose Foundation
+compose-foundation = [
+    "androidx-foundation-layout-android",
+    "androidx-foundation",
+    "compose-foundation-layout"
+]
+# Compose Testing
+compose-testing = [
+    "androidx-ui-test-junit4"
+]
+# Compose Debug
+compose-debug = [
+    "androidx-ui-tooling",
+    "androidx-ui-test-manifest"
+]
+# Testing
+testing = [
+    "junit"
+]
+# Android Testing
+android-testing = [
+    "androidx-junit",
+    "androidx-espresso-core"
+]
+# Hilt
+hilt = [
+    "hilt-android",
+    "hilt-navigation-compose"
+]
+# Retrofit
+retrofit = [
+    "retrofit",
+    "retrofit-converter-gson"
+]
+# Lifecycle
+lifecycle = [
+    "lifecycle-viewmodel-ktx",
+    "lifecycle-viewmodel-compose"
+]
+# Coil
+coil = [
+    "coil-compose",
+    "coil-gif",
+    "coil-svg"
+]
+# Accompanist
+accompanist = [
+    "accompanist-systemuicontroller",
+    "accompanist-placeholder-material3"
+]
+# Android Core
+android-core = [
+    "androidx-core-ktx",
+    "androidx-lifecycle-runtime-ktx",
+    "androidx-activity-compose",
+    "appcompat"
+]
+# Navigation
+navigation = [
+    "navigation-compose"
+]
+# DataStore
+datastore = [
+    "datastore-preferences"
 ]
