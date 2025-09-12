@@ -9,6 +9,8 @@ activityCompose = "1.10.1"
 composeBom = "2025.08.01"
 foundationLayoutAndroid = "1.7.2"
 foundation = "1.9.0"
+# App Core
+appCore = "1.0.15"
 # Hilt/Dagger
 hilt = "2.52"
 hiltNavigationCompose = "1.2.0"
@@ -27,14 +29,6 @@ appcompat = "1.7.0"
 accompanist = "0.34.0"
 # Coil
 coil = "2.6.0"
-# == BEGIN Core Module ==
-# Koin
-koin = "4.0.0"
-# Serialization
-kotlinx-serialization = "1.8.1"
-# Ktor
-ktor = "3.2.3"
-# == END Core Module ==
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +47,8 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
+# App Core
+android-app-core = { module = "com.github.m0hamedSamy:android-app-core", version.ref = "appCore" }
 # Hilt/Dagger
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -78,28 +74,6 @@ coil-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 # Compose BOM and foundation layout
 compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
-# == BEGIN Core Module==
-# Build plugins (for build-logic)
-android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
-kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-kotlin-serialization-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
-# Koin
-koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
-koin-core = { module = "io.insert-koin:koin-core" }
-koin-compose = { module = "io.insert-koin:koin-compose" }
-koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel" }
-koin-android = { module = "io.insert-koin:koin-android" }
-# Serialization
-kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-# Ktor
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
-# == END Core Module ==
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -107,37 +81,10 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-# == BEGIN Core Module ==
-android-library = { id = "com.android.library", version.ref = "agp" }
-java-library = { id = "java-library" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-# == END Core Module ==
+# App Core
+app-core-plugin = { id = "com.github.m0hamedSamy.app-core", version.ref = "appCore" }
 
 [bundles]
-# == BEGIN Core Module ==
-koin-common = [
-    "koin-core",
-    "koin-compose",
-    "koin-composeVM",
-]
-serialization-common = [
-    "kotlinx-serialization-core",
-    "kotlinx-serialization-json"
-]
-ktor = [
-    "ktor-client-core",
-    "ktor-client-okhttp",
-    "ktor-client-content-negotiation",
-    "ktor-serialization-kotlinx-json",
-    "ktor-client-logging",
-    "ktor-client-auth"
-]
-# == END Core Module ==
-# Koin Android
-koin-android = [
-    "koin-android"
-]
 # Compose UI Core
 compose-ui = [
     "androidx-ui",

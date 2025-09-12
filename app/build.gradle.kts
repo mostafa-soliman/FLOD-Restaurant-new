@@ -4,10 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.android)
-
-    /** === CORE BEGIN === */
-    alias(libs.plugins.kotlin.serialization)
-    /** === CORE END === */
+    // App Core
+    alias(libs.plugins.app.core.plugin)
 }
 
 android {
@@ -88,8 +86,6 @@ dependencies {
     // DataStore
     implementation(libs.bundles.datastore)
 
-    /** === CORE BEGIN === */
-    implementation(project(":app:core"))
-    implementation(libs.bundles.koin.android)
-    /** === CORE END === */
+    // App Core
+    implementation(libs.android.app.core)
 }

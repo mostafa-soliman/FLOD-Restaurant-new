@@ -1,8 +1,8 @@
 package com.fadali.flod_restaurant.app.di
 
-import com.example.core.network.AppNetworkConfig
-import com.example.core.network.networkModule
 import com.fadali.flod_restaurant.BuildConfig
+import com.smyvo.core.network.AppNetworkConfig
+import com.smyvo.core.network.networkModule
 import org.koin.dsl.module
 
 val appNetworkModule = module {

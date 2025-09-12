@@ -1,6 +1,4 @@
 pluginManagement {
-    includeBuild("build-logic")
-
     repositories {
         google {
             content {
@@ -11,6 +9,14 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/m0hamedSamy/app-core")
+            credentials {
+                username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GPR_USER")
+                password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GPR_TOKEN")
+            }
+        }
     }
     plugins {
         id("com.google.dagger.hilt.android") version "2.52"
@@ -21,11 +27,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/m0hamedSamy/app-core")
+            credentials {
+                username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GPR_USER")
+                password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GPR_TOKEN")
+            }
+        }
     }
 }
 
 rootProject.name = "FLOD-Restaurant"
 include(":app")
-include(":app:core")
-include(":app:core:network")
-include(":app:core:utils")
