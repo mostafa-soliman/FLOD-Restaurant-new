@@ -1,11 +1,18 @@
 package com.fadali.flod_restaurant.app.navigation
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
+import com.fadali.flod_restaurant.app.MainViewModel
 import com.fadali.flod_restaurant.app.navigation.graphs.Graph
 import com.fadali.flod_restaurant.app.navigation.routes.Route
+import org.koin.compose.koinInject
 
 private const val BACK_STACK_ROOT = 0
 
@@ -13,13 +20,30 @@ private const val BACK_STACK_ROOT = 0
  * Create new Graph for new feature modules
  */
 inline fun <reified T: Graph> NavGraphBuilder.addGraph(
-    startDestination: Route,
     crossinline graphContent: NavGraphBuilder.() -> Unit
 ){
+    val graphInstance = Graph.getInstance<T>()
     navigation<T>(
-        startDestination = startDestination
+        startDestination = graphInstance.startDestination
     ){
         graphContent()
+    }
+}
+
+/**
+ * Enhanced composable that automatically updates MainViewModel with current route
+ */
+inline fun <reified T : Route> NavGraphBuilder.addScreen(
+    crossinline content: @Composable (NavBackStackEntry) -> Unit
+) {
+    composable<T> { backStackEntry ->
+        val mainViewModel: MainViewModel = koinInject()
+        val currentRoute = backStackEntry.toRoute<T>()
+        LaunchedEffect(currentRoute) {
+            mainViewModel.updateCurrentRoute(currentRoute)
+        }
+
+        content(backStackEntry)
     }
 }
 
@@ -28,6 +52,17 @@ inline fun <reified T: Graph> NavGraphBuilder.addGraph(
  */
 fun NavController.navigateAndClearBackStack(route: Route) {
     navigate(route) {
+        popUpTo(BACK_STACK_ROOT) {
+            inclusive = true
+        }
+    }
+}
+
+/**
+ * Navigate and clear the entire back stack
+ */
+fun NavController.navigateAndClearBackStack(graph: Graph) {
+    navigate(graph) {
         popUpTo(BACK_STACK_ROOT) {
             inclusive = true
         }

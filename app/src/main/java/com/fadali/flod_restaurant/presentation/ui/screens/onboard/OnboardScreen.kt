@@ -1,6 +1,5 @@
 package com.fadali.flod_restaurant.presentation.ui.screens.onboard
 
-import android.app.Activity
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -58,18 +57,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
+import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.i18n.LText
-import com.fadali.flod_restaurant.i18n.LanguageStore
 import com.fadali.flod_restaurant.i18n.LocalAppLocale
-import com.fadali.flod_restaurant.i18n.LocaleManager
-import com.fadali.flod_restaurant.i18n.LocaleUtils
 import com.fadali.flod_restaurant.i18n.rememberLanguageController
-import com.fadali.flod_restaurant.presentation.ui.navigation.Route
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.grayText
 import com.fadali.flod_restaurant.presentation.viewmodel.LoginViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 @Composable
@@ -87,7 +82,7 @@ fun OnboardScreen(
         onLoginClick = { phone ->
             viewModel.login(phone)
         },
-        onSignUpClick = { navController.navigate(Route.SignUp) },
+        onSignUpClick = { navController.navigate(AuthRoutes.SignUp) },
         responseMsg = responseText,
         isLoading = isLoading,
         viewModel = viewModel
@@ -116,7 +111,7 @@ fun OnboardScreen(
 
                 delay(2000)
                 val mobile = response.data?.mobileNumber ?: ""
-                navController.navigate("${Route.VerifyOtp}/$mobile")
+                navController.navigate(AuthRoutes.OtpVerification(phone = mobile))
             }
         }
 

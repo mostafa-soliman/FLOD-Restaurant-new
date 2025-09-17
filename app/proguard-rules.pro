@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep Graph classes for reflection-based navigation (inheritance-based)
+-keep class * extends **.navigation.**.Graph { *; }
+
+# Keep Route classes for navigation (inheritance-based)
+-keep class * extends **.navigation.**.Route { *; }

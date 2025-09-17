@@ -10,11 +10,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.fadali.flod_restaurant.R
 import androidx.compose.ui.tooling.preview.Preview
+import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.i18n.LText
 import com.fadali.flod_restaurant.presentation.ui.components.AutoSwitcherHero
-import com.fadali.flod_restaurant.presentation.ui.components.BottomNavBar
 import com.fadali.flod_restaurant.presentation.ui.components.HomeTopBar
 import com.fadali.flod_restaurant.presentation.ui.components.MealCardItem
 import com.fadali.flod_restaurant.util.Dimens
@@ -33,7 +32,6 @@ fun HomeScreen() {
     Scaffold(
         contentWindowInsets = WindowInsets(0),
         topBar = { HomeTopBar(userName = "Ahmed", avatarUrl = "https://picsum.photos/100") },
-        bottomBar = { BottomNavBar(selected = 0, onSelect = {}) }
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),

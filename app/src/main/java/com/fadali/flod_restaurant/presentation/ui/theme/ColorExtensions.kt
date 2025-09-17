@@ -15,3 +15,6 @@ val ColorScheme.appText: Color get() = AppText
 // State colors
 val ColorScheme.errorRed: Color get() = ErrorRed
 val ColorScheme.onErrorText: Color get() = OnErrorText
+
+// Bottom Nav Bar
+val ColorScheme.navBarBorder: Color get() = NavBarBorder

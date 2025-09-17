@@ -44,6 +44,7 @@ android {
         buildConfig = true
     }
 }
+
 dependencies {
 
     // Android Core
@@ -88,4 +89,7 @@ dependencies {
 
     // App Core
     implementation(libs.android.app.core)
+    
+    // Kotlin Reflection
+    implementation(libs.kotlin.reflect)
 }
