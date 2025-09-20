@@ -10,15 +10,9 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,27 +40,5 @@ fun HomeTopBar(userName: String, avatarUrl: String) {
             Spacer(Modifier.width(8.dp))
             NetworkImage(url = avatarUrl, modifier = Modifier.size(40.dp), shape = CircleShape)
         }
-    }
-}
-
-@Composable
-fun BottomNavBar(selected: Int, onSelect: (Int) -> Unit) {
-    NavigationBar {
-        NavigationBarItem(selected = selected == 0, onClick = { onSelect(0) }, icon = {
-            Icon(Icons.Default.Home, null)
-        }, label = { LText(R.string.nav_home)  })
-
-
-        NavigationBarItem(selected = selected == 1, onClick = { onSelect(1) }, icon = {
-            Icon(Icons.Default.List, null)
-        }, label = {LText(R.string.nav_plans) })
-
-        NavigationBarItem(selected = selected == 2, onClick = { onSelect(2) }, icon = {
-            Icon(Icons.Default.Person, null)
-        }, label = { LText(R.string.nav_profile)  })
-
-        NavigationBarItem(selected = selected == 3, onClick = { onSelect(3) }, icon = {
-            Icon(Icons.Default.Settings, null)
-        }, label = { LText(R.string.nav_settings) })
     }
 }
