@@ -169,8 +169,8 @@ fun SignUpScreen(
                     contentPadding = PaddingValues(horizontal = 12.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.saudi_flag),
-                        contentDescription = LText(R.string.saudi_flag_desc),
+                        painter = painterResource(id = R.drawable.ic_saudi_flag),
+                        contentDescription = LText(R.string.saudi_flag_content_desc),
                         contentScale = ContentScale.Fit,
                         modifier = Modifier.size(20.dp)
                     )

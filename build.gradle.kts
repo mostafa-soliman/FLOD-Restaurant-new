@@ -5,5 +5,5 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.hilt.android) apply false
     // App Core
-    alias(libs.plugins.app.core.plugin) apply false
+    alias(libs.plugins.core.network) apply false
 }

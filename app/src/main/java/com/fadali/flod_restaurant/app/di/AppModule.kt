@@ -1,5 +1,7 @@
 package com.fadali.flod_restaurant.app.di
 
+import com.fadali.flod_restaurant.feature.auth.authModule
+import com.smyvo.core.ui.uiModule
 import org.koin.dsl.module
 
 /**
@@ -9,6 +11,8 @@ import org.koin.dsl.module
 val appModule = module {
     includes(
         appNetworkModule,
+        uiModule,
         mainModule,
+        authModule,
     )
 }

@@ -2,12 +2,19 @@
 <resources>
     <string name="app_name">مطعم فلود</string>
     <string name="tagline"> معاك في الدايت&#10; وأيام الراحة ؛)</string>
-    <string name="welcome_back">مرحبًا بعودتك</string>
-    <string name="sign_in_description">سجل الدخول لإكمال ما بداناه</string>
-    <string name="phone_number">رقم الهاتف</string>
+    <string name="welcome_back">مرحبًا بعودتك!</string>
+    <string name="sign_in_description">الرجاء إدخال تفاصيلك</string>
+    <string name="phone_number">رقم الجوال</string>
+    <string name="invalid_phone_number">رقم الجوال غير صالح</string>
     <string name="login">تسجيل الدخول</string>
-    <string name="signup_prompt">مستخدم جديد؟</string>
-    <string name="signup_link">إنشاء حساب</string>
+    <string name="error_occurred">حدث خطأ</string>
+    <string name="something_went_wrong">لقد حدث خطأ ما</string>
+    <string name="try_again">حاول مرة أخرى</string>
+    <string name="cancel">إلغاء</string>
+    <string name="ok">حسنا</string>
+    <string name="loading_message">&#8230;تحميل</string>
+    <string name="signup_prompt">ليس لديك حساب؟ قم بتسجيل الدخول</string>
+    <string name="signup_prompt_clickable_text">قم بتسجيل الدخول</string>
     <string name="lang_toggle_ar">ع</string>
     <string name="lang_toggle_en">En</string>
     <string name="app_logo">app_logo</string>
@@ -23,7 +30,7 @@
     <string name="gender_female">أنثى</string>
     <string name="next">التالي</string>
     <string name="saudi_country_code">+966</string>
-    <string name="saudi_flag_desc">علم السعودية</string>
+    <string name="saudi_flag_content_desc">علم السعودية</string>
     <string name="sign_up_success">تم إنشاء الحساب</string>
     <string name="verification_title">رمز التحقق!</string>
     <string name="verification_message">أرسلنا رمز التحقق إلى رقم هاتفك %1$s</string>
@@ -66,6 +73,4 @@
     <string name="meal_avocado_salad">سلطة أفوكادو</string>
     <string name="cta_select_plan">اختر خطة</string>
     <string name="cta_order_now">اطلب الآن</string>
-
-
 </resources>

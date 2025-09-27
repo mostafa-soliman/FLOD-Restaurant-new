@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.android)
     // App Core
-    alias(libs.plugins.app.core.plugin)
+    alias(libs.plugins.core.network)
 }
 
 android {
@@ -20,6 +20,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        buildConfigField("String", "BASE_URL", "\"https://api.fodek.net/\"")
+        buildConfigField("String", "RESOURCES_BASE_URL", "\"https://feerotech.blob.core.windows.net/public/\"")
+        buildConfigField("String", "TENANT_ID", "\"01996cc9-62b6-760d-97d3-e2a8561204f4\"")
     }
 
     buildTypes {
@@ -88,7 +92,7 @@ dependencies {
     implementation(libs.bundles.datastore)
 
     // App Core
-    implementation(libs.android.app.core)
+    implementation(libs.bundles.app.core)
     
     // Kotlin Reflection
     implementation(libs.kotlin.reflect)

@@ -10,7 +10,7 @@ composeBom = "2025.08.01"
 foundationLayoutAndroid = "1.7.2"
 foundation = "1.9.0"
 # App Core
-appCore = "1.0.15"
+appCore = "1.0.25"
 # Hilt/Dagger
 hilt = "2.52"
 hiltNavigationCompose = "1.2.0"
@@ -48,7 +48,9 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 # App Core
-android-app-core = { module = "com.github.m0hamedSamy:android-app-core", version.ref = "appCore" }
+core-network-android = { module = "com.smyvo.core:network-android", version.ref = "appCore" }
+core-utils = { module = "com.smyvo.core:utils", version.ref = "appCore" }
+core-ui = { module = "com.smyvo.core:ui", version.ref = "appCore" }
 # Hilt/Dagger
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -84,9 +86,15 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 # App Core
-app-core-plugin = { id = "com.github.m0hamedSamy.app-core", version.ref = "appCore" }
+core-network = { id = "com.smyvo.core.network-plugin", version.ref = "appCore" }
 
 [bundles]
+# App Core
+app-core = [
+    "core-network-android",
+    "core-utils",
+    "core-ui"
+]
 # Compose UI Core
 compose-ui = [
     "androidx-ui",

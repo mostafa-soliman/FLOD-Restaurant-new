@@ -10,11 +10,11 @@ import androidx.navigation.toRoute
 import com.fadali.flod_restaurant.app.navigation.addScreen
 import com.fadali.flod_restaurant.app.navigation.navigateAndClearBackStack
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
+import com.fadali.flod_restaurant.feature.auth.ui.login.LoginScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.AllergiesScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.Allergy
 import com.fadali.flod_restaurant.presentation.ui.screens.fitstart.FitStartScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.loading.PreparingScreen
-import com.fadali.flod_restaurant.presentation.ui.screens.onboard.OnboardScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.signup.SignUpScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.splash.SplashScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.verify.VerifyOtpScreen
@@ -25,7 +25,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         SplashScreen(navController)
     }
     addScreen<AuthRoutes.Login> {
-        OnboardScreen(navController)
+        LoginScreen(navController)
     }
     addScreen<AuthRoutes.SignUp> {
         SignUpScreen(

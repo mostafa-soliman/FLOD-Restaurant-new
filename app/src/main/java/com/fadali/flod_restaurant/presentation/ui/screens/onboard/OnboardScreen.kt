@@ -48,6 +48,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,7 +65,6 @@ import com.fadali.flod_restaurant.i18n.rememberLanguageController
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.grayText
 import com.fadali.flod_restaurant.presentation.viewmodel.LoginViewModel
-import kotlinx.coroutines.delay
 
 
 @Composable
@@ -105,11 +105,11 @@ fun OnboardScreen(
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 
                 // ✅ show full json object
-                val gson = com.google.gson.Gson()
-                val jsonString = gson.toJson(response)
-                Toast.makeText(context, jsonString, Toast.LENGTH_LONG).show()
-
-                delay(2000)
+//                val gson = com.google.gson.Gson()
+//                val jsonString = gson.toJson(response)
+//                Toast.makeText(context, jsonString, Toast.LENGTH_LONG).show()
+//
+//                delay(2000)
                 val mobile = response.data?.mobileNumber ?: ""
                 navController.navigate(AuthRoutes.OtpVerification(phone = mobile))
             }
@@ -134,7 +134,7 @@ fun OnboardScreenContent(
     responseMsg: String = "",
     isLoading: Boolean = false
 ) {
-    val fieldHeight = 56.dp
+    val fieldHeight = 60.dp
     var phone by rememberSaveable { mutableStateOf("") }
     val cs = androidx.compose.material3.MaterialTheme.colorScheme
 
@@ -156,30 +156,41 @@ fun OnboardScreenContent(
 
         Text(
             text = "FLOD",
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Bold,
-            color = cs.primary
+            style = TextStyle(
+                fontSize = 40.sp,
+                fontWeight = FontWeight(700),
+                color = cs.primary,
+                textAlign = TextAlign.Center,
+            )
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(18.dp))
 
         Text(
             text = LText(R.string.welcome_back),
-            fontSize = 26.sp,
-            fontWeight = FontWeight.Bold,
-            color = cs.accentBlue
+
+            style = TextStyle(
+                fontSize = 26.sp,
+                fontWeight = FontWeight(600),
+                color = cs.accentBlue,
+                textAlign = TextAlign.Center,
+            )
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = LText( R.string.sign_in_description),
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Medium,
-            color = cs.grayText
+            text = LText(R.string.sign_in_description),
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontWeight = FontWeight(500),
+                color = cs.grayText,
+                textAlign = TextAlign.Center,
+            )
+
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(36.dp))
 
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             Row(
@@ -188,18 +199,19 @@ fun OnboardScreenContent(
             ) {
                 OutlinedButton(
                     onClick = { /* TODO country pick */ },
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .width(110.dp)
                         .height(fieldHeight),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = cs.surface,
                         contentColor = cs.onSurface
-                    )
+                    ),
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 12.dp)
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.saudi_flag),
-                        contentDescription = LText(R.string.saudi_flag_desc),
+                        painter = painterResource(R.drawable.ic_saudi_flag),
+                        contentDescription = LText(R.string.saudi_flag_content_desc),
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
@@ -217,7 +229,8 @@ fun OnboardScreenContent(
                     placeholder = {
                         Text(
                             text = LText(R.string.phone_number),
-                            color = cs.grayText
+                            color = cs.grayText,
+                            fontSize = 12.sp,
                         )
                     },
                     singleLine = true,
@@ -242,7 +255,7 @@ fun OnboardScreenContent(
 
         Button(
             onClick = { viewModel?.let { onLoginClick(phone) } },
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(6.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -251,7 +264,14 @@ fun OnboardScreenContent(
                 contentColor = cs.onPrimary
             )
         ) {
-            Text(text = LText(R.string.login), color = Color.White)
+            Text(
+                text = LText(R.string.login),
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight(600),
+                    color = Color.White
+                )
+            )
         }
 
         if (isLoading) {
@@ -272,7 +292,11 @@ fun OnboardScreenContent(
         ) {
             Text(
                 text = LText(R.string.signup_prompt),
-                color = cs.grayText,
+                style = TextStyle(
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight(500),
+                    color = cs.grayText,
+                ),
                 modifier = Modifier.alignBy(FirstBaseline)
             )
             Spacer(
@@ -286,8 +310,9 @@ fun OnboardScreenContent(
                 modifier = Modifier.alignBy(FirstBaseline)
             ) {
                 Text(
-                    text = LText(R.string.signup_link),
+                    text = LText(R.string.signup_prompt_clickable_text),
                     color = cs.primary,
+                    fontWeight = FontWeight(600),
                     textDecoration = TextDecoration.None,
                     modifier = Modifier.alignBy(FirstBaseline)
                 )
@@ -302,6 +327,7 @@ private fun toAsciiDigits(input: String): String = buildString {
         if (d != null) append(('0'.code + d).toChar())
     }
 }
+
 @Composable
 fun LanguageIcon(
     modifier: Modifier = Modifier.padding(16.dp)
@@ -331,7 +357,6 @@ fun LanguageIcon(
         )
     }
 }
-
 
 
 @Preview(name = "AR - Light", showSystemUi = true, locale = "ar", device = "id:pixel_7_pro")
