@@ -41,22 +41,27 @@ class LoginViewModel(
     }
 
     private fun validatePhoneNumber() {
-        val isValidNumber = validatePhoneNumberUseCase(currentState.phoneNumber)
-        setState { copy(isValidPhoneNumber = isValidNumber) }
+        val finalNumber = validatePhoneNumberUseCase(currentState.phoneNumber)
+        setState {
+            copy(
+                isValidPhoneNumber = finalNumber != null,
+                finalPhoneNumber = finalNumber ?: ""
+            )
+        }
     }
 
     private fun login() {
         setState { copy(isLoading = true) }
         launchSafe {
             val request = LoginRequestDomainModel(
-                phoneNumber = currentState.phoneNumber
+                phoneNumber = currentState.finalPhoneNumber
             )
             val response = loginUseCase(request)
             setState { copy(isLoading = false) }
             if (response.notRegistered) {
                 sendEffect(LoginEffect.NavigateToSignUp)
             } else {
-                sendEffect(LoginEffect.NavigateToOtp(phoneNumber = currentState.phoneNumber))
+                sendEffect(LoginEffect.NavigateToOtp(phoneNumber = currentState.finalPhoneNumber))
             }
         }
     }

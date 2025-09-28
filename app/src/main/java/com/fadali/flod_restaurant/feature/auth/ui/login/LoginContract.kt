@@ -7,7 +7,8 @@ import com.smyvo.core.ui.mvi.UiState
 data class LoginState(
     val isLoading: Boolean = false,
     val phoneNumber: String = "",
-    val isValidPhoneNumber: Boolean = true
+    val isValidPhoneNumber: Boolean = true,
+    val finalPhoneNumber: String = "",
 ) : UiState
 
 sealed interface LoginEvent : UiEvent {
