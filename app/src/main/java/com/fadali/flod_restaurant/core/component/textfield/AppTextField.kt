@@ -106,7 +106,7 @@ fun AppTextField(
     Column {
         OutlinedTextField(
             modifier = modifier
-                .height(60.dp)
+                .height(if (enabled) 68.dp else 60.dp)
                 .onFocusChanged { focusState ->
                     val newFocusState = focusState.isFocused
                     if (isFocused != newFocusState) {
