@@ -63,6 +63,7 @@ class LoginViewModel(
 
     override fun handleException(throwable: Throwable) {
         super.handleException(throwable)
+        setState { copy(isLoading = false) }
         sendEffect(LoginEffect.ShowError(message = throwable.message))
     }
 }
