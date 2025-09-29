@@ -11,11 +11,11 @@ import com.fadali.flod_restaurant.app.navigation.addScreen
 import com.fadali.flod_restaurant.app.navigation.navigateAndClearBackStack
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.feature.auth.ui.login.LoginScreen
+import com.fadali.flod_restaurant.feature.auth.ui.signup.SignUpScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.AllergiesScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.Allergy
 import com.fadali.flod_restaurant.presentation.ui.screens.fitstart.FitStartScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.loading.PreparingScreen
-import com.fadali.flod_restaurant.presentation.ui.screens.signup.SignUpScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.splash.SplashScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.verify.VerifyOtpScreen
 import com.fadali.flod_restaurant.presentation.viewmodel.VerifyViewModel
@@ -28,13 +28,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         LoginScreen(navController)
     }
     addScreen<AuthRoutes.SignUp> {
-        SignUpScreen(
-            navController = navController,
-            onContinue = { name, phone, email, birthday, gender ->
-                val maskedPhone = maskPhone(phone)
-                navController.navigate(AuthRoutes.OtpVerification(phone = maskedPhone))
-            }
-        )
+        SignUpScreen(navController)
     }
     addScreen<AuthRoutes.OtpVerification> { backStackEntry ->
         val route: AuthRoutes.OtpVerification = backStackEntry.toRoute()

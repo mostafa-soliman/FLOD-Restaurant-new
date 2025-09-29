@@ -1,5 +1,6 @@
 package com.fadali.flod_restaurant.core.component.phonenumberfield
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,8 +33,8 @@ fun AppPhoneNumberField(
     onFocusChanged: (Boolean) -> Unit = {},
     onNext: (() -> Unit)? = null,
     onDone: (() -> Unit)? = null,
-    isValidNumber: Boolean = true,
-    validationError: String = stringResource(R.string.invalid_phone_number),
+    validationError: String? = null,
+    @DrawableRes errorIcon: Int = R.drawable.ic_error_required_icon,
 ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Row(
@@ -66,7 +67,8 @@ fun AppPhoneNumberField(
                 onDone = onDone,
                 maxLength = 10,
                 onFocusChanged = onFocusChanged,
-                errorMessage = if (isValidNumber) null else validationError
+                errorMessage = validationError,
+                errorMessageIcon = errorIcon
             )
         }
     }

@@ -20,13 +20,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -47,8 +48,10 @@ fun AppTextField(
     maxLength: Int? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     enabled: Boolean = true,
+    readOnly: Boolean = false,
+    placeholder: String? = null,
     errorMessage: String? = null,
-    @DrawableRes errorMessageIcon: Int? = null,
+    @DrawableRes errorMessageIcon: Int = R.drawable.ic_error_required_icon,
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
     onDone: (() -> Unit)? = null,
@@ -70,9 +73,11 @@ fun AppTextField(
         },
         onNext = {
             onNext?.invoke()
+            focusManager.moveFocus(FocusDirection.Down)
         },
         onPrevious = {
             onPrevious?.invoke()
+            focusManager.moveFocus(FocusDirection.Up)
         },
         onSearch = { 
             focusManager.clearFocus()
@@ -127,7 +132,7 @@ fun AppTextField(
                 {
                     Text(
                         text = label,
-                        style = TextStyle(
+                        style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.appText,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Medium
@@ -135,13 +140,26 @@ fun AppTextField(
                     )
                 }
             },
+            placeholder = if (placeholder.isNullOrEmpty()) null else {
+                {
+                    Text(
+                        text = placeholder,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.appText.copy(alpha = 0.4f),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal
+                        ),
+                    )
+                }
+            },
+            readOnly = readOnly,
             enabled = enabled,
             singleLine = maxLines == 1,
             maxLines = maxLines,
             keyboardOptions = enhancedKeyboardOptions,
             keyboardActions = enhancedKeyboardActions,
             shape = RoundedCornerShape(8.dp),
-            textStyle = TextStyle(
+            textStyle = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.appText,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium
@@ -164,22 +182,21 @@ fun AppTextField(
         Row(
             modifier = Modifier
                 .height(20.dp)
-                .padding(top = 4.dp)
+                .padding(top = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            if (errorMessageIcon != null) {
+            if (errorMessage != null) {
                 Image(
                     modifier = Modifier.padding(start = 5.dp),
                     imageVector = ImageVector.vectorResource(id = errorMessageIcon),
                     contentDescription = null
                 )
-            }
-            if (errorMessage != null) {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 5.dp),
                     text = errorMessage,
-                    style = TextStyle(
+                    style = MaterialTheme.typography.labelSmall.copy(
                         color = MaterialTheme.colorScheme.error,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium

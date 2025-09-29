@@ -143,7 +143,7 @@ private fun LoginScreenContent(
                 else sendEvent(LoginEvent.RemovePhoneNumberValidationError)
             },
             onDone = { sendEvent(LoginEvent.OnLoginClicked) },
-            isValidNumber = state.isValidPhoneNumber
+            validationError = state.phoneNumberError?.let { stringResource(it) }
         )
         Spacer(modifier = Modifier.height(24.dp))
         AppPrimaryButton(

@@ -1,5 +1,6 @@
 package com.fadali.flod_restaurant.feature.auth.ui.login
 
+import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.feature.auth.domain.model.LoginRequestDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.LoginUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
@@ -25,7 +26,7 @@ class LoginViewModel(
             LoginEvent.OnSignUpClicked -> sendEffect(LoginEffect.NavigateToSignUp)
             LoginEvent.OnLanguageSelectorClicked -> {}
             LoginEvent.ValidatePhoneNumber -> validatePhoneNumber()
-            LoginEvent.RemovePhoneNumberValidationError -> setState { copy(isValidPhoneNumber = true) }
+            LoginEvent.RemovePhoneNumberValidationError -> setState { copy(phoneNumberError = null) }
         }
     }
 
@@ -35,16 +36,23 @@ class LoginViewModel(
 
     private fun onLoginClicked() {
         validatePhoneNumber()
-        if (currentState.isValidPhoneNumber) {
+        if (currentState.phoneNumberError == null) {
             login()
         }
     }
 
     private fun validatePhoneNumber() {
-        val finalNumber = validatePhoneNumberUseCase(currentState.phoneNumber)
+        val phoneNumber = currentState.phoneNumber.trim()
+        val finalNumber = validatePhoneNumberUseCase(phoneNumber)
+        val isValidNumber = finalNumber != null
+        val phoneNumberError = when {
+            phoneNumber.isEmpty() || phoneNumber.isBlank() -> R.string.phone_number_is_required
+            !isValidNumber -> R.string.invalid_phone_number
+            else -> null
+        }
         setState {
             copy(
-                isValidPhoneNumber = finalNumber != null,
+                phoneNumberError = phoneNumberError,
                 finalPhoneNumber = finalNumber ?: ""
             )
         }

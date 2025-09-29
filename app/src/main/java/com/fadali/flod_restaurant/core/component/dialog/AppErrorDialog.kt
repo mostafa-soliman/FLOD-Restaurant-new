@@ -13,7 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -43,78 +42,69 @@ fun AppErrorDialog(
     onSecondaryBtnClicked: () -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
-    var isDialogVisible by rememberSaveable { mutableStateOf(isVisible) }
+    var isDialogVisible by rememberSaveable(isVisible) { mutableStateOf(isVisible) }
+    if (!isDialogVisible) return
 
-    // Update internal state when external state changes
-    LaunchedEffect(isVisible) {
-        isDialogVisible = isVisible
-    }
-
-    if (isDialogVisible) {
-        BasicAlertDialog(
-            onDismissRequest = {
-                if (isDismissible) {
-                    isDialogVisible = false
-                    onDismiss()
-                }
-            },
-            properties = DialogProperties(
-                dismissOnBackPress = isDismissible,
-                dismissOnClickOutside = isDismissible
-            )
+    BasicAlertDialog(
+        onDismissRequest = {
+            if (isDismissible) {
+                onDismiss()
+            }
+        },
+        properties = DialogProperties(
+            dismissOnBackPress = isDismissible,
+            dismissOnClickOutside = isDismissible
+        )
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier.padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = message,
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            lineHeight = 20.sp,
-                            textAlign = TextAlign.Center,
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(24.dp))
-                    AppPrimaryButton(
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = message,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        lineHeight = 20.sp,
+                        textAlign = TextAlign.Center,
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+                AppPrimaryButton(
+                    onClick = {
+                        onPrimaryBtnClicked()
+                        onDismiss()
+                    },
+                    text = primaryButtonText,
+                )
+                if (secondaryButtonText != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    AppSecondaryButton(
                         onClick = {
-                            onPrimaryBtnClicked()
-                            isDialogVisible = false
+                            onSecondaryBtnClicked()
                             onDismiss()
                         },
-                        text = primaryButtonText,
+                        text = secondaryButtonText,
+                        showBorder = false
                     )
-                    if (secondaryButtonText != null) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                        AppSecondaryButton(
-                            onClick = {
-                                onSecondaryBtnClicked()
-                                isDialogVisible = false
-                                onDismiss()
-                            },
-                            text = secondaryButtonText,
-                            showBorder = false
-                        )
-                    }
                 }
             }
         }

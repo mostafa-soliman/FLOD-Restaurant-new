@@ -3,6 +3,7 @@ package com.fadali.flod_restaurant.app.di
 import com.fadali.flod_restaurant.BuildConfig
 import com.fadali.flod_restaurant.core.network.AppDefaultExceptionHandler
 import com.fadali.flod_restaurant.core.network.AppResponseErrorModel
+import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthEndPoints
 import com.smyvo.core.network.AppNetworkConfig
 import com.smyvo.core.network.model.NetworkAuthTokens
 import com.smyvo.core.network.networkModule
@@ -28,11 +29,11 @@ val appNetworkModule = module {
             refreshTokens = { NetworkAuthTokens("", "") }, // TODO: Replace with actual token refresh logic
             onRefreshTokenExpired = {  }, // TODO: Replace with actual refresh token expiry handling logic
             unAuthorizedEndpoints = listOf(
-                "api/MobileAccount/Login",
-                "api/MobileAccount/Register",
-                "api/MobileAccount/ValidateCustomerLogin",
-                "api/MobileAccount/ValidateCustomerRegister",
-                "api/MobileAccount/RefreshToken",
+                AuthEndPoints.ENDPOINT_LOGIN,
+                AuthEndPoints.ENDPOINT_SIGN_UP,
+                AuthEndPoints.ENDPOINT_VALIDATE_OTP_LOGIN,
+                AuthEndPoints.ENDPOINT_VALIDATE_OTP_SIGN_UP,
+                AuthEndPoints.ENDPOINT_REFRESH_TOKEN,
             ),
         )
     }

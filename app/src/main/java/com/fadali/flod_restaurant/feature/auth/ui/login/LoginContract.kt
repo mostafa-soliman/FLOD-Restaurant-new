@@ -1,5 +1,6 @@
 package com.fadali.flod_restaurant.feature.auth.ui.login
 
+import androidx.annotation.StringRes
 import com.smyvo.core.ui.mvi.UiEffect
 import com.smyvo.core.ui.mvi.UiEvent
 import com.smyvo.core.ui.mvi.UiState
@@ -7,7 +8,7 @@ import com.smyvo.core.ui.mvi.UiState
 data class LoginState(
     val isLoading: Boolean = false,
     val phoneNumber: String = "",
-    val isValidPhoneNumber: Boolean = true,
+    @StringRes val phoneNumberError: Int? = null,
     val finalPhoneNumber: String = "",
 ) : UiState
 
