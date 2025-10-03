@@ -62,6 +62,7 @@ fun LoginScreen(
             is LoginEffect.NavigateToOtp -> navController.navigate(
                 AuthRoutes.OtpVerification(
                     flowType = OtpFlowType.LOGIN,
+                    userId = effect.userId,
                     phone = effect.phoneNumber
                 )
             )

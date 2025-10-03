@@ -33,6 +33,7 @@ class OTPVerificationViewModel(
         setState {
             copy(
                 flowType = event.args.flowType,
+                userId = event.args.userId,
                 phoneNumber = event.args.phone,
             )
         }

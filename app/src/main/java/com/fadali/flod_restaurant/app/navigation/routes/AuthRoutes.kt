@@ -13,6 +13,7 @@ sealed class AuthRoutes : Route(showBottomNavBar = false) {
     @Serializable
     data class OtpVerification(
         val phone: String,
+        val userId: String = "",
         val flowType: OtpFlowType
     ) : AuthRoutes()
     @Serializable

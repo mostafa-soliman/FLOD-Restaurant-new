@@ -69,7 +69,12 @@ class LoginViewModel(
             if (response.notRegistered) {
                 sendEffect(LoginEffect.NavigateToSignUp)
             } else {
-                sendEffect(LoginEffect.NavigateToOtp(phoneNumber = currentState.finalPhoneNumber))
+                sendEffect(
+                    LoginEffect.NavigateToOtp(
+                        userId = response.customerId,
+                        phoneNumber = currentState.finalPhoneNumber
+                    )
+                )
             }
         }
     }
@@ -77,6 +82,10 @@ class LoginViewModel(
     override fun handleException(throwable: Throwable) {
         super.handleException(throwable)
         setState { copy(isLoading = false) }
-        sendEffect(LoginEffect.ShowError(message = throwable.message))
+        val errorMessage = throwable.message?.let {
+            if (it.isEmpty()) return@let null
+            it
+        }
+        sendEffect(LoginEffect.ShowError(message = errorMessage))
     }
 }

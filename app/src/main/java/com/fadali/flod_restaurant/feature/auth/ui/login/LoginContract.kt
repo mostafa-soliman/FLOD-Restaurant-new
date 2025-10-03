@@ -22,7 +22,10 @@ sealed interface LoginEvent : UiEvent {
 }
 
 sealed interface LoginEffect : UiEffect {
-    data class NavigateToOtp(val phoneNumber: String) : LoginEffect
+    data class NavigateToOtp(
+        val userId: String,
+        val phoneNumber: String
+    ) : LoginEffect
     data object NavigateToSignUp : LoginEffect
     data class ShowError(val message: String? = null) : LoginEffect
 }
