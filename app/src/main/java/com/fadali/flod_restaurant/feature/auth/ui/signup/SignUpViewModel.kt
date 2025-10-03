@@ -35,9 +35,11 @@ class SignUpViewModel(
             is SignUpEvent.OnPhoneNumberChanged -> onPhoneNumberChanged(event)
             SignUpEvent.OnValidatePhoneNumber -> validatePhoneNumber()
             SignUpEvent.OnRemovePhoneNumberValidationError -> setState { copy(phoneNumberError = null) }
-            SignUpEvent.OnBirthdatePickerClicked -> setState { copy(isBirthDatePickerVisible = true) }
+            SignUpEvent.OnBirthdatePickerClicked -> setState { copy(isBirthdatePickerVisible = true) }
             is SignUpEvent.OnBirthdateSelected -> onBirthdateSelected(event)
-            SignUpEvent.OnBirthdatePickerDismissed -> setState { copy(isBirthDatePickerVisible = false) }
+            SignUpEvent.OnBirthdatePickerDismissed -> setState { copy(isBirthdatePickerVisible = false) }
+            SignUpEvent.OnValidateBirthdate -> validateBirthdate()
+            SignUpEvent.OnRemoveBirthdateValidationError -> setState { copy(birthdateError = null) }
             is SignUpEvent.OnGenderSelected -> onGenderSelected(event)
             SignUpEvent.OnNextBtnClicked -> onNextBtnClicked()
         }
@@ -69,7 +71,7 @@ class SignUpViewModel(
         setState {
             copy(
                 birthdate = event.birthdate.toString(),
-                isBirthDatePickerVisible = false
+                isBirthdatePickerVisible = false
             )
         }
     }
@@ -79,7 +81,7 @@ class SignUpViewModel(
     }
 
     private fun validateName() {
-        val minNameLength = 2
+        val minNameLength = 3
         val name = currentState.name.trim()
         val nameError = when {
             name.isEmpty() || name.isBlank() -> R.string.name_is_required
@@ -118,6 +120,15 @@ class SignUpViewModel(
         }
     }
 
+    private fun validateBirthdate() {
+        val isValidBirthdate = currentState.birthdate.isNotEmpty()
+        setState {
+            copy(
+                birthdateError = if (isValidBirthdate) null else R.string.birthday_is_required
+            )
+        }
+    }
+
     private fun validateGender() {
         val isValidGender = currentState.gender != Gender.NONE
         setState {
@@ -132,9 +143,11 @@ class SignUpViewModel(
         validateEmail()
         validatePhoneNumber()
         validateGender()
+        validateBirthdate()
         val areValidFields = currentState.nameError == null &&
                 currentState.emailError == null &&
                 currentState.phoneNumberError == null &&
+                currentState.birthdateError == null &&
                 currentState.genderError == null
 
         return areValidFields

@@ -8,6 +8,8 @@ import com.fadali.flod_restaurant.feature.auth.domain.model.LoginRequestDomainMo
 import com.fadali.flod_restaurant.feature.auth.domain.model.LoginResponseDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.model.SignUpRequestDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.model.SignUpResponseDomainModel
+import com.fadali.flod_restaurant.feature.auth.domain.model.otp.ValidateOtpRequest
+import com.fadali.flod_restaurant.feature.auth.domain.model.otp.ValidateOtpResponse
 
 class AuthRepoImpl(
     private val authRemoteDataSource: AuthRemoteDataSource
@@ -18,5 +20,17 @@ class AuthRepoImpl(
 
     override suspend fun signUp(request: SignUpRequestDomainModel): SignUpResponseDomainModel {
         return authRemoteDataSource.signUp(request = request.toDataModel()).toDomainModel()
+    }
+
+    override suspend fun validateOtp(request: ValidateOtpRequest): ValidateOtpResponse {
+        return when (request) {
+            is ValidateOtpRequest.Login -> {
+                authRemoteDataSource.validateLoginOtp(request.toDataModel()).toDomainModel()
+            }
+
+            is ValidateOtpRequest.SignUp -> {
+                authRemoteDataSource.validateSignUpOtp(request.toDataModel()).toDomainModel()
+            }
+        }
     }
 }

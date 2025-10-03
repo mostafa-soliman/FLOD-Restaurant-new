@@ -16,7 +16,7 @@
     <string name="signup_prompt">Don’t have an account? Sign up</string>
     <string name="signup_prompt_clickable_text">Sign up</string>
     <string name="name_is_required">Name is required</string>
-    <string name="name_min_characters_allowed_error">Enter at least 2 characters</string>
+    <string name="name_min_characters_allowed_error">Enter at least 3 characters</string>
     <string name="name_format_error">Only letters and spaces allowed</string>
     <string name="invalid_email_format">Invalid email format</string>
     <string name="email_is_required">Email is required</string>
@@ -33,6 +33,7 @@
     <string name="email_label">Email</string>
     <string name="name_label">Name</string>
     <string name="birthday_label">Birthday</string>
+    <string name="birthday_is_required">Birthday is required</string>
     <string name="pick_date_content_desc">Pick date</string>
     <string name="gender_label">Gender Selection</string>
     <string name="gender_male">Male</string>
@@ -43,8 +44,9 @@
     <string name="saudi_flag_content_desc">Saudi flag</string>
     <string name="sign_up_success">Account Created</string>
     <string name="verification_title">Verification Code!</string>
-    <string name="verification_message">We have sent the verification code to your mobile number %1$s</string>
+    <string name="verification_message">We have sent the verification code to your mobile number %s</string>
     <string name="didnt_receive_code">Didn’t receive a code?</string>
+    <string name="invalid_otp_error">Invalid code. Please try again.</string>
     <string name="resend">Resend</string>
     <string name="fit_start_title">Fit Start</string>
     <string name="weight_label">Weight</string>

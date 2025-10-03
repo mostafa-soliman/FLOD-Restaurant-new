@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -35,13 +34,14 @@ import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.core.component.button.AppPrimaryButton
 import com.fadali.flod_restaurant.core.component.datepicker.AppDatePickerDialog
-import com.fadali.flod_restaurant.core.component.dialog.AppErrorDialog
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
+import com.fadali.flod_restaurant.core.component.dialog.errordialog.AppErrorDialog
 import com.fadali.flod_restaurant.core.component.modifiers.clearFocusOnTap
 import com.fadali.flod_restaurant.core.component.multiselect.AppGenderSelector
 import com.fadali.flod_restaurant.core.component.phonenumberfield.AppPhoneNumberField
 import com.fadali.flod_restaurant.core.component.preview.AppPreviews
 import com.fadali.flod_restaurant.core.component.textfield.AppTextField
+import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.appText
@@ -61,24 +61,26 @@ fun SignUpScreen(
     LaunchedEffect(Unit) {
         viewModel.sendEvent(SignUpEvent.LoadBirthDateRange)
     }
-
     HandleState(viewModel.state) { state ->
         SignUpScreenContent(
             state = state,
             sendEvent = { event -> viewModel.sendEvent(event) }
         )
     }
-
     HandleEffects(viewModel.effect) { effect ->
         when (effect) {
-            is SignUpEffect.NavigateToOtp -> navController.navigate(AuthRoutes.OtpVerification(phone = effect.phoneNumber))
+            is SignUpEffect.NavigateToOtp -> navController.navigate(
+                AuthRoutes.OtpVerification(
+                    flowType = OtpFlowType.SIGN_UP,
+                    phone = effect.phoneNumber
+                )
+            )
             is SignUpEffect.ShowError -> {
                 showErrorDialog = true
                 errorDialogMessage = effect.message
             }
         }
     }
-
     AppErrorDialog(
         isVisible = showErrorDialog,
         title = stringResource(R.string.error_occurred),
@@ -111,7 +113,7 @@ private fun SignUpScreenContent(
 
         Text(
             stringResource(R.string.brand),
-            style = TextStyle(
+            style = MaterialTheme.typography.displaySmall.copy(
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
@@ -120,7 +122,7 @@ private fun SignUpScreenContent(
         Spacer(Modifier.height(18.dp))
         Text(
             stringResource(R.string.signup_title),
-            style = TextStyle(
+            style = MaterialTheme.typography.headlineMedium.copy(
                 fontSize = 26.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.accentBlue,
@@ -129,7 +131,7 @@ private fun SignUpScreenContent(
         Spacer(Modifier.height(10.dp))
         Text(
             text = stringResource(R.string.signup_subtitle),
-            style = TextStyle(
+            style = MaterialTheme.typography.bodyMedium.copy(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.grayText
@@ -182,6 +184,10 @@ private fun SignUpScreenContent(
             label = stringResource(R.string.birthday_label),
             readOnly = true,
             placeholder = stringResource(R.string.birthday_date_picker_title),
+            onFocusChanged = { isFocused ->
+                if (!isFocused) sendEvent(SignUpEvent.OnValidateBirthdate)
+                else sendEvent(SignUpEvent.OnRemoveBirthdateValidationError)
+            },
             suffix = {
                 Image(
                     modifier = Modifier.clickable {
@@ -190,10 +196,11 @@ private fun SignUpScreenContent(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_calendar),
                     contentDescription = stringResource(R.string.pick_date_content_desc),
                 )
-            }
+            },
+            errorMessage = state.birthdateError?.let { stringResource(it) }
         )
         AppDatePickerDialog(
-            isVisible = state.isBirthDatePickerVisible,
+            isVisible = state.isBirthdatePickerVisible,
             dateRange = state.birthDateRange,
             title = stringResource(R.string.birthday_date_picker_title),
             onDateSelected = { sendEvent(SignUpEvent.OnBirthdateSelected(it)) },

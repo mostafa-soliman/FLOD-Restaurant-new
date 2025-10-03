@@ -17,7 +17,8 @@ data class SignUpState(
     @StringRes val phoneNumberError: Int? = null,
     val finalPhoneNumber: String = "",
     val birthdate: String = "",
-    val isBirthDatePickerVisible: Boolean = false,
+    val isBirthdatePickerVisible: Boolean = false,
+    @StringRes val birthdateError: Int? = null,
     val birthDateRange: ClosedRange<LocalDate> = LocalDate.of(1900, 1, 1)..LocalDate.now(),
     val gender: Gender = Gender.NONE,
     @StringRes val genderError: Int? = null,
@@ -41,6 +42,8 @@ sealed interface SignUpEvent : UiEvent {
     data object OnBirthdatePickerClicked : SignUpEvent
     data class OnBirthdateSelected(val birthdate: LocalDate) : SignUpEvent
     data object OnBirthdatePickerDismissed : SignUpEvent
+    data object OnValidateBirthdate : SignUpEvent
+    data object OnRemoveBirthdateValidationError : SignUpEvent
 
     data class OnGenderSelected(val gender: Gender) : SignUpEvent
     data object OnNextBtnClicked : SignUpEvent

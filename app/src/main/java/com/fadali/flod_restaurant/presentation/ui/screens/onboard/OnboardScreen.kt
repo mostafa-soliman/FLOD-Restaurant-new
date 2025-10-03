@@ -59,6 +59,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
+import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
 import com.fadali.flod_restaurant.i18n.LText
 import com.fadali.flod_restaurant.i18n.LocalAppLocale
 import com.fadali.flod_restaurant.i18n.rememberLanguageController
@@ -111,7 +112,12 @@ fun OnboardScreen(
 //
 //                delay(2000)
                 val mobile = response.data?.mobileNumber ?: ""
-                navController.navigate(AuthRoutes.OtpVerification(phone = mobile))
+                navController.navigate(
+                    AuthRoutes.OtpVerification(
+                        flowType = OtpFlowType.LOGIN,
+                        phone = mobile
+                    )
+                )
             }
         }
 

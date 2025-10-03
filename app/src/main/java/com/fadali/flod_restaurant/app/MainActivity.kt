@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatDelegate
+import com.fadali.flod_restaurant.core.permissions.PermissionRequester
 import com.fadali.flod_restaurant.i18n.ContextUtils
 import com.fadali.flod_restaurant.i18n.LanguageStore
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        PermissionRequester.requestPermissions(activity = this)
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge()
         setContent { App() }

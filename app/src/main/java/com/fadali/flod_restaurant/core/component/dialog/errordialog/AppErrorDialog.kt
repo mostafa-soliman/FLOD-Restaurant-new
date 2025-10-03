@@ -1,4 +1,4 @@
-package com.fadali.flod_restaurant.core.component.dialog
+package com.fadali.flod_restaurant.core.component.dialog.errordialog
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

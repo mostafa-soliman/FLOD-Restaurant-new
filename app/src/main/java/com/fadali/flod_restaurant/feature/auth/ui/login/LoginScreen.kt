@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -30,11 +29,12 @@ import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.core.component.button.AppPrimaryButton
-import com.fadali.flod_restaurant.core.component.dialog.AppErrorDialog
+import com.fadali.flod_restaurant.core.component.dialog.errordialog.AppErrorDialog
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
 import com.fadali.flod_restaurant.core.component.modifiers.clearFocusOnTap
 import com.fadali.flod_restaurant.core.component.phonenumberfield.AppPhoneNumberField
 import com.fadali.flod_restaurant.core.component.preview.AppPreviews
+import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.grayText
@@ -56,18 +56,21 @@ fun LoginScreen(
             sendEvent = { event -> viewModel.sendEvent(event) }
         )
     }
-
     HandleEffects(viewModel.effect) { effect ->
         when (effect) {
             LoginEffect.NavigateToSignUp -> navController.navigate(AuthRoutes.SignUp)
-            is LoginEffect.NavigateToOtp -> navController.navigate(AuthRoutes.OtpVerification(phone = effect.phoneNumber))
+            is LoginEffect.NavigateToOtp -> navController.navigate(
+                AuthRoutes.OtpVerification(
+                    flowType = OtpFlowType.LOGIN,
+                    phone = effect.phoneNumber
+                )
+            )
             is LoginEffect.ShowError -> {
                 showErrorDialog = true
                 errorDialogMessage = effect.message
             }
         }
     }
-
     AppErrorDialog(
         isVisible = showErrorDialog,
         title = stringResource(R.string.error_occurred),
@@ -107,7 +110,7 @@ private fun LoginScreenContent(
         )
         Text(
             text = stringResource(R.string.brand),
-            style = TextStyle(
+            style = MaterialTheme.typography.displaySmall.copy(
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
@@ -117,7 +120,7 @@ private fun LoginScreenContent(
         Spacer(modifier = Modifier.height(18.dp))
         Text(
             text = stringResource(R.string.welcome_back),
-            style = TextStyle(
+            style = MaterialTheme.typography.headlineMedium.copy(
                 fontSize = 26.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.accentBlue,
@@ -127,7 +130,7 @@ private fun LoginScreenContent(
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = stringResource(R.string.sign_in_description),
-            style = TextStyle(
+            style = MaterialTheme.typography.bodyMedium.copy(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.grayText,

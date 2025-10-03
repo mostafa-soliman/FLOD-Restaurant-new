@@ -1,9 +1,5 @@
 package com.fadali.flod_restaurant.app.navigation.graphs
 
-import android.widget.Toast
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.toRoute
@@ -11,14 +7,13 @@ import com.fadali.flod_restaurant.app.navigation.addScreen
 import com.fadali.flod_restaurant.app.navigation.navigateAndClearBackStack
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.feature.auth.ui.login.LoginScreen
+import com.fadali.flod_restaurant.feature.auth.ui.otp.OTPVerificationScreen
 import com.fadali.flod_restaurant.feature.auth.ui.signup.SignUpScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.AllergiesScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.Allergy
 import com.fadali.flod_restaurant.presentation.ui.screens.fitstart.FitStartScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.loading.PreparingScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.splash.SplashScreen
-import com.fadali.flod_restaurant.presentation.ui.screens.verify.VerifyOtpScreen
-import com.fadali.flod_restaurant.presentation.viewmodel.VerifyViewModel
 
 fun NavGraphBuilder.authGraph(navController: NavHostController) {
     addScreen<AuthRoutes.Splash> {
@@ -31,55 +26,11 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         SignUpScreen(navController)
     }
     addScreen<AuthRoutes.OtpVerification> { backStackEntry ->
-        val route: AuthRoutes.OtpVerification = backStackEntry.toRoute()
-        val phone = route.phone
-        val verifyViewModel: VerifyViewModel = hiltViewModel()
-        val state = verifyViewModel.state
-        val context = LocalContext.current
-
-        VerifyOtpScreen(
-            phone = phone,
-            maskedPhone = maskPhone(phone),
-            onCodeComplete = { code ->
-                //verifyViewModel.verify(phone, code)
-                val finalCode = if (code == "1111") "123456" else code
-                verifyViewModel.verify(phone, finalCode)
-            }
+        val args: AuthRoutes.OtpVerification = backStackEntry.toRoute()
+        OTPVerificationScreen(
+            navController = navController,
+            args = args
         )
-
-        when (state) {
-            is VerifyViewModel.VerifyState.Success -> {
-                LaunchedEffect(state) {
-                    val response = state.data      // VerifyResponse
-                    val msg = response.message ?: "Verify Success"
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    navController.navigate(AuthRoutes.FitStart) {
-                        popUpTo(AuthRoutes.SignUp) { inclusive = true }
-                        launchSingleTop = true
-                    }
-
-                    verifyViewModel.state = VerifyViewModel.VerifyState.Idle
-                    // TODO: show full json
-                    val gson = com.google.gson.Gson()
-                    Toast.makeText(context, gson.toJson(response), Toast.LENGTH_LONG).show()
-
-                    // TODO: navigate to home screen
-                    // navController.navigate(Route.Home)
-                }
-            }
-
-            is VerifyViewModel.VerifyState.Error -> {
-                Toast.makeText(
-                    LocalContext.current,
-                    state.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-                verifyViewModel.state = VerifyViewModel.VerifyState.Idle
-            }
-
-            else -> { /* Loading / Idle */
-            }
-        }
     }
     addScreen<AuthRoutes.FitStart> {
         FitStartScreen(

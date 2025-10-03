@@ -17,7 +17,7 @@
     <string name="signup_prompt">ليس لديك حساب؟ قم بتسجيل الدخول</string>
     <string name="signup_prompt_clickable_text">قم بتسجيل الدخول</string>
     <string name="name_is_required">الاسم مطلوب</string>
-    <string name="name_min_characters_allowed_error">أدخل حرفين على الأقل</string>
+    <string name="name_min_characters_allowed_error">أدخل 3 حروف على الأقل</string>
     <string name="name_format_error">يُسمح فقط بالحروف والمسافات</string>
     <string name="invalid_email_format">بريد الإلكتروني غير صالح</string>
     <string name="email_is_required">البريد الإلكتروني مطلوب</string>
@@ -34,6 +34,7 @@
     <string name="email_label">البريد الإلكتروني</string>
     <string name="name_label">الاسم</string>
     <string name="birthday_label">تاريخ الميلاد</string>
+    <string name="birthday_is_required">تاريخ الميلاد مطلوب</string>
     <string name="pick_date_content_desc">اختر التاريخ</string>
     <string name="gender_label">اختيار الجنس</string>
     <string name="gender_male">ذكر</string>
@@ -44,8 +45,9 @@
     <string name="saudi_flag_content_desc">علم السعودية</string>
     <string name="sign_up_success">تم إنشاء الحساب</string>
     <string name="verification_title">رمز التحقق!</string>
-    <string name="verification_message">أرسلنا رمز التحقق إلى رقم هاتفك %1$s</string>
-    <string name="didnt_receive_code">لم يصلك الرمز؟</string>
+    <string name="verification_message">لقد أرسلنا رمز التحقق إلى رقم هاتفك المحمول %s</string>
+    <string name="didnt_receive_code">لم تتلقى الرمز؟</string>
+    <string name="invalid_otp_error">رمز غير صحيح. يرجى المحاولة مرة أخرى.</string>
     <string name="resend">إعادة الإرسال</string>
     <string name="fit_start_title">بداية مناسبة</string>
     <string name="weight_label">الوزن</string>

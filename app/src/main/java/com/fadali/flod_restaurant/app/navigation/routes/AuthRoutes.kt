@@ -1,5 +1,6 @@
 package com.fadali.flod_restaurant.app.navigation.routes
 
+import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
 import kotlinx.serialization.Serializable
 
 sealed class AuthRoutes : Route(showBottomNavBar = false) {
@@ -10,7 +11,10 @@ sealed class AuthRoutes : Route(showBottomNavBar = false) {
     @Serializable
     data object SignUp : AuthRoutes()
     @Serializable
-    data class OtpVerification(val phone: String) : AuthRoutes()
+    data class OtpVerification(
+        val phone: String,
+        val flowType: OtpFlowType
+    ) : AuthRoutes()
     @Serializable
     data object FitStart : AuthRoutes()
     @Serializable

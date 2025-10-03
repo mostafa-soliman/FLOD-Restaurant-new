@@ -6,8 +6,10 @@ import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthRemote
 import com.fadali.flod_restaurant.feature.auth.domain.AuthRepo
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.LoginUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.SignUpUseCase
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidateOtpUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
 import com.fadali.flod_restaurant.feature.auth.ui.login.LoginViewModel
+import com.fadali.flod_restaurant.feature.auth.ui.otp.OTPVerificationViewModel
 import com.fadali.flod_restaurant.feature.auth.ui.signup.SignUpViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -29,6 +31,9 @@ val authModule = module {
     factory<SignUpUseCase> {
         SignUpUseCase(get())
     }
+    factory<ValidateOtpUseCase> {
+        ValidateOtpUseCase(get())
+    }
 
     viewModel<LoginViewModel> {
         LoginViewModel(
@@ -42,6 +47,13 @@ val authModule = module {
         SignUpViewModel(
             validatePhoneNumberUseCase = get(),
             signUpUseCase = get(),
+            dispatchers = get(),
+            defaultExceptionHandler = get()
+        )
+    }
+    viewModel<OTPVerificationViewModel> {
+        OTPVerificationViewModel(
+            validateOtpUseCase = get(),
             dispatchers = get(),
             defaultExceptionHandler = get()
         )
