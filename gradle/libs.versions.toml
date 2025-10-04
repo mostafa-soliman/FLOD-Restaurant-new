@@ -29,6 +29,8 @@ appcompat = "1.7.0"
 accompanist = "0.34.0"
 # Coil
 coil = "2.6.0"
+# Security
+security = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -79,6 +81,8 @@ coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
 # Kotlin Reflection
 kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+# Security
+security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -171,4 +175,8 @@ navigation = [
 # DataStore
 datastore = [
     "datastore-preferences"
+]
+# Security & Keystore
+security = [
+    "security-crypto"
 ]

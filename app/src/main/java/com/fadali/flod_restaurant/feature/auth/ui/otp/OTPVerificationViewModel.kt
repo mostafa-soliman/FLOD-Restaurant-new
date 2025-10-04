@@ -2,6 +2,7 @@ package com.fadali.flod_restaurant.feature.auth.ui.otp
 
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.ErrorDialogState
 import com.fadali.flod_restaurant.core.util.DeferredString
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveAuthTokensUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidateOtpUseCase
 import com.fadali.flod_restaurant.feature.auth.ui.otp.mapper.toNextScreenRoute
 import com.fadali.flod_restaurant.feature.auth.ui.otp.mapper.toValidateOtpRequest
@@ -11,6 +12,7 @@ import com.smyvo.core.ui.network.DefaultExceptionHandler
 
 class OTPVerificationViewModel(
     private val validateOtpUseCase: ValidateOtpUseCase,
+    private val saveAuthTokensUseCase: SaveAuthTokensUseCase,
     dispatchers: AppCoroutineDispatcher,
     defaultExceptionHandler: DefaultExceptionHandler
 ) : BaseViewModel<OTPVerificationState, OTPVerificationEvent, OTPVerificationEffect>(
@@ -49,7 +51,10 @@ class OTPVerificationViewModel(
         launchSafe {
             val request = currentState.toValidateOtpRequest()
             val response = validateOtpUseCase(request)
-            // TODO: store tokens in keystore
+            saveAuthTokensUseCase(
+                accessToken = response.accessToken,
+                refreshToken = response.refreshToken
+            )
             setState { copy(isLoading = false) }
             sendEffect(
                 OTPVerificationEffect.NavigateToNextScreen(

@@ -4,7 +4,9 @@ import com.fadali.flod_restaurant.feature.auth.data.AuthRepoImpl
 import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthRemoteDataSource
 import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthRemoteDataSourceImpl
 import com.fadali.flod_restaurant.feature.auth.domain.AuthRepo
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetAuthTokensUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.LoginUseCase
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveAuthTokensUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.SignUpUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidateOtpUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
@@ -34,6 +36,18 @@ val authModule = module {
     factory<ValidateOtpUseCase> {
         ValidateOtpUseCase(get())
     }
+    single<GetAuthTokensUseCase> {
+        GetAuthTokensUseCase(
+            tokenStorage = get(),
+            context = get()
+        )
+    }
+    single<SaveAuthTokensUseCase> {
+        SaveAuthTokensUseCase(
+            tokenStorage = get(),
+            context = get()
+        )
+    }
 
     viewModel<LoginViewModel> {
         LoginViewModel(
@@ -54,6 +68,7 @@ val authModule = module {
     viewModel<OTPVerificationViewModel> {
         OTPVerificationViewModel(
             validateOtpUseCase = get(),
+            saveAuthTokensUseCase = get(),
             dispatchers = get(),
             defaultExceptionHandler = get()
         )

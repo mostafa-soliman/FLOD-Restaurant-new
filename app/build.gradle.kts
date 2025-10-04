@@ -107,6 +107,9 @@ dependencies {
     // App Core
     implementation(libs.bundles.app.core)
     
+    // Security
+    implementation(libs.bundles.security)
+    
     // Kotlin Reflection
     implementation(libs.kotlin.reflect)
 }
