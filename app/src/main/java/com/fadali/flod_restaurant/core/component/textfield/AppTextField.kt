@@ -2,6 +2,7 @@ package com.fadali.flod_restaurant.core.component.textfield
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,10 +25,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -43,6 +46,12 @@ fun AppTextField(
     modifier: Modifier = Modifier,
     value: String = "",
     onValueChange: (String) -> Unit = {},
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium.copy(
+        color = MaterialTheme.colorScheme.appText,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Medium
+    ),
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     label: String? = null,
     maxLines: Int = 1,
     maxLength: Int? = null,
@@ -108,10 +117,20 @@ fun AppTextField(
         keyboardType = keyboardType
     )
 
+    val textFieldShape = RoundedCornerShape(8.dp)
+
     Column {
         OutlinedTextField(
             modifier = modifier
-                .height(if (enabled) 68.dp else 60.dp)
+                .height(
+                    if (label == null) 60.dp
+                    else if (enabled) 68.dp
+                    else 60.dp
+                )
+                .background(
+                    color = backgroundColor,
+                    shape = textFieldShape
+                )
                 .onFocusChanged { focusState ->
                     val newFocusState = focusState.isFocused
                     if (isFocused != newFocusState) {
@@ -158,12 +177,8 @@ fun AppTextField(
             maxLines = maxLines,
             keyboardOptions = enhancedKeyboardOptions,
             keyboardActions = enhancedKeyboardActions,
-            shape = RoundedCornerShape(8.dp),
-            textStyle = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.appText,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Medium
-            ),
+            shape = textFieldShape,
+            textStyle = textStyle,
             isError = errorMessage != null,
             supportingText = null, // Keep null to maintain consistent height
             prefix = prefix,
@@ -223,10 +238,8 @@ private fun AppTextFieldPreview() {
                 value = "123@abc.com",
                 onValueChange = {},
                 keyboardType = KeyboardType.Email,
-                label = "Email",
                 maxLength = 50,
                 errorMessage = "This field is required",
-                errorMessageIcon = R.drawable.ic_error_required_icon
             )
             AppTextField(
                 value = "123@abc.com",

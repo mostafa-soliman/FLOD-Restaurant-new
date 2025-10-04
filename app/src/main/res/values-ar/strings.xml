@@ -25,6 +25,8 @@
     <string name="date_picker_confirm_btn">اختار</string>
     <string name="date_picker_dismiss_btn">إلغاء</string>
     <string name="birthday_date_picker_title">اختر تاريخ ميلادك</string>
+    <string name="height_validation_error">يجب أن يكون الطول بين %s سم و %s سم</string>
+    <string name="weight_validation_error">يجب أن يكون الوزن بين %s كجم و%s كجم</string>
     <string name="lang_toggle_ar">ع</string>
     <string name="lang_toggle_en">En</string>
     <string name="app_logo">app_logo</string>

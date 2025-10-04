@@ -16,7 +16,11 @@ val appNetworkModule = module {
         AppDefaultExceptionHandler()
     }
     single<AppNetworkConfig> {
-        getAppNetworkConfig(context = get())
+        getAppNetworkConfig(
+            context = get(),
+            getAuthTokensUseCase = get(),
+            saveAuthTokensUseCase = get(),
+        )
     }
     single<AppConfig> {
         AppConfig.default

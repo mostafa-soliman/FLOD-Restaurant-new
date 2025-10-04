@@ -9,9 +9,9 @@ import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.feature.auth.ui.login.LoginScreen
 import com.fadali.flod_restaurant.feature.auth.ui.otp.OTPVerificationScreen
 import com.fadali.flod_restaurant.feature.auth.ui.signup.SignUpScreen
+import com.fadali.flod_restaurant.feature.profile.ui.completeuserdata.CompleteUserDataScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.AllergiesScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.allergies.Allergy
-import com.fadali.flod_restaurant.presentation.ui.screens.fitstart.FitStartScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.loading.PreparingScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.splash.SplashScreen
 
@@ -32,21 +32,8 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
             args = args
         )
     }
-    addScreen<AuthRoutes.FitStart> {
-        FitStartScreen(
-            onLogin = { _, _, _ ->
-                navController.navigate(AuthRoutes.Allergies) {
-                    popUpTo(AuthRoutes.SignUp) { inclusive = true }
-                    launchSingleTop = true
-                }
-            },
-            onSkip = {
-                navController.navigate(AuthRoutes.Allergies) {
-                    popUpTo(AuthRoutes.SignUp) { inclusive = true }
-                    launchSingleTop = true
-                }
-            }
-        )
+    addScreen<AuthRoutes.CompleteUserData> {
+        CompleteUserDataScreen(navController)
     }
     addScreen<AuthRoutes.Allergies> {
 

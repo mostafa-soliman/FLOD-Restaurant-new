@@ -17,6 +17,7 @@ data class SignUpState(
     @StringRes val phoneNumberError: Int? = null,
     val finalPhoneNumber: String = "",
     val birthdate: String = "",
+    val displayedBirthdate: String = "",
     val isBirthdatePickerVisible: Boolean = false,
     @StringRes val birthdateError: Int? = null,
     val birthDateRange: ClosedRange<LocalDate> = LocalDate.of(1900, 1, 1)..LocalDate.now(),

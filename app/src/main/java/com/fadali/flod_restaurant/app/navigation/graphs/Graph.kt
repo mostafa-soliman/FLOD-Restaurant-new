@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class Graph(val startDestination: Route) {
     @Serializable
-    data object AuthGraph : Graph(startDestination = AuthRoutes.Login)
+    data object AuthGraph : Graph(startDestination = AuthRoutes.Splash)
     @Serializable
     data object HomeGraph : Graph(startDestination = BottomNavRoutes.Home)
     @Serializable

@@ -3,6 +3,7 @@ package com.fadali.flod_restaurant.feature.auth.ui.signup
 import android.util.Patterns
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.core.util.isOnlyLettersAndSpaces
+import com.fadali.flod_restaurant.core.util.toUTCFormat
 import com.fadali.flod_restaurant.feature.auth.domain.model.Gender
 import com.fadali.flod_restaurant.feature.auth.domain.model.SignUpRequestDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.SignUpUseCase
@@ -70,7 +71,8 @@ class SignUpViewModel(
     private fun onBirthdateSelected(event: SignUpEvent.OnBirthdateSelected) {
         setState {
             copy(
-                birthdate = event.birthdate.toString(),
+                birthdate = event.birthdate.toUTCFormat(),
+                displayedBirthdate = event.birthdate.toString(),
                 isBirthdatePickerVisible = false
             )
         }
@@ -161,7 +163,7 @@ class SignUpViewModel(
                 val request = SignUpRequestDomainModel(
                     name = currentState.name,
                     email = currentState.email.lowercase(),
-                    phoneNumber = currentState.phoneNumber,
+                    phoneNumber = currentState.finalPhoneNumber,
                     gender = currentState.gender,
                     dateOfBirth = currentState.birthdate
                 )

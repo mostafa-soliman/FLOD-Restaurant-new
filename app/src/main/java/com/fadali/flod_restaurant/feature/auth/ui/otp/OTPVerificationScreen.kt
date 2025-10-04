@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
-import com.fadali.flod_restaurant.app.navigation.graphs.Graph
 import com.fadali.flod_restaurant.app.navigation.navigateAndClearBackStack
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
@@ -67,7 +68,7 @@ fun OTPVerificationScreen(
     }
     HandleEffects(viewModel.effect) { effect ->
         when (effect) {
-            is OTPVerificationEffect.NavigateToNextScreen -> navController.navigateAndClearBackStack(Graph.HomeGraph)
+            is OTPVerificationEffect.NavigateToNextScreen -> navController.navigateAndClearBackStack(effect.route)
             is OTPVerificationEffect.ShowError -> {
                 showErrorDialog = true
                 effect.dialogState?.let { errorDialogState = it }
@@ -97,6 +98,8 @@ private fun OTPVerificationScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 20.dp, vertical = 38.dp),
         horizontalAlignment = Alignment.CenterHorizontally

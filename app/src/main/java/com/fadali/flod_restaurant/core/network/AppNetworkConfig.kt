@@ -3,20 +3,25 @@ package com.fadali.flod_restaurant.core.network
 import android.content.Context
 import com.fadali.flod_restaurant.BuildConfig
 import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthEndPoints
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetAuthTokensUseCase
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveAuthTokensUseCase
 import com.smyvo.core.network.AppNetworkConfig
 import com.smyvo.core.network.android.interceptors.ChuckerInterceptorFactory
 import com.smyvo.core.network.model.NetworkAuthTokens
 import okhttp3.Interceptor
 
-fun getAppNetworkConfig(context: Context): AppNetworkConfig {
+fun getAppNetworkConfig(
+    context: Context,
+    getAuthTokensUseCase: GetAuthTokensUseCase,
+    saveAuthTokensUseCase: SaveAuthTokensUseCase
+): AppNetworkConfig {
     return AppNetworkConfig(
         appVersionName = BuildConfig.VERSION_NAME,
         deviceId = "unique-device-id-12345", // TODO: Replace with actual device ID retrieval logic
         acceptLanguage = "en-US", // TODO: Replace with actual language preference retrieval logic
         clientExceptionStatusCode = 422,
         errorResponseModel = AppResponseErrorModel::class,
-        getAccessToken = { "" }, // TODO: Replace with actual access token retrieval logic
-        getRefreshToken = { "" }, // TODO: Replace with actual refresh token retrieval logic
+        getAuthTokens = { getAuthTokensUseCase()?.toNetworkAuthTokens() ?: NetworkAuthTokens("", "") },
         refreshTokens = { NetworkAuthTokens("", "") }, // TODO: Replace with actual token refresh logic
         onRefreshTokenExpired = {  }, // TODO: Replace with actual refresh token expiry handling logic
         unAuthorizedEndpoints = getUnAuthorizedEndpoints(),

@@ -24,6 +24,8 @@
     <string name="date_picker_confirm_btn">Select</string>
     <string name="date_picker_dismiss_btn">Cancel</string>
     <string name="birthday_date_picker_title">Select your birthday</string>
+    <string name="height_validation_error">Height must be between %s cm and %s cm</string>
+    <string name="weight_validation_error">Weight must be between %s kg and %s kg</string>
     <string name="lang_toggle_ar">ع</string>
     <string name="lang_toggle_en">En</string>
     <string name="app_logo">app_logo</string>

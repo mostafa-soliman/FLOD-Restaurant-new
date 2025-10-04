@@ -17,7 +17,7 @@ sealed class AuthRoutes : Route(showBottomNavBar = false) {
         val flowType: OtpFlowType
     ) : AuthRoutes()
     @Serializable
-    data object FitStart : AuthRoutes()
+    data object CompleteUserData : AuthRoutes()
     @Serializable
     data object Allergies : AuthRoutes()
     @Serializable
