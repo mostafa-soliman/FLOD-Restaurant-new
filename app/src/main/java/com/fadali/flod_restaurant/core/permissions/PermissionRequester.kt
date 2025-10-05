@@ -12,6 +12,7 @@ object PermissionRequester {
     ).filterNotNull().toTypedArray<String>()
 
     fun requestPermissions(activity: Activity) {
+        if (permissions.isEmpty()) return
         ActivityCompat.requestPermissions(
             activity,
             permissions,
