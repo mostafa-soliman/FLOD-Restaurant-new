@@ -28,4 +28,5 @@ sealed interface LoginEffect : UiEffect {
     ) : LoginEffect
     data object NavigateToSignUp : LoginEffect
     data class ShowError(val message: String? = null) : LoginEffect
+    data object LanguageToggled : LoginEffect
 }

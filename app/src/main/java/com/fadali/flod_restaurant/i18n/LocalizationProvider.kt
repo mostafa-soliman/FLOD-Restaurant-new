@@ -1,16 +1,15 @@
 package com.fadali.flod_restaurant.i18n
 
-import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
+import com.fadali.flod_restaurant.core.datastore.preferences.language.LanguageManager
+import org.koin.compose.koinInject
+
 val LocalAppLocale = compositionLocalOf { "en" }
 
 val LocalAppLocaleState = compositionLocalOf<MutableState<String>> {
@@ -20,15 +19,30 @@ val LocalAppLocaleState = compositionLocalOf<MutableState<String>> {
 @Composable
 fun LocalizationProvider(content: @Composable () -> Unit) {
     val context = LocalContext.current
-    val initial = remember { runBlocking { LanguageStore.load(context) } ?: "en" }
-    val langState = remember { mutableStateOf(initial) }
+    val languageManager: LanguageManager = koinInject()
+    
+    // Use the new DataStore system to get the current language
+    val currentLanguage by languageManager.getCurrentLanguageFlow(context).collectAsState(initial = "en")
+    
+    // Force recomposition and locale update when language changes
+    LaunchedEffect(currentLanguage) {
+        // Apply the language at the system level to ensure consistency
+        languageManager.applySavedLanguage(context)
+    }
 
-    val dir = if (langState.value.equals("ar", true)) LayoutDirection.Rtl else LayoutDirection.Ltr
+    val dir = if (currentLanguage.equals("ar", true)) LayoutDirection.Rtl else LayoutDirection.Ltr
+
+    // Create a locale-aware context for this composition
+    val localeContext = remember(currentLanguage) {
+        ContextUtils.wrap(context, currentLanguage)
+    }
 
     CompositionLocalProvider(
-        LocalAppLocale provides langState.value,
-        LocalAppLocaleState provides langState,
-        LocalLayoutDirection provides dir
+        LocalAppLocale provides currentLanguage,
+        LocalAppLocaleState provides remember { mutableStateOf(currentLanguage) },
+        LocalLayoutDirection provides dir,
+        // Provide the locale-wrapped context so LText can use it
+        LocalContext provides localeContext
     ) {
         content()
     }
@@ -36,40 +50,38 @@ fun LocalizationProvider(content: @Composable () -> Unit) {
 
 @Composable
 fun LText(@StringRes resId: Int): String {
-    val base = LocalContext.current
-    val lang = LocalAppLocale.current
-    val wrapped = remember(lang) { ContextUtils.wrap(base, lang) }
-    return wrapped.resources.getString(resId)
+    val context = LocalContext.current
+    return context.resources.getString(resId)
 }
 @Composable
 fun LText(@StringRes resId: Int, vararg args: Any): String {
-    val base = LocalContext.current
-    val lang = LocalAppLocale.current
-    val wrapped = remember(lang) { ContextUtils.wrap(base, lang) }
-    return wrapped.resources.getString(resId, *args)
+    val context = LocalContext.current
+    return context.resources.getString(resId, *args)
 }
 
 @Composable
 fun LPlural(@androidx.annotation.PluralsRes resId: Int, quantity: Int, vararg args: Any): String {
-    val base = LocalContext.current
-    val lang = LocalAppLocale.current
-    val wrapped = remember(lang) { ContextUtils.wrap(base, lang) }
-    return wrapped.resources.getQuantityString(resId, quantity, *args)
+    val context = LocalContext.current
+    return context.resources.getQuantityString(resId, quantity, *args)
 }
 @Composable
 fun rememberLanguageController(): (String) -> Unit {
     val context = LocalContext.current
     val langState = LocalAppLocaleState.current
     val scope = rememberCoroutineScope()
+    val languageManager: LanguageManager = koinInject()
 
     return { newLang ->
         if (langState.value != newLang) {
-            langState.value = newLang
-            AppCompatDelegate.setApplicationLocales(
-                LocaleListCompat.forLanguageTags(newLang)
-            )
             scope.launch {
-                LanguageStore.save(context, newLang)
+                // Use the new LanguageManager instead of the old LanguageStore
+                languageManager.setLanguage(
+                    context = context,
+                    languageCode = newLang,
+                    activity = null,
+                    recreateActivity = false // We don't need to recreate for Compose
+                )
+                // The langState will be updated automatically through the Flow in LocalizationProvider
             }
         }
     }

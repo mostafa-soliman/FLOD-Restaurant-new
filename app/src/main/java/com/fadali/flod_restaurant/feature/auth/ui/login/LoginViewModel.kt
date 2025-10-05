@@ -24,7 +24,7 @@ class LoginViewModel(
             is LoginEvent.OnPhoneNumberChanged -> onPhoneNumberChanged(event)
             LoginEvent.OnLoginClicked -> onLoginClicked()
             LoginEvent.OnSignUpClicked -> sendEffect(LoginEffect.NavigateToSignUp)
-            LoginEvent.OnLanguageSelectorClicked -> {}
+            LoginEvent.OnLanguageSelectorClicked -> onLanguageSelectorClicked()
             LoginEvent.ValidatePhoneNumber -> validatePhoneNumber()
             LoginEvent.RemovePhoneNumberValidationError -> setState { copy(phoneNumberError = null) }
         }
@@ -32,6 +32,10 @@ class LoginViewModel(
 
     private fun onPhoneNumberChanged(event: LoginEvent.OnPhoneNumberChanged) {
         setState { copy(phoneNumber = event.phoneNumber) }
+    }
+
+    private fun onLanguageSelectorClicked() {
+        sendEffect(LoginEffect.LanguageToggled)
     }
 
     private fun onLoginClicked() {

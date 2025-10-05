@@ -5,6 +5,9 @@ import org.koin.dsl.module
 
 val mainModule = module {
     single {
-        MainViewModel()
+        MainViewModel(
+            dispatchers = get(),
+            defaultExceptionHandler = get()
+        )
     }
 }
