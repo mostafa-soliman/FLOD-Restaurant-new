@@ -5,14 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-data class ActivitiesLookupResponseDataModel(
-    val items: List<ActivityDataDataModel>,
+data class ActivitiesLookupResponse(
+    val items: List<ActivityDataModel>,
     val totalCount: Int,
 )
 
 @Keep
 @Serializable
-data class ActivityDataDataModel(
+data class ActivityDataModel(
     val id: String,
     val displayName: String,
     val imageUrl: String,

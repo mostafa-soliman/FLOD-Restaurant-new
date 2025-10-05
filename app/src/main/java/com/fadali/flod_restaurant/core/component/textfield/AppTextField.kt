@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -61,6 +63,8 @@ fun AppTextField(
     placeholder: String? = null,
     errorMessage: String? = null,
     @DrawableRes errorMessageIcon: Int = R.drawable.ic_error_required_icon,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
     onDone: (() -> Unit)? = null,
@@ -181,6 +185,8 @@ fun AppTextField(
             textStyle = textStyle,
             isError = errorMessage != null,
             supportingText = null, // Keep null to maintain consistent height
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
             prefix = prefix,
             suffix = suffix,
             interactionSource = interactionSource,
@@ -232,7 +238,13 @@ private fun AppTextFieldPreview() {
                 onValueChange = {},
                 keyboardType = KeyboardType.Phone,
                 label = stringResource(R.string.phone_number),
-                maxLength = 11
+                maxLength = 11,
+                leadingIcon = {
+                    Image(
+                        imageVector = Icons.Default.Phone,
+                        contentDescription = null
+                    )
+                }
             )
             AppTextField(
                 value = "123@abc.com",

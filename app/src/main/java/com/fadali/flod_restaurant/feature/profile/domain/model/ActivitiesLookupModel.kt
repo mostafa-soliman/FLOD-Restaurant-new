@@ -1,11 +1,11 @@
 package com.fadali.flod_restaurant.feature.profile.domain.model
 
-data class GoalsLookupResponse(
-    val items: List<GoalData>,
+data class ActivitiesLookupModel(
+    val items: List<ActivityData>,
     val totalCount: Int,
 )
 
-data class GoalData(
+data class ActivityData(
     val id: String,
     val displayName: String,
     val imageUrl: String,

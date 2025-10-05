@@ -1,11 +1,15 @@
 package com.fadali.flod_restaurant.feature.profile.data.remote
 
-import com.fadali.flod_restaurant.feature.profile.data.model.ActivitiesLookupResponseDataModel
-import com.fadali.flod_restaurant.feature.profile.data.model.GoalsLookupResponseDataModel
+import com.fadali.flod_restaurant.feature.profile.data.model.ActivitiesLookupResponse
+import com.fadali.flod_restaurant.feature.profile.data.model.AllergiesLookupResponse
+import com.fadali.flod_restaurant.feature.profile.data.model.GoalsLookupResponse
 import com.fadali.flod_restaurant.feature.profile.domain.model.CompleteUserDataRequest
+import com.fadali.flod_restaurant.feature.profile.domain.model.UpdateUserAllergiesRequest
 
 interface ProfileRemoteDataSource {
-    suspend fun getActivitiesLookup(): ActivitiesLookupResponseDataModel
-    suspend fun getGoalsLookup(): GoalsLookupResponseDataModel
+    suspend fun getActivitiesLookup(): ActivitiesLookupResponse
+    suspend fun getGoalsLookup(): GoalsLookupResponse
+    suspend fun getAllergiesLookup(query: String? = null): AllergiesLookupResponse
     suspend fun completeUserData(request: CompleteUserDataRequest): Boolean
+    suspend fun updateUserAllergies(request: UpdateUserAllergiesRequest): Boolean
 }

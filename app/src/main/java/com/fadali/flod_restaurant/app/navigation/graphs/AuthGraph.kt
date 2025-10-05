@@ -9,9 +9,8 @@ import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.feature.auth.ui.login.LoginScreen
 import com.fadali.flod_restaurant.feature.auth.ui.otp.OTPVerificationScreen
 import com.fadali.flod_restaurant.feature.auth.ui.signup.SignUpScreen
+import com.fadali.flod_restaurant.feature.profile.ui.allergies.AllergiesScreen
 import com.fadali.flod_restaurant.feature.profile.ui.completeuserdata.CompleteUserDataScreen
-import com.fadali.flod_restaurant.presentation.ui.screens.allergies.AllergiesScreen
-import com.fadali.flod_restaurant.presentation.ui.screens.allergies.Allergy
 import com.fadali.flod_restaurant.presentation.ui.screens.loading.PreparingScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.splash.SplashScreen
 
@@ -36,38 +35,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         CompleteUserDataScreen(navController)
     }
     addScreen<AuthRoutes.Allergies> {
-
-        // مؤقتًا: بيانات محلية — بدّلها بتحميل من ViewModel لاحقًا
-        val demoItems = listOf(
-            Allergy("eggs", "Eggs", "🥚"),
-            Allergy("milk", "Lactose", "🥛"),
-            Allergy("chicken", "Chicken", "🍗"),
-            Allergy("spice", "Spice", "🌶️"),
-            Allergy("meat", "Meat", "🥩"),
-            Allergy("gluten", "Gluten", "🍞"),
-            Allergy("fish", "Fish", "🐟"),
-            Allergy("peanuts", "Peanuts", "🥜"),
-            Allergy("tree_nuts", "Tree Nuts", "🌰"),
-            Allergy("shellfish", "Shellfish", "🦐"),
-            Allergy("soy", "Soy", "🌱"),
-            Allergy("mold", "Mold", "🍄"),
-            Allergy("peach", "Peach", "🍑"),
-            Allergy("corn", "Corn", "🌽"),
-            Allergy("apple", "Apple", "🍎"),
-            Allergy("broccoli", "Broccoli", "🥦"),
-            Allergy("strawberries", "Strawberries", "🍓"),
-        )
-
-        AllergiesScreen(
-            items = demoItems,
-            onStart = { selected ->
-                // TODO: احفظ الاختيارات ووجّه للهوم الحقيقي
-                // navController.navigate(Route.Home) { popUpTo(Route.Splash){ inclusive = true } }
-                navController.navigate(AuthRoutes.Onboarding) {
-                    launchSingleTop = true
-                }
-            }
-        )
+        AllergiesScreen(navController)
     }
     addScreen<AuthRoutes.Onboarding> {
         PreparingScreen(
