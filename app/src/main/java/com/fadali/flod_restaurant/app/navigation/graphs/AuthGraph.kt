@@ -9,10 +9,10 @@ import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.feature.auth.ui.login.LoginScreen
 import com.fadali.flod_restaurant.feature.auth.ui.otp.OTPVerificationScreen
 import com.fadali.flod_restaurant.feature.auth.ui.signup.SignUpScreen
+import com.fadali.flod_restaurant.feature.auth.ui.splash.SplashScreen
 import com.fadali.flod_restaurant.feature.profile.ui.allergies.AllergiesScreen
 import com.fadali.flod_restaurant.feature.profile.ui.completeuserdata.CompleteUserDataScreen
 import com.fadali.flod_restaurant.presentation.ui.screens.loading.PreparingScreen
-import com.fadali.flod_restaurant.presentation.ui.screens.splash.SplashScreen
 
 fun NavGraphBuilder.authGraph(navController: NavHostController) {
     addScreen<AuthRoutes.Splash> {
