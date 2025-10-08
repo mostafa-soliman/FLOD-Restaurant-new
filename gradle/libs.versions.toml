@@ -10,7 +10,7 @@ composeBom = "2025.08.01"
 foundationLayoutAndroid = "1.7.2"
 foundation = "1.9.0"
 # App Core
-appCore = "1.0.32"
+appCore = "1.0.33"
 # Hilt/Dagger
 hilt = "2.52"
 hiltNavigationCompose = "1.2.0"

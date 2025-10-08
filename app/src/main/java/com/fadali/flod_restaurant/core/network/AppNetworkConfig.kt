@@ -7,7 +7,6 @@ import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetAuthTokensUseCa
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveAuthTokensUseCase
 import com.smyvo.core.network.AppNetworkConfig
 import com.smyvo.core.network.android.interceptors.ChuckerInterceptorFactory
-import com.smyvo.core.network.model.NetworkAuthTokens
 import okhttp3.Interceptor
 
 fun getAppNetworkConfig(
@@ -21,8 +20,8 @@ fun getAppNetworkConfig(
         acceptLanguage = "en-US", // TODO: Replace with actual language preference retrieval logic
         clientExceptionStatusCode = 422,
         errorResponseModel = AppResponseErrorModel::class,
-        getAuthTokens = { getAuthTokensUseCase()?.toNetworkAuthTokens() ?: NetworkAuthTokens("", "") },
-        refreshTokens = { NetworkAuthTokens("", "") }, // TODO: Replace with actual token refresh logic
+        getAuthTokens = { getAuthTokensUseCase()?.toNetworkAuthTokens() },
+        refreshTokens = { null }, // TODO: Replace with actual token refresh logic
         onRefreshTokenExpired = {  }, // TODO: Replace with actual refresh token expiry handling logic
         unAuthorizedEndpoints = getUnAuthorizedEndpoints(),
         interceptors = getInterceptors(context = context)
