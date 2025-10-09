@@ -1,9 +1,11 @@
 package com.fadali.flod_restaurant.feature.auth.ui.login
 
 import com.fadali.flod_restaurant.R
+import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.feature.auth.domain.model.LoginRequestDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.LoginUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
+import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
 import com.smyvo.core.ui.dispatchers.AppCoroutineDispatcher
 import com.smyvo.core.ui.mvi.BaseViewModel
 import com.smyvo.core.ui.network.DefaultExceptionHandler
@@ -23,7 +25,6 @@ class LoginViewModel(
         when (event) {
             is LoginEvent.OnPhoneNumberChanged -> onPhoneNumberChanged(event)
             LoginEvent.OnLoginClicked -> onLoginClicked()
-            LoginEvent.OnSignUpClicked -> sendEffect(LoginEffect.NavigateToSignUp)
             LoginEvent.OnLanguageSelectorClicked -> onLanguageSelectorClicked()
             LoginEvent.ValidatePhoneNumber -> validatePhoneNumber()
             LoginEvent.RemovePhoneNumberValidationError -> setState { copy(phoneNumberError = null) }
@@ -71,12 +72,19 @@ class LoginViewModel(
             val response = loginUseCase(request)
             setState { copy(isLoading = false) }
             if (response.notRegistered) {
-                sendEffect(LoginEffect.NavigateToSignUp)
+                sendEffect(
+                    LoginEffect.NavigateToNextScreen(
+                        route = AuthRoutes.SignUp(phone = currentState.finalPhoneNumber)
+                    )
+                )
             } else {
                 sendEffect(
-                    LoginEffect.NavigateToOtp(
-                        userId = response.customerId,
-                        phoneNumber = currentState.finalPhoneNumber
+                    LoginEffect.NavigateToNextScreen(
+                        route = AuthRoutes.OtpVerification(
+                            userId = response.customerId,
+                            phone = currentState.finalPhoneNumber,
+                            flowType = OtpFlowType.LOGIN
+                        )
                     )
                 )
             }

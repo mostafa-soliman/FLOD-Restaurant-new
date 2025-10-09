@@ -21,8 +21,12 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
     addScreen<AuthRoutes.Login> {
         LoginScreen(navController)
     }
-    addScreen<AuthRoutes.SignUp> {
-        SignUpScreen(navController)
+    addScreen<AuthRoutes.SignUp> { backStackEntry ->
+        val args: AuthRoutes.SignUp = backStackEntry.toRoute()
+        SignUpScreen(
+            navController = navController,
+            args = args
+        )
     }
     addScreen<AuthRoutes.OtpVerification> { backStackEntry ->
         val args: AuthRoutes.OtpVerification = backStackEntry.toRoute()
@@ -44,13 +48,4 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
             }
         )
     }
-}
-
-private fun maskPhone(phone: String): String {
-    val clean = phone.trim()
-    return if (clean.length > 6) {
-        val head = clean.take(4)
-        val tail = clean.takeLast(2)
-        "$head${"x".repeat(clean.length - 6)}$tail"
-    } else clean
 }

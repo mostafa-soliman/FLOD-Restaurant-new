@@ -40,7 +40,6 @@ import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.AppErrorDialog
 import com.fadali.flod_restaurant.core.component.modifiers.clearFocusOnTap
 import com.fadali.flod_restaurant.core.component.multiselect.AppGenderSelector
-import com.fadali.flod_restaurant.core.component.phonenumberfield.AppPhoneNumberField
 import com.fadali.flod_restaurant.core.component.preview.AppPreviews
 import com.fadali.flod_restaurant.core.component.textfield.AppTextField
 import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
@@ -56,11 +55,13 @@ import org.koin.compose.viewmodel.koinViewModel
 fun SignUpScreen(
     navController: NavController,
     viewModel: SignUpViewModel = koinViewModel(),
+    args: AuthRoutes.SignUp
 ) {
     var showErrorDialog by rememberSaveable { mutableStateOf(false) }
     var errorDialogMessage by rememberSaveable { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
+        viewModel.sendEvent(SignUpEvent.LoadArgs(args))
         viewModel.sendEvent(SignUpEvent.LoadBirthDateRange)
     }
     HandleState(viewModel.state) { state ->
@@ -171,16 +172,6 @@ private fun SignUpScreenContent(
                 else sendEvent(SignUpEvent.OnValidateEmail)
             },
             errorMessage = state.emailError?.let { stringResource(it) }
-        )
-        AppPhoneNumberField(
-            phoneNumber = state.phoneNumber,
-            onPhoneNumberChanged = { sendEvent(SignUpEvent.OnPhoneNumberChanged(it)) },
-            onFocusChanged = { isFocused ->
-                if (!isFocused) sendEvent(SignUpEvent.OnValidatePhoneNumber)
-                else sendEvent(SignUpEvent.OnRemovePhoneNumberValidationError)
-            },
-            onNext = {},
-            validationError = state.phoneNumberError?.let { stringResource(it) }
         )
         AppTextField(
             modifier = Modifier.fillMaxWidth(),

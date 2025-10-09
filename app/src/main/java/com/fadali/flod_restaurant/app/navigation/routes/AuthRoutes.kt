@@ -9,7 +9,7 @@ sealed class AuthRoutes : Route(showBottomNavBar = false) {
     @Serializable
     data object Login : AuthRoutes()
     @Serializable
-    data object SignUp : AuthRoutes()
+    data class SignUp(val phone: String) : AuthRoutes()
     @Serializable
     data class OtpVerification(
         val phone: String,

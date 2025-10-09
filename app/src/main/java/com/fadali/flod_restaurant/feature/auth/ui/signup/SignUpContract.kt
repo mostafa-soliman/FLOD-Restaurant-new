@@ -1,6 +1,7 @@
 package com.fadali.flod_restaurant.feature.auth.ui.signup
 
 import androidx.annotation.StringRes
+import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.feature.auth.domain.model.Gender
 import com.smyvo.core.ui.mvi.UiEffect
 import com.smyvo.core.ui.mvi.UiEvent
@@ -13,8 +14,6 @@ data class SignUpState(
     @StringRes val nameError: Int? = null,
     val email: String = "",
     @StringRes val emailError: Int? = null,
-    val phoneNumber: String = "",
-    @StringRes val phoneNumberError: Int? = null,
     val finalPhoneNumber: String = "",
     val birthdate: String = "",
     val displayedBirthdate: String = "",
@@ -26,6 +25,7 @@ data class SignUpState(
 ) : UiState
 
 sealed interface SignUpEvent : UiEvent {
+    data class LoadArgs(val args: AuthRoutes.SignUp) : SignUpEvent
     data object LoadBirthDateRange : SignUpEvent
 
     data class OnNameChanged(val name: String) : SignUpEvent
@@ -35,10 +35,6 @@ sealed interface SignUpEvent : UiEvent {
     data class OnEmailChanged(val email: String) : SignUpEvent
     data object OnValidateEmail : SignUpEvent
     data object OnRemoveEmailValidationError : SignUpEvent
-
-    data class OnPhoneNumberChanged(val phoneNumber: String) : SignUpEvent
-    data object OnValidatePhoneNumber : SignUpEvent
-    data object OnRemovePhoneNumberValidationError : SignUpEvent
 
     data object OnBirthdatePickerClicked : SignUpEvent
     data class OnBirthdateSelected(val birthdate: LocalDate) : SignUpEvent

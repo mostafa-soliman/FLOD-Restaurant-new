@@ -7,14 +7,12 @@ import com.fadali.flod_restaurant.core.util.toUTCFormat
 import com.fadali.flod_restaurant.feature.auth.domain.model.Gender
 import com.fadali.flod_restaurant.feature.auth.domain.model.SignUpRequestDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.SignUpUseCase
-import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
 import com.smyvo.core.ui.dispatchers.AppCoroutineDispatcher
 import com.smyvo.core.ui.mvi.BaseViewModel
 import com.smyvo.core.ui.network.DefaultExceptionHandler
 import java.time.LocalDate
 
 class SignUpViewModel(
-    private val validatePhoneNumberUseCase: ValidatePhoneNumberUseCase,
     private val signUpUseCase: SignUpUseCase,
     dispatchers: AppCoroutineDispatcher,
     defaultExceptionHandler: DefaultExceptionHandler
@@ -26,6 +24,7 @@ class SignUpViewModel(
 
     override fun handleEvent(event: SignUpEvent) {
         when (event) {
+            is SignUpEvent.LoadArgs -> loadArgs(event)
             SignUpEvent.LoadBirthDateRange -> loadBirthDateRange()
             is SignUpEvent.OnNameChanged -> onNameChanged(event)
             SignUpEvent.OnValidateName -> validateName()
@@ -33,9 +32,6 @@ class SignUpViewModel(
             is SignUpEvent.OnEmailChanged -> onEmailChanged(event)
             SignUpEvent.OnValidateEmail -> validateEmail()
             SignUpEvent.OnRemoveEmailValidationError -> setState { copy(emailError = null) }
-            is SignUpEvent.OnPhoneNumberChanged -> onPhoneNumberChanged(event)
-            SignUpEvent.OnValidatePhoneNumber -> validatePhoneNumber()
-            SignUpEvent.OnRemovePhoneNumberValidationError -> setState { copy(phoneNumberError = null) }
             SignUpEvent.OnBirthdatePickerClicked -> setState { copy(isBirthdatePickerVisible = true) }
             is SignUpEvent.OnBirthdateSelected -> onBirthdateSelected(event)
             SignUpEvent.OnBirthdatePickerDismissed -> setState { copy(isBirthdatePickerVisible = false) }
@@ -44,6 +40,10 @@ class SignUpViewModel(
             is SignUpEvent.OnGenderSelected -> onGenderSelected(event)
             SignUpEvent.OnNextBtnClicked -> onNextBtnClicked()
         }
+    }
+
+    private fun loadArgs(event: SignUpEvent.LoadArgs) {
+        setState { copy(finalPhoneNumber = event.args.phone) }
     }
 
     private fun loadBirthDateRange() {
@@ -62,10 +62,6 @@ class SignUpViewModel(
 
     private fun onEmailChanged(event: SignUpEvent.OnEmailChanged) {
         setState { copy(email = event.email) }
-    }
-
-    private fun onPhoneNumberChanged(event: SignUpEvent.OnPhoneNumberChanged) {
-        setState { copy(phoneNumber = event.phoneNumber) }
     }
 
     private fun onBirthdateSelected(event: SignUpEvent.OnBirthdateSelected) {
@@ -105,23 +101,6 @@ class SignUpViewModel(
         setState { copy(emailError = emailError) }
     }
 
-    private fun validatePhoneNumber() {
-        val phoneNumber = currentState.phoneNumber.trim()
-        val finalNumber = validatePhoneNumberUseCase(phoneNumber)
-        val isValidNumber = finalNumber != null
-        val phoneNumberError = when {
-            phoneNumber.isEmpty() || phoneNumber.isBlank() -> R.string.phone_number_is_required
-            !isValidNumber -> R.string.invalid_phone_number
-            else -> null
-        }
-        setState {
-            copy(
-                phoneNumberError = phoneNumberError,
-                finalPhoneNumber = finalNumber ?: ""
-            )
-        }
-    }
-
     private fun validateBirthdate() {
         val isValidBirthdate = currentState.birthdate.isNotEmpty()
         setState {
@@ -143,14 +122,13 @@ class SignUpViewModel(
     private fun validateAllFields(): Boolean {
         validateName()
         validateEmail()
-        validatePhoneNumber()
         validateGender()
         validateBirthdate()
         val areValidFields = currentState.nameError == null &&
                 currentState.emailError == null &&
-                currentState.phoneNumberError == null &&
                 currentState.birthdateError == null &&
-                currentState.genderError == null
+                currentState.genderError == null &&
+                currentState.finalPhoneNumber.isNotEmpty()
 
         return areValidFields
     }

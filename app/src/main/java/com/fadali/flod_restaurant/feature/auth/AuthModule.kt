@@ -59,7 +59,6 @@ val authModule = module {
     }
     viewModel<SignUpViewModel> {
         SignUpViewModel(
-            validatePhoneNumberUseCase = get(),
             signUpUseCase = get(),
             dispatchers = get(),
             defaultExceptionHandler = get()

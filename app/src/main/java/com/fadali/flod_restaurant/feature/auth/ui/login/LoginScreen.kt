@@ -31,14 +31,12 @@ import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.MainEvent
 import com.fadali.flod_restaurant.app.MainViewModel
-import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.core.component.button.AppPrimaryButton
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.AppErrorDialog
 import com.fadali.flod_restaurant.core.component.modifiers.clearFocusOnTap
 import com.fadali.flod_restaurant.core.component.phonenumberfield.AppPhoneNumberField
 import com.fadali.flod_restaurant.core.component.preview.AppPreviews
-import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.grayText
@@ -64,14 +62,7 @@ fun LoginScreen(
     }
     HandleEffects(viewModel.effect) { effect ->
         when (effect) {
-            LoginEffect.NavigateToSignUp -> navController.navigate(AuthRoutes.SignUp)
-            is LoginEffect.NavigateToOtp -> navController.navigate(
-                AuthRoutes.OtpVerification(
-                    flowType = OtpFlowType.LOGIN,
-                    userId = effect.userId,
-                    phone = effect.phoneNumber
-                )
-            )
+            is LoginEffect.NavigateToNextScreen -> navController.navigate(effect.route)
             is LoginEffect.ShowError -> {
                 showErrorDialog = true
                 errorDialogMessage = effect.message
