@@ -25,8 +25,8 @@ fun HomeScreen() {
         "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200"
     )
     val meals = listOf(
-        Triple("https://picsum.photos/500/250?3", LText(R.string.meal_diet), LText(R.string.cta_select_plan)),
-        Triple("https://picsum.photos/500/250?4", LText(R.string.meal_avocado_salad), LText(R.string.cta_order_now))
+        Triple("https://picsum.photos/500/250?3", LText(R.string.meal_diet), LText(R.string.select_plan)),
+        Triple("https://picsum.photos/500/250?4", LText(R.string.meal_avocado_salad), LText(R.string.order_now))
     )
 
     Scaffold(

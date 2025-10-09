@@ -85,6 +85,6 @@
     <string name="nav_more">More</string>
     <string name="meal_diet">Diet Meal</string>
     <string name="meal_avocado_salad">Avocado Salad</string>
-    <string name="cta_select_plan">Select a plan</string>
-    <string name="cta_order_now">Order now</string>
+    <string name="select_plan">Select a plan</string>
+    <string name="order_now">Order now</string>
 </resources>

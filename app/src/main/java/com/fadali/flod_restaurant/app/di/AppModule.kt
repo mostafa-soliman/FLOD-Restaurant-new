@@ -3,6 +3,7 @@ package com.fadali.flod_restaurant.app.di
 import com.fadali.flod_restaurant.core.authtokens.authTokenModule
 import com.fadali.flod_restaurant.core.di.coreDataStoreModule
 import com.fadali.flod_restaurant.feature.auth.authModule
+import com.fadali.flod_restaurant.feature.home.homeModule
 import com.fadali.flod_restaurant.feature.profile.profileModule
 import com.smyvo.core.ui.uiModule
 import org.koin.dsl.module
@@ -20,5 +21,6 @@ val appModule = module {
         authModule,
         authTokenModule,
         profileModule,
+        homeModule,
     )
 }
