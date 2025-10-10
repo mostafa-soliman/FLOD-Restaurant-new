@@ -1,12 +1,13 @@
-package com.fadali.flod_restaurant.core.di
+package com.fadali.flod_restaurant.core.datastore
 
 import com.fadali.flod_restaurant.core.datastore.preferences.AppPreferences
 import com.fadali.flod_restaurant.core.datastore.preferences.language.LanguageManager
 import com.fadali.flod_restaurant.core.datastore.preferences.language.LanguagePreferences
-import com.fadali.flod_restaurant.core.domain.usecase.GetCurrentLanguageUseCase
-import com.fadali.flod_restaurant.core.domain.usecase.OnboardingUseCase
-import com.fadali.flod_restaurant.core.domain.usecase.ThemeUseCase
-import com.fadali.flod_restaurant.core.domain.usecase.ToggleLanguageUseCase
+import com.fadali.flod_restaurant.core.datastore.preferences.usecase.GetCurrentLanguageUseCase
+import com.fadali.flod_restaurant.core.datastore.preferences.usecase.OnboardingUseCase
+import com.fadali.flod_restaurant.core.datastore.preferences.usecase.ThemeUseCase
+import com.fadali.flod_restaurant.core.datastore.preferences.usecase.ToggleLanguageUseCase
+import com.fadali.flod_restaurant.core.datastore.preferences.usecase.UserPrefsUseCase
 import org.koin.dsl.module
 
 val coreDataStoreModule = module {
@@ -31,6 +32,15 @@ val coreDataStoreModule = module {
         ThemeUseCase(appPreferences = get()) 
     }
     factory<OnboardingUseCase> { 
-        OnboardingUseCase(appPreferences = get()) 
+        OnboardingUseCase(
+            appPreferences = get(),
+            context = get(),
+        )
+    }
+    factory<UserPrefsUseCase> {
+        UserPrefsUseCase(
+            appPreferences = get(),
+            context = get(),
+        )
     }
 }

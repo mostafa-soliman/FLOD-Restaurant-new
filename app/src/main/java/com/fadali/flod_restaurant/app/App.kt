@@ -24,7 +24,7 @@ import com.fadali.flod_restaurant.core.component.bottomnavbar.BottomNavConfig
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.AppErrorDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.ErrorDialogState
-import com.fadali.flod_restaurant.core.domain.usecase.ToggleLanguageUseCase
+import com.fadali.flod_restaurant.core.datastore.preferences.usecase.ToggleLanguageUseCase
 import com.fadali.flod_restaurant.core.util.resolve
 import com.fadali.flod_restaurant.i18n.LocalizationProvider
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme

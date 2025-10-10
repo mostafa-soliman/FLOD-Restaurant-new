@@ -32,17 +32,18 @@ class AppPreferences(
 
         // App version tracking
         private val LAST_APP_VERSION_KEY = stringPreferencesKey("last_app_version")
+
+        // Login state
+        private val LOGGED_IN_KEY = booleanPreferencesKey("logged_in")
     }
 
     // Theme preferences
     suspend fun saveThemeMode(context: Context, themeMode: String) {
         savePreference(context, THEME_MODE_KEY, themeMode)
     }
-
     fun getThemeModeFlow(context: Context): Flow<String> {
         return getPreferenceFlow(context, THEME_MODE_KEY, THEME_SYSTEM)
     }
-
     suspend fun getThemeMode(context: Context): String {
         return getPreference(context, THEME_MODE_KEY, THEME_SYSTEM)
     }
@@ -51,23 +52,18 @@ class AppPreferences(
     suspend fun setNotificationsEnabled(context: Context, enabled: Boolean) {
         savePreference(context, NOTIFICATIONS_ENABLED_KEY, enabled)
     }
-
     fun getNotificationsEnabledFlow(context: Context): Flow<Boolean> {
         return getPreferenceFlow(context, NOTIFICATIONS_ENABLED_KEY, true)
     }
-
     suspend fun areNotificationsEnabled(context: Context): Boolean {
         return getPreference(context, NOTIFICATIONS_ENABLED_KEY, true)
     }
-
     suspend fun setPushNotificationsEnabled(context: Context, enabled: Boolean) {
         savePreference(context, PUSH_NOTIFICATIONS_KEY, enabled)
     }
-
     fun getPushNotificationsEnabledFlow(context: Context): Flow<Boolean> {
         return getPreferenceFlow(context, PUSH_NOTIFICATIONS_KEY, true)
     }
-
     suspend fun arePushNotificationsEnabled(context: Context): Boolean {
         return getPreference(context, PUSH_NOTIFICATIONS_KEY, true)
     }
@@ -76,23 +72,18 @@ class AppPreferences(
     suspend fun setOnboardingCompleted(context: Context, completed: Boolean) {
         savePreference(context, ONBOARDING_COMPLETED_KEY, completed)
     }
-
     fun getOnboardingCompletedFlow(context: Context): Flow<Boolean> {
         return getPreferenceFlow(context, ONBOARDING_COMPLETED_KEY, false)
     }
-
     suspend fun isOnboardingCompleted(context: Context): Boolean {
         return getPreference(context, ONBOARDING_COMPLETED_KEY, false)
     }
-
     suspend fun setFirstTimeUser(context: Context, isFirstTime: Boolean) {
         savePreference(context, FIRST_TIME_USER_KEY, isFirstTime)
     }
-
     fun getFirstTimeUserFlow(context: Context): Flow<Boolean> {
         return getPreferenceFlow(context, FIRST_TIME_USER_KEY, true)
     }
-
     suspend fun isFirstTimeUser(context: Context): Boolean {
         return getPreference(context, FIRST_TIME_USER_KEY, true)
     }
@@ -101,13 +92,22 @@ class AppPreferences(
     suspend fun saveLastAppVersion(context: Context, version: String) {
         savePreference(context, LAST_APP_VERSION_KEY, version)
     }
-
     fun getLastAppVersionFlow(context: Context): Flow<String> {
         return getPreferenceFlow(context, LAST_APP_VERSION_KEY, "")
     }
-
     suspend fun getLastAppVersion(context: Context): String {
         return getPreference(context, LAST_APP_VERSION_KEY, "")
+    }
+
+    // Login state
+    suspend fun setLoggedIn(context: Context, loggedIn: Boolean) {
+        savePreference(context, LOGGED_IN_KEY, loggedIn)
+    }
+    fun getLoggedInFlow(context: Context): Flow<Boolean> {
+        return getPreferenceFlow(context, LOGGED_IN_KEY, false)
+    }
+    suspend fun isLoggedIn(context: Context): Boolean {
+        return getPreference(context, LOGGED_IN_KEY, false)
     }
 
     /**

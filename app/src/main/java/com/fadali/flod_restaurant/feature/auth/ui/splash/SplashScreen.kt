@@ -19,10 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -34,23 +31,47 @@ import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
+import com.fadali.flod_restaurant.app.navigation.graphs.Graph
+import com.fadali.flod_restaurant.app.navigation.navigateAndClearBackStack
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.core.component.video.videoplayer.VideoPlayer
 import com.fadali.flod_restaurant.presentation.ui.theme.PrimaryRed
 import com.fadali.flod_restaurant.presentation.ui.theme.accentBlue
 import com.fadali.flod_restaurant.presentation.ui.theme.onErrorText
+import com.smyvo.core.ui.mvi.HandleEffects
+import com.smyvo.core.ui.mvi.HandleState
 import kotlinx.coroutines.delay
+import org.koin.compose.koinInject
 
 @Composable
 fun SplashScreen(
     navController: NavController,
+    viewModel: SplashViewModel = koinInject()
+) {
+    HandleState(viewModel.state) { state ->
+        SplashScreenContent(
+            state = state,
+            sendEvent = viewModel::handleEvent
+        )
+    }
+    HandleEffects(viewModel.effect) { effect ->
+        when (effect) {
+            SplashEffect.NavigateToLogin -> navController.navigateAndClearBackStack(AuthRoutes.Login)
+            SplashEffect.NavigateToHome -> navController.navigateAndClearBackStack(Graph.HomeGraph)
+        }
+    }
+}
+
+@Composable
+private fun SplashScreenContent(
+    state: SplashState,
+    sendEvent: (SplashEvent) -> Unit,
 ) {
     val letterCount = stringResource(R.string.brand).length
     val letterAnimations = remember { List(letterCount) { Animatable(0f) } }
     val underlineAnimation = remember { Animatable(0f) }
     val context = LocalContext.current
     val videoUri = "android.resource://${context.packageName}/${R.raw.splash_video}".toUri()
-    var showVideo by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         delay(500L)
@@ -72,7 +93,7 @@ fun SplashScreen(
             )
         )
         delay(500L)
-        showVideo = true
+        sendEvent(SplashEvent.ShouldShowVideo)
     }
 
     Box(
@@ -119,16 +140,12 @@ fun SplashScreen(
         }
     }
 
-    if (showVideo) {
+    if (state.showVideo) {
         VideoPlayer(
             modifier = Modifier.fillMaxWidth(),
             uri = videoUri,
             showControllers = false,
-            onVideoEnded = {
-                navController.navigate(AuthRoutes.Login) {
-                    popUpTo(AuthRoutes.Splash) { inclusive = true }
-                }
-            }
+            onVideoEnded = { sendEvent(SplashEvent.OnSplashFinished) }
         )
     }
 }

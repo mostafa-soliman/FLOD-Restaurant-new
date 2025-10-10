@@ -1,4 +1,4 @@
-package com.fadali.flod_restaurant.core.domain.usecase
+package com.fadali.flod_restaurant.core.datastore.preferences.usecase
 
 import android.content.Context
 import com.fadali.flod_restaurant.core.datastore.preferences.language.LanguageManager

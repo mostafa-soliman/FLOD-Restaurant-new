@@ -16,6 +16,7 @@ import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumbe
 import com.fadali.flod_restaurant.feature.auth.ui.login.LoginViewModel
 import com.fadali.flod_restaurant.feature.auth.ui.otp.OTPVerificationViewModel
 import com.fadali.flod_restaurant.feature.auth.ui.signup.SignUpViewModel
+import com.fadali.flod_restaurant.feature.auth.ui.splash.SplashViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -67,11 +68,20 @@ val authModule = module {
         RefreshTokenUseCase(get())
     }
 
+    viewModel<SplashViewModel> {
+        SplashViewModel(
+            userPrefsUseCase = get(),
+            onboardingUseCase = get(),
+            dispatchers = get(),
+            defaultExceptionHandler = get(),
+        )
+    }
     viewModel<LoginViewModel> {
         LoginViewModel(
             validatePhoneNumberUseCase = get(),
             loginUseCase = get(),
             saveUserIdUseCase = get(),
+            userPrefsUseCase = get(),
             dispatchers = get(),
             defaultExceptionHandler = get(),
         )
