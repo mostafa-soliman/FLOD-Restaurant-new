@@ -6,9 +6,12 @@ import com.fadali.flod_restaurant.feature.auth.domain.model.SignUpRequestDomainM
 import com.fadali.flod_restaurant.feature.auth.domain.model.SignUpResponseDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.model.otp.ValidateOtpRequest
 import com.fadali.flod_restaurant.feature.auth.domain.model.otp.ValidateOtpResponse
+import com.fadali.flod_restaurant.feature.auth.domain.model.refreshtoken.RefreshTokenRequestDomainModel
+import com.fadali.flod_restaurant.feature.auth.domain.model.refreshtoken.RefreshTokenResponseDomainModel
 
 interface AuthRepo {
     suspend fun login(request: LoginRequestDomainModel): LoginResponseDomainModel
     suspend fun signUp(request: SignUpRequestDomainModel): SignUpResponseDomainModel
     suspend fun validateOtp(request: ValidateOtpRequest): ValidateOtpResponse
+    suspend fun refreshToken(request: RefreshTokenRequestDomainModel): RefreshTokenResponseDomainModel
 }

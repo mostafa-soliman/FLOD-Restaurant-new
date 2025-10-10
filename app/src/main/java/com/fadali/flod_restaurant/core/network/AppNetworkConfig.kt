@@ -2,37 +2,58 @@ package com.fadali.flod_restaurant.core.network
 
 import android.content.Context
 import com.fadali.flod_restaurant.BuildConfig
+import com.fadali.flod_restaurant.core.datastore.preferences.language.LanguageManager
+import com.fadali.flod_restaurant.core.network.interceptor.SubDomainInterceptorFactory
 import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthEndPoints
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetAuthTokensUseCase
-import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveAuthTokensUseCase
 import com.smyvo.core.network.AppNetworkConfig
 import com.smyvo.core.network.android.interceptors.ChuckerInterceptorFactory
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
+
 
 fun getAppNetworkConfig(
     context: Context,
     getAuthTokensUseCase: GetAuthTokensUseCase,
-    saveAuthTokensUseCase: SaveAuthTokensUseCase
+    languageManager: LanguageManager,
 ): AppNetworkConfig {
+    val tokenRefreshHandler = TokenRefreshHandler()
+    
     return AppNetworkConfig(
         appVersionName = BuildConfig.VERSION_NAME,
         deviceId = "unique-device-id-12345", // TODO: Replace with actual device ID retrieval logic
-        acceptLanguage = "en-US", // TODO: Replace with actual language preference retrieval logic
+        acceptLanguage = getAcceptLanguage(
+            languageManager = languageManager,
+            context = context
+        ),
         clientExceptionStatusCode = 422,
         errorResponseModel = AppResponseErrorModel::class,
         getAuthTokens = { getAuthTokensUseCase()?.toNetworkAuthTokens() },
-        refreshTokens = { null }, // TODO: Replace with actual token refresh logic
-        onRefreshTokenExpired = {  }, // TODO: Replace with actual refresh token expiry handling logic
+        refreshTokens = { tokenRefreshHandler.refreshTokens() },
+        onRefreshTokenExpired = { }, // TODO: Replace with actual refresh token expiry handling logic
         unAuthorizedEndpoints = getUnAuthorizedEndpoints(),
         interceptors = getInterceptors(context = context)
     )
 }
 
-fun getInterceptors(context: Context): List<Interceptor> = listOfNotNull(
+private fun getAcceptLanguage(languageManager: LanguageManager, context: Context): String {
+    var currentLanguage = "en-US"
+    runBlocking {
+        currentLanguage = languageManager.getCurrentLanguage(context)
+    }
+    return when (currentLanguage) {
+        LanguageManager.ARABIC -> "ar-SA"
+        LanguageManager.ENGLISH -> "en-US"
+        else -> "en-US"
+    }
+}
+
+private fun getInterceptors(context: Context): List<Interceptor> = listOfNotNull(
     if (BuildConfig.DEBUG || BuildConfig.BUILD_TYPE == "staging") ChuckerInterceptorFactory.createDefault(context = context) else null,
+    SubDomainInterceptorFactory.create(),
 )
 
-fun getUnAuthorizedEndpoints(): List<String> = listOf(
+private fun getUnAuthorizedEndpoints(): List<String> = listOf(
     AuthEndPoints.ENDPOINT_LOGIN,
     AuthEndPoints.ENDPOINT_SIGN_UP,
     AuthEndPoints.ENDPOINT_VALIDATE_OTP_LOGIN,

@@ -10,6 +10,8 @@ import com.fadali.flod_restaurant.feature.auth.data.model.otp.ValidateOtpLoginRe
 import com.fadali.flod_restaurant.feature.auth.data.model.otp.ValidateOtpLoginResponseDataModel
 import com.fadali.flod_restaurant.feature.auth.data.model.otp.ValidateOtpSignUpRequestDataModel
 import com.fadali.flod_restaurant.feature.auth.data.model.otp.ValidateOtpSignUpResponseDataModel
+import com.fadali.flod_restaurant.feature.auth.data.model.refreshtoken.RefreshTokenRequestDataModel
+import com.fadali.flod_restaurant.feature.auth.data.model.refreshtoken.RefreshTokenResponseDataModel
 import com.smyvo.core.network.NetworkHandler
 
 class AuthRemoteDataSourceImpl(
@@ -49,6 +51,15 @@ class AuthRemoteDataSourceImpl(
     ): ValidateOtpSignUpResponseDataModel {
         val url = "${BuildConfig.BASE_URL}${AuthEndPoints.ENDPOINT_VALIDATE_OTP_SIGN_UP}"
         val response = networkHandler.post<ResponseModel<ValidateOtpSignUpResponseDataModel>>(
+            url = url,
+            data = request
+        )
+        return response.data!!
+    }
+
+    override suspend fun refreshToken(request: RefreshTokenRequestDataModel): RefreshTokenResponseDataModel {
+        val url = "${BuildConfig.BASE_URL}${AuthEndPoints.ENDPOINT_REFRESH_TOKEN}"
+        val response = networkHandler.post<ResponseModel<RefreshTokenResponseDataModel>>(
             url = url,
             data = request
         )

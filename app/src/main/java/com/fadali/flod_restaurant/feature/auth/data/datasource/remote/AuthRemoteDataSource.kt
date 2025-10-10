@@ -8,10 +8,13 @@ import com.fadali.flod_restaurant.feature.auth.data.model.otp.ValidateOtpLoginRe
 import com.fadali.flod_restaurant.feature.auth.data.model.otp.ValidateOtpLoginResponseDataModel
 import com.fadali.flod_restaurant.feature.auth.data.model.otp.ValidateOtpSignUpRequestDataModel
 import com.fadali.flod_restaurant.feature.auth.data.model.otp.ValidateOtpSignUpResponseDataModel
+import com.fadali.flod_restaurant.feature.auth.data.model.refreshtoken.RefreshTokenRequestDataModel
+import com.fadali.flod_restaurant.feature.auth.data.model.refreshtoken.RefreshTokenResponseDataModel
 
 interface AuthRemoteDataSource {
     suspend fun login(request: LoginRequestDataModel): LoginResponseDataModel
     suspend fun signUp(request: SignUpRequestDataModel): SignUpResponseDataModel
     suspend fun validateLoginOtp(request: ValidateOtpLoginRequestDataModel): ValidateOtpLoginResponseDataModel
     suspend fun validateSignUpOtp(request: ValidateOtpSignUpRequestDataModel): ValidateOtpSignUpResponseDataModel
+    suspend fun refreshToken(request: RefreshTokenRequestDataModel): RefreshTokenResponseDataModel
 }

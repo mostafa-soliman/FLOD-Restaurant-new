@@ -10,6 +10,8 @@ import com.fadali.flod_restaurant.feature.auth.domain.model.SignUpRequestDomainM
 import com.fadali.flod_restaurant.feature.auth.domain.model.SignUpResponseDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.model.otp.ValidateOtpRequest
 import com.fadali.flod_restaurant.feature.auth.domain.model.otp.ValidateOtpResponse
+import com.fadali.flod_restaurant.feature.auth.domain.model.refreshtoken.RefreshTokenRequestDomainModel
+import com.fadali.flod_restaurant.feature.auth.domain.model.refreshtoken.RefreshTokenResponseDomainModel
 
 class AuthRepoImpl(
     private val authRemoteDataSource: AuthRemoteDataSource
@@ -32,5 +34,9 @@ class AuthRepoImpl(
                 authRemoteDataSource.validateSignUpOtp(request.toDataModel()).toDomainModel()
             }
         }
+    }
+
+    override suspend fun refreshToken(request: RefreshTokenRequestDomainModel): RefreshTokenResponseDomainModel {
+        return authRemoteDataSource.refreshToken(request = request.toDataModel()).toDomainModel()
     }
 }

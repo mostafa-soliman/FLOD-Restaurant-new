@@ -19,7 +19,7 @@ val appNetworkModule = module {
         getAppNetworkConfig(
             context = get(),
             getAuthTokensUseCase = get(),
-            saveAuthTokensUseCase = get(),
+            languageManager = get(),
         )
     }
     single<AppConfig> {

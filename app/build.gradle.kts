@@ -24,6 +24,7 @@ android {
         buildConfigField("String", "BASE_URL", "\"https://api.fodek.net/\"")
         buildConfigField("String", "RESOURCES_BASE_URL", "\"https://feerotech.blob.core.windows.net/public/\"")
         buildConfigField("String", "TENANT_ID", "\"0199bda7-ba1c-7d79-8a56-350f00d6f4ba\"")
+        buildConfigField("String", "SUB_DOMAIN", "\"Https://astrecode.dev.fodek.net\"")
     }
 
     buildTypes {

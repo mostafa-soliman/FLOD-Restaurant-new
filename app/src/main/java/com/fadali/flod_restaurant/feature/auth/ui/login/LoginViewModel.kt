@@ -4,6 +4,7 @@ import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
 import com.fadali.flod_restaurant.feature.auth.domain.model.LoginRequestDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.LoginUseCase
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveUserIdUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
 import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
 import com.smyvo.core.ui.dispatchers.AppCoroutineDispatcher
@@ -13,6 +14,7 @@ import com.smyvo.core.ui.network.DefaultExceptionHandler
 class LoginViewModel(
     private val validatePhoneNumberUseCase: ValidatePhoneNumberUseCase,
     private val loginUseCase: LoginUseCase,
+    private val saveUserIdUseCase: SaveUserIdUseCase,
     dispatchers: AppCoroutineDispatcher,
     defaultExceptionHandler: DefaultExceptionHandler
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(
@@ -70,6 +72,7 @@ class LoginViewModel(
                 phoneNumber = currentState.finalPhoneNumber
             )
             val response = loginUseCase(request)
+            saveUserIdUseCase(response.customerId)
             setState { copy(isLoading = false) }
             if (response.notRegistered) {
                 sendEffect(

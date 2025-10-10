@@ -5,8 +5,11 @@ import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthRemote
 import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthRemoteDataSourceImpl
 import com.fadali.flod_restaurant.feature.auth.domain.AuthRepo
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetAuthTokensUseCase
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetUserIdUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.LoginUseCase
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.RefreshTokenUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveAuthTokensUseCase
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveUserIdUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.SignUpUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidateOtpUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
@@ -48,13 +51,29 @@ val authModule = module {
             context = get()
         )
     }
+    single<SaveUserIdUseCase> {
+        SaveUserIdUseCase(
+            context = get(),
+            dispatchers = get(),
+        )
+    }
+    single<GetUserIdUseCase> {
+        GetUserIdUseCase(
+            context = get(),
+            dispatchers = get(),
+        )
+    }
+    single<RefreshTokenUseCase> {
+        RefreshTokenUseCase(get())
+    }
 
     viewModel<LoginViewModel> {
         LoginViewModel(
             validatePhoneNumberUseCase = get(),
             loginUseCase = get(),
+            saveUserIdUseCase = get(),
             dispatchers = get(),
-            defaultExceptionHandler = get()
+            defaultExceptionHandler = get(),
         )
     }
     viewModel<SignUpViewModel> {
