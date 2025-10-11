@@ -1,6 +1,6 @@
 package com.fadali.flod_restaurant.feature.auth.data.datasource.remote
 
-object AuthEndPoints {
+object AuthEndpoints {
     const val ENDPOINT_LOGIN = "api/MobileAccount/Login"
     const val ENDPOINT_SIGN_UP = "api/MobileAccount/Register"
     const val ENDPOINT_VALIDATE_OTP_LOGIN = "api/MobileAccount/ValidateCustomerLogin"

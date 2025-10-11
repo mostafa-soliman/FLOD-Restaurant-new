@@ -18,7 +18,7 @@ class AuthRemoteDataSourceImpl(
     private val networkHandler: NetworkHandler
 ) : AuthRemoteDataSource {
     override suspend fun login(request: LoginRequestDataModel): LoginResponseDataModel {
-        val url = "${BuildConfig.BASE_URL}${AuthEndPoints.ENDPOINT_LOGIN}"
+        val url = "${BuildConfig.BASE_URL}${AuthEndpoints.ENDPOINT_LOGIN}"
         val response = networkHandler.post<ResponseModel<LoginResponseDataModel>>(
             url = url,
             data = request
@@ -27,7 +27,7 @@ class AuthRemoteDataSourceImpl(
     }
 
     override suspend fun signUp(request: SignUpRequestDataModel): SignUpResponseDataModel {
-        val url = "${BuildConfig.BASE_URL}${AuthEndPoints.ENDPOINT_SIGN_UP}"
+        val url = "${BuildConfig.BASE_URL}${AuthEndpoints.ENDPOINT_SIGN_UP}"
         val response = networkHandler.post<ResponseModel<String>>(
             url = url,
             data = request
@@ -38,7 +38,7 @@ class AuthRemoteDataSourceImpl(
     override suspend fun validateLoginOtp(
         request: ValidateOtpLoginRequestDataModel
     ): ValidateOtpLoginResponseDataModel {
-        val url = "${BuildConfig.BASE_URL}${AuthEndPoints.ENDPOINT_VALIDATE_OTP_LOGIN}"
+        val url = "${BuildConfig.BASE_URL}${AuthEndpoints.ENDPOINT_VALIDATE_OTP_LOGIN}"
         val response = networkHandler.post<ResponseModel<ValidateOtpLoginResponseDataModel>>(
             url = url,
             data = request
@@ -49,7 +49,7 @@ class AuthRemoteDataSourceImpl(
     override suspend fun validateSignUpOtp(
         request: ValidateOtpSignUpRequestDataModel
     ): ValidateOtpSignUpResponseDataModel {
-        val url = "${BuildConfig.BASE_URL}${AuthEndPoints.ENDPOINT_VALIDATE_OTP_SIGN_UP}"
+        val url = "${BuildConfig.BASE_URL}${AuthEndpoints.ENDPOINT_VALIDATE_OTP_SIGN_UP}"
         val response = networkHandler.post<ResponseModel<ValidateOtpSignUpResponseDataModel>>(
             url = url,
             data = request
@@ -58,7 +58,7 @@ class AuthRemoteDataSourceImpl(
     }
 
     override suspend fun refreshToken(request: RefreshTokenRequestDataModel): RefreshTokenResponseDataModel {
-        val url = "${BuildConfig.BASE_URL}${AuthEndPoints.ENDPOINT_REFRESH_TOKEN}"
+        val url = "${BuildConfig.BASE_URL}${AuthEndpoints.ENDPOINT_REFRESH_TOKEN}"
         val response = networkHandler.post<ResponseModel<RefreshTokenResponseDataModel>>(
             url = url,
             data = request

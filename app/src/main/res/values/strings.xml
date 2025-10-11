@@ -87,4 +87,18 @@
     <string name="meal_avocado_salad">Avocado Salad</string>
     <string name="select_plan">Select a plan</string>
     <string name="order_now">Order now</string>
+    <string name="delivery">Delivery</string>
+    <string name="pick_up">Pick-up</string>
+    <string name="receipt_address">Address</string>
+    <string name="pickup_branch">Pick-up branch</string>
+    <string name="service_categories">Service Categories</string>
+    <string name="plan_categories">Plan Categories</string>
+    <string name="package_duration">Package duration</string>
+    <string name="number_of_meals">Number of Meals</string>
+    <string name="calories_badge">🔥 CAL %1$d</string>
+    <string name="price_sar">%1$.2f</string>
+    <string name="sample_package_subtitle">VARIETY PACKAGE</string>
+    <string name="nav_back">Back</string>
+    <string name="subscription_duration_text">%d days</string>
+    <string name="subscription_meal_text">x%d Meals</string>
 </resources>

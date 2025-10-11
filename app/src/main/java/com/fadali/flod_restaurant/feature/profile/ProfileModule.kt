@@ -1,8 +1,8 @@
 package com.fadali.flod_restaurant.feature.profile
 
 import com.fadali.flod_restaurant.feature.profile.data.ProfileRepoImpl
-import com.fadali.flod_restaurant.feature.profile.data.remote.ProfileRemoteDataSource
-import com.fadali.flod_restaurant.feature.profile.data.remote.ProfileRemoteDataSourceImpl
+import com.fadali.flod_restaurant.feature.profile.data.datasource.remote.ProfileRemoteDataSource
+import com.fadali.flod_restaurant.feature.profile.data.datasource.remote.ProfileRemoteDataSourceImpl
 import com.fadali.flod_restaurant.feature.profile.domain.ProfileRepo
 import com.fadali.flod_restaurant.feature.profile.domain.usecase.CompleteUserDataUseCase
 import com.fadali.flod_restaurant.feature.profile.domain.usecase.GetActivitiesLookupUseCase

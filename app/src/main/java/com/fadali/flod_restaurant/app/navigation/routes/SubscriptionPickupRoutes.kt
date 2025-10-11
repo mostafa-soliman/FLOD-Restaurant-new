@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class SubscriptionPickupRoutes(private val showBottomBar: Boolean) : Route(showBottomNavBar = showBottomBar) {
     @Serializable
-    data object CategoriesBrowser : SubscriptionPickupRoutes(showBottomBar = true)
+    data object SelectPlan : SubscriptionPickupRoutes(showBottomBar = true)
     @Serializable
     data object SelectPickupBranch : SubscriptionPickupRoutes(showBottomBar = false)
     @Serializable

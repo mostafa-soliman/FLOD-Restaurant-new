@@ -1,4 +1,4 @@
-package com.fadali.flod_restaurant.feature.profile.data
+package com.fadali.flod_restaurant.feature.profile.data.datasource.remote
 
 object ProfileEndpoints {
     const val ENDPOINT_GET_ACTIVITIES_LOOKUP = "api/CustomerSpecifications/GetActivitiesLookup"

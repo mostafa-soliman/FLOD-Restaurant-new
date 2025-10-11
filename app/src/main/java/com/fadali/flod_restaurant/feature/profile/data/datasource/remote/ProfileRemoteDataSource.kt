@@ -1,4 +1,4 @@
-package com.fadali.flod_restaurant.feature.profile.data.remote
+package com.fadali.flod_restaurant.feature.profile.data.datasource.remote
 
 import com.fadali.flod_restaurant.feature.profile.data.model.ActivitiesLookupResponse
 import com.fadali.flod_restaurant.feature.profile.data.model.AllergiesLookupResponse

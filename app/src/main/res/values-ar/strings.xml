@@ -88,4 +88,18 @@
     <string name="meal_avocado_salad">سلطة أفوكادو</string>
     <string name="select_plan">اختر خطة</string>
     <string name="order_now">اطلب الآن</string>
+    <string name="pick_up">إستلام</string>
+    <string name="delivery">توصيل</string>
+    <string name="receipt_address">الاستلام</string>
+    <string name="pickup_branch">فرع الاستلام</string>
+    <string name="service_categories"> فئة الخدمات  </string>
+    <string name="plan_categories">فئات الخطط</string>
+    <string name="package_duration">مدة الباقة</string>
+    <string name="number_of_meals">عدد الوجبات</string>
+    <string name="calories_badge">🔥سعرات %1$d</string>
+    <string name="price_sar">%1$.2f</string>
+    <string name="sample_package_subtitle">باستا بالجمبري</string>
+    <string name="nav_back">العودة</string>
+    <string name="subscription_duration_text">%d يوم</string>
+    <string name="subscription_meal_text">x%d وجبة</string>
 </resources>

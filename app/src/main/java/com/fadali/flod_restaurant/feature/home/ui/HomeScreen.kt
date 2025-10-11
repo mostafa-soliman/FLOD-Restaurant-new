@@ -55,7 +55,7 @@ fun HomeScreen(
     HandleEffects(viewModel.effect) { effect ->
         when (effect) {
             is HomeEffect.NavigateToSelectPlan -> {
-                navController.navigate(SubscriptionPickupRoutes.CategoriesBrowser)
+                navController.navigate(SubscriptionPickupRoutes.SelectPlan)
             }
 
             is HomeEffect.ShowError -> {

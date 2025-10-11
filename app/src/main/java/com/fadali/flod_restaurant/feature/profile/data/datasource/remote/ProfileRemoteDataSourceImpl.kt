@@ -1,8 +1,8 @@
-package com.fadali.flod_restaurant.feature.profile.data.remote
+package com.fadali.flod_restaurant.feature.profile.data.datasource.remote
 
 import com.fadali.flod_restaurant.BuildConfig
 import com.fadali.flod_restaurant.core.network.ResponseModel
-import com.fadali.flod_restaurant.feature.profile.data.ProfileEndpoints
+import com.fadali.flod_restaurant.feature.profile.data.datasource.remote.ProfileEndpoints
 import com.fadali.flod_restaurant.feature.profile.data.model.ActivitiesLookupResponse
 import com.fadali.flod_restaurant.feature.profile.data.model.AllergiesLookupResponse
 import com.fadali.flod_restaurant.feature.profile.data.model.GoalsLookupResponse

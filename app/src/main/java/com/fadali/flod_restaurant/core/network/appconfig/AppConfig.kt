@@ -6,11 +6,15 @@ import kotlinx.serialization.Serializable
 @Keep
 @Serializable
 data class AppConfig(
-    val otpSettings: OtpSettings
+    val otpSettings: OtpSettings,
+    val timeSlotType: TimeSlotType,
+    val packageType: PackageType,
 ) {
     companion object {
         val default = AppConfig(
-            otpSettings = OtpSettings.default
+            otpSettings = OtpSettings.default,
+            timeSlotType = TimeSlotType.DELIVERY,
+            packageType = PackageType.DELIVERY
         )
     }
 }
@@ -36,5 +40,33 @@ data class OtpSettings(
             resendTrialsExpireInMinutes = 15,
             wrongOTPTrailsExpireInMinutes = 15,
         )
+    }
+}
+
+@Keep
+@Serializable
+enum class TimeSlotType(val value: Int) {
+    DELIVERY(1),
+    PICKUP(2),
+    BOTH(3);
+
+    companion object {
+        fun from(value: Int): TimeSlotType {
+            return TimeSlotType.entries.first { it.value == value }
+        }
+    }
+}
+
+@Keep
+@Serializable
+enum class PackageType(val value: Int) {
+    DELIVERY(1),
+    PICKUP(2),
+    BOTH(3);
+
+    companion object {
+        fun from(value: Int): PackageType {
+            return PackageType.entries.first { it.value == value }
+        }
     }
 }

@@ -26,7 +26,7 @@ sealed class Graph(val startDestination: Route) {
     @Serializable
     data object MoreGraph : Graph(startDestination = BottomNavRoutes.More)
     @Serializable
-    data object SubscriptionPickupGraph : Graph(startDestination = SubscriptionPickupRoutes.CategoriesBrowser)
+    data object SubscriptionPickupGraph : Graph(startDestination = SubscriptionPickupRoutes.SelectPlan)
     @Serializable
     data object SubscriptionDeliveryGraph : Graph(startDestination = SubscriptionDeliveryRoutes.CategoriesBrowser)
     

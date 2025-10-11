@@ -1,7 +1,7 @@
 package com.fadali.flod_restaurant.feature.profile.data
 
 import com.fadali.flod_restaurant.feature.profile.data.mapper.toDomainModel
-import com.fadali.flod_restaurant.feature.profile.data.remote.ProfileRemoteDataSource
+import com.fadali.flod_restaurant.feature.profile.data.datasource.remote.ProfileRemoteDataSource
 import com.fadali.flod_restaurant.feature.profile.domain.ProfileRepo
 import com.fadali.flod_restaurant.feature.profile.domain.model.ActivitiesLookupModel
 import com.fadali.flod_restaurant.feature.profile.domain.model.AllergiesLookupModel

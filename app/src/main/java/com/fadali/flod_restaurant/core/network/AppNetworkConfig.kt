@@ -4,7 +4,7 @@ import android.content.Context
 import com.fadali.flod_restaurant.BuildConfig
 import com.fadali.flod_restaurant.core.datastore.preferences.language.LanguageManager
 import com.fadali.flod_restaurant.core.network.interceptor.SubDomainInterceptorFactory
-import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthEndPoints
+import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthEndpoints
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetAuthTokensUseCase
 import com.smyvo.core.network.AppNetworkConfig
 import com.smyvo.core.network.android.interceptors.ChuckerInterceptorFactory
@@ -54,9 +54,9 @@ private fun getInterceptors(context: Context): List<Interceptor> = listOfNotNull
 )
 
 private fun getUnAuthorizedEndpoints(): List<String> = listOf(
-    AuthEndPoints.ENDPOINT_LOGIN,
-    AuthEndPoints.ENDPOINT_SIGN_UP,
-    AuthEndPoints.ENDPOINT_VALIDATE_OTP_LOGIN,
-    AuthEndPoints.ENDPOINT_VALIDATE_OTP_SIGN_UP,
-    AuthEndPoints.ENDPOINT_REFRESH_TOKEN,
+    AuthEndpoints.ENDPOINT_LOGIN,
+    AuthEndpoints.ENDPOINT_SIGN_UP,
+    AuthEndpoints.ENDPOINT_VALIDATE_OTP_LOGIN,
+    AuthEndpoints.ENDPOINT_VALIDATE_OTP_SIGN_UP,
+    AuthEndpoints.ENDPOINT_REFRESH_TOKEN,
 )
