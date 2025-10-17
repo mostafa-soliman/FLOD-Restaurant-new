@@ -1,8 +1,8 @@
 package com.fadali.flod_restaurant.app.di
 
 import com.fadali.flod_restaurant.core.network.AppDefaultExceptionHandler
+import com.fadali.flod_restaurant.core.network.FLODNetworkConfig
 import com.fadali.flod_restaurant.core.network.appconfig.AppConfig
-import com.fadali.flod_restaurant.core.network.getAppNetworkConfig
 import com.smyvo.core.network.AppNetworkConfig
 import com.smyvo.core.network.networkModule
 import com.smyvo.core.ui.network.DefaultExceptionHandler
@@ -13,14 +13,19 @@ val appNetworkModule = module {
         networkModule
     )
     single<DefaultExceptionHandler> {
-        AppDefaultExceptionHandler()
+        AppDefaultExceptionHandler(
+            networkClientManager = get(),
+        )
     }
-    single<AppNetworkConfig> {
-        getAppNetworkConfig(
+    single<FLODNetworkConfig> {
+        FLODNetworkConfig(
             context = get(),
             getAuthTokensUseCase = get(),
             languageManager = get(),
         )
+    }
+    single<AppNetworkConfig> {
+        get<FLODNetworkConfig>().networkConfig
     }
     single<AppConfig> {
         AppConfig.default

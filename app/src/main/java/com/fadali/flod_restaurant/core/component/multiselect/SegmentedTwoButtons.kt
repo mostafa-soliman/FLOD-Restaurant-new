@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fadali.flod_restaurant.core.network.appconfig.AddressType
 import com.fadali.flod_restaurant.core.network.appconfig.PackageType
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 
@@ -87,8 +88,9 @@ fun SegmentedButton(
         }
     }
 }
+
 @Composable
-fun SegmentedTwoButtons(
+fun SegmentedTwoButtonsPackage(
     modifier: Modifier = Modifier,
     leftLabel: String,
     rightLabel: String,
@@ -133,16 +135,64 @@ fun SegmentedTwoButtons(
         )
     }
 }
+
+@Composable
+fun SegmentedTwoButtonsAddress(
+    modifier: Modifier = Modifier,
+    leftLabel: String,
+    rightLabel: String,
+    leftIcon: ImageVector? = null,
+    rightIcon: ImageVector? = null,
+    selectedLeft: Boolean,
+    selectedBackgroundColor: Color = MaterialTheme.colorScheme.primary,
+    unselectedBackgroundColor: Color = Color.Transparent,
+    selectedContentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    unselectedContentColor: Color = MaterialTheme.colorScheme.onSurface,
+    showBorderOnUnselected: Boolean = true,
+    borderColor: Color = MaterialTheme.colorScheme.outline,
+    onSelect: (AddressType) -> Unit
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        SegmentedButton(
+            label = leftLabel,
+            icon = leftIcon,
+            selected = selectedLeft,
+            selectedBackgroundColor = selectedBackgroundColor,
+            unselectedBackgroundColor = unselectedBackgroundColor,
+            selectedContentColor = selectedContentColor,
+            unselectedContentColor = unselectedContentColor,
+            showBorder = !selectedLeft && showBorderOnUnselected,
+            borderColor = borderColor,
+            onClick = { onSelect(AddressType.HOME) }
+        )
+        SegmentedButton(
+            label = rightLabel,
+            icon = rightIcon,
+            selected = !selectedLeft,
+            selectedBackgroundColor = selectedBackgroundColor,
+            unselectedBackgroundColor = unselectedBackgroundColor,
+            selectedContentColor = selectedContentColor,
+            unselectedContentColor = unselectedContentColor,
+            showBorder = selectedLeft && showBorderOnUnselected,
+            borderColor = borderColor,
+            onClick = { onSelect(AddressType.WORK) }
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun SegmentedTwoButtonsPreview() {
     var selectedLeft by remember { mutableStateOf(true) }
     FLODRestaurantTheme {
-        SegmentedTwoButtons(
+        SegmentedTwoButtonsPackage(
             leftLabel = "Left",
             rightLabel = "Right",
             selectedLeft = selectedLeft,
-            onSelect = {}
+            onSelect = { type: PackageType -> },
         )
     }
 }

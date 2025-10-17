@@ -11,10 +11,7 @@ fun NavGraphBuilder.homeGraph(navController: NavHostController) {
     addScreen<BottomNavRoutes.Home> {
         HomeScreen(navController)
     }
-    addGraph<Graph.SubscriptionPickupGraph> {
-        subscriptionPickupGraph(navController = navController)
-    }
-    addGraph<Graph.SubscriptionDeliveryGraph> {
-        subscriptionDeliveryGraph(navController = navController)
+    addGraph<Graph.SubscriptionGraph> {
+        subscriptionGraph(navController = navController)
     }
 }

@@ -19,6 +19,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.fadali.flod_restaurant.app.navigation.NavigationRoot
+import com.fadali.flod_restaurant.app.navigation.graphs.Graph
+import com.fadali.flod_restaurant.app.navigation.navigateAndClearBackStack
 import com.fadali.flod_restaurant.core.component.bottomnavbar.BottomNavBar
 import com.fadali.flod_restaurant.core.component.bottomnavbar.BottomNavConfig
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
@@ -75,6 +77,7 @@ fun App() {
                         showErrorDialog = true
                         effect.dialogState?.let { errorDialogState = it }
                     }
+                    MainEffect.NavigateToLogin -> navController.navigateAndClearBackStack(Graph.AuthGraph)
                 }
             }
             AppErrorDialog(

@@ -14,4 +14,5 @@ interface AuthRepo {
     suspend fun signUp(request: SignUpRequestDomainModel): SignUpResponseDomainModel
     suspend fun validateOtp(request: ValidateOtpRequest): ValidateOtpResponse
     suspend fun refreshToken(request: RefreshTokenRequestDomainModel): RefreshTokenResponseDomainModel
+    suspend fun logout(): Boolean
 }

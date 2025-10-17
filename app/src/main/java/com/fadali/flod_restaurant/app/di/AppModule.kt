@@ -2,6 +2,7 @@ package com.fadali.flod_restaurant.app.di
 
 import com.fadali.flod_restaurant.core.authtokens.authTokenModule
 import com.fadali.flod_restaurant.core.datastore.coreDataStoreModule
+import com.fadali.flod_restaurant.core.keystore.keyStoreModule
 import com.fadali.flod_restaurant.feature.auth.authModule
 import com.fadali.flod_restaurant.feature.home.homeModule
 import com.fadali.flod_restaurant.feature.profile.profileModule
@@ -19,6 +20,7 @@ val appModule = module {
         uiModule,
         mainModule,
         coreDataStoreModule,
+        keyStoreModule,
         authModule,
         authTokenModule,
         profileModule,

@@ -1,7 +1,6 @@
 package com.fadali.flod_restaurant.feature.auth.data.model
 
 import androidx.annotation.Keep
-import com.fadali.flod_restaurant.BuildConfig
 import kotlinx.serialization.Serializable
 
 @Keep
@@ -12,5 +11,4 @@ data class SignUpRequestDataModel(
     val phoneNumber: String,
     val gender: Int,
     val dateOfBirth: String,
-    val tenantId: String = BuildConfig.TENANT_ID
 )

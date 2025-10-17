@@ -26,6 +26,7 @@ class MainViewModel(
         when (event) {
             MainEvent.CheckLoginStatus -> checkLoginStatus()
             MainEvent.OnToggleLanguage -> onToggleLanguage()
+            MainEvent.OnLogout -> sendEffect(MainEffect.NavigateToLogin)
         }
     }
 

@@ -17,4 +17,5 @@ interface AuthRemoteDataSource {
     suspend fun validateLoginOtp(request: ValidateOtpLoginRequestDataModel): ValidateOtpLoginResponseDataModel
     suspend fun validateSignUpOtp(request: ValidateOtpSignUpRequestDataModel): ValidateOtpSignUpResponseDataModel
     suspend fun refreshToken(request: RefreshTokenRequestDataModel): RefreshTokenResponseDataModel
+    suspend fun logout(): Boolean
 }

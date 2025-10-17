@@ -2,10 +2,9 @@ package com.fadali.flod_restaurant.feature.auth.ui.login
 
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.navigation.routes.AuthRoutes
-import com.fadali.flod_restaurant.core.datastore.preferences.usecase.UserPrefsUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.model.LoginRequestDomainModel
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.LoginUseCase
-import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveUserIdUseCase
+import com.fadali.flod_restaurant.core.keystore.usecase.userid.SaveUserIdUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
 import com.fadali.flod_restaurant.feature.auth.ui.otp.OtpFlowType
 import com.smyvo.core.ui.dispatchers.AppCoroutineDispatcher
@@ -16,7 +15,6 @@ class LoginViewModel(
     private val validatePhoneNumberUseCase: ValidatePhoneNumberUseCase,
     private val loginUseCase: LoginUseCase,
     private val saveUserIdUseCase: SaveUserIdUseCase,
-    private val userPrefsUseCase: UserPrefsUseCase,
     dispatchers: AppCoroutineDispatcher,
     defaultExceptionHandler: DefaultExceptionHandler
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(
@@ -74,10 +72,7 @@ class LoginViewModel(
                 phoneNumber = currentState.finalPhoneNumber
             )
             val response = loginUseCase(request)
-
             saveUserIdUseCase(response.customerId)
-            userPrefsUseCase.markUserAsLoggedIn()
-
             setState { copy(isLoading = false) }
             if (response.notRegistered) {
                 sendEffect(

@@ -65,4 +65,10 @@ class AuthRemoteDataSourceImpl(
         )
         return response.data!!
     }
+
+    override suspend fun logout(): Boolean {
+        val url = "${BuildConfig.BASE_URL}${AuthEndpoints.ENDPOINT_LOGOUT}"
+        val response = networkHandler.post<ResponseModel<Boolean>>(url = url)
+        return response.data!!
+    }
 }

@@ -6,6 +6,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
@@ -13,6 +14,7 @@ import com.fadali.flod_restaurant.app.MainViewModel
 import com.fadali.flod_restaurant.app.navigation.graphs.Graph
 import com.fadali.flod_restaurant.app.navigation.routes.Route
 import org.koin.compose.koinInject
+import kotlin.reflect.KType
 
 private const val BACK_STACK_ROOT = 0
 
@@ -34,9 +36,10 @@ inline fun <reified T: Graph> NavGraphBuilder.addGraph(
  * Enhanced composable that automatically updates MainViewModel with current route
  */
 inline fun <reified T : Route> NavGraphBuilder.addScreen(
+    typeMap: Map<KType, NavType<*>> = emptyMap(),
     crossinline content: @Composable (NavBackStackEntry) -> Unit
 ) {
-    composable<T> { backStackEntry ->
+    composable<T>(typeMap = typeMap) { backStackEntry ->
         val mainViewModel: MainViewModel = koinInject()
         val currentRoute = backStackEntry.toRoute<T>()
         LaunchedEffect(currentRoute) {

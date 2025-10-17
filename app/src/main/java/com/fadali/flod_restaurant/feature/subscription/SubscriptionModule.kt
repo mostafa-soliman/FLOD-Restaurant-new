@@ -11,7 +11,8 @@ import com.fadali.flod_restaurant.feature.subscription.domain.usecase.GetCustome
 import com.fadali.flod_restaurant.feature.subscription.domain.usecase.GetPackagesUseCase
 import com.fadali.flod_restaurant.feature.subscription.domain.usecase.GetProductCategoriesUseCase
 import com.fadali.flod_restaurant.feature.subscription.domain.usecase.UpdateCustomerAddressUseCase
-import com.fadali.flod_restaurant.feature.subscription.selectplan.ui.SelectPlanViewModel
+import com.fadali.flod_restaurant.feature.subscription.ui.branchaddress.BranchAddressViewModel
+import com.fadali.flod_restaurant.feature.subscription.ui.selectplan.ui.SelectPlanViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -33,6 +34,15 @@ val subscriptionModule = module {
             getBranchesUseCase = get(),
             getProductCategoriesUseCase = get(),
             getPackagesUseCase = get(),
+            dispatchers = get(),
+            defaultExceptionHandler = get()
+        )
+    }
+    viewModel<BranchAddressViewModel> {
+        BranchAddressViewModel(
+            createCustomerAddressUseCase = get(),
+            updateCustomerAddressUseCase = get(),
+            getCustomerAddressesUseCase = get(),
             dispatchers = get(),
             defaultExceptionHandler = get()
         )

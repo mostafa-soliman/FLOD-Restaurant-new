@@ -8,11 +8,15 @@ import kotlinx.serialization.Serializable
 data class Branch(
     val id: String,
     val displayName: String,
+    val addressLat: Double,
+    val addressLng: Double,
 ) {
     companion object {
         val empty = Branch(
             id = "",
             displayName = "",
+            addressLat = 0.0,
+            addressLng = 0.0,
         )
     }
 }

@@ -20,4 +20,11 @@ class UserPrefsUseCase(
     suspend fun markUserAsLoggedIn() {
         appPreferences.setLoggedIn(context, true)
     }
+
+    /**
+     * Mark the the User as logged in
+     */
+    suspend fun markUserAsLoggedOut() {
+        appPreferences.setLoggedIn(context, false)
+    }
 }

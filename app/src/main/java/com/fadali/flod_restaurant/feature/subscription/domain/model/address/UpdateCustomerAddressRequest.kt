@@ -14,7 +14,7 @@ data class UpdateCustomerAddressRequest(
     val city: String,
     val district: String,
     val landmark: String,
-    val additionalNotes: String,
+    val additionalNotes: String?,
     val latitude: Double,
     val longitude: Double,
 )

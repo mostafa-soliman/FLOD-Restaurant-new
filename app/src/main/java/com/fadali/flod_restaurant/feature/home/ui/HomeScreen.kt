@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.fadali.flod_restaurant.R
-import com.fadali.flod_restaurant.app.navigation.routes.SubscriptionPickupRoutes
+import com.fadali.flod_restaurant.app.navigation.routes.SubscriptionRoutes
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.AppErrorDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.ErrorDialogState
@@ -55,7 +55,7 @@ fun HomeScreen(
     HandleEffects(viewModel.effect) { effect ->
         when (effect) {
             is HomeEffect.NavigateToSelectPlan -> {
-                navController.navigate(SubscriptionPickupRoutes.SelectPlan)
+                navController.navigate(SubscriptionRoutes.SelectPlan)
             }
 
             is HomeEffect.ShowError -> {

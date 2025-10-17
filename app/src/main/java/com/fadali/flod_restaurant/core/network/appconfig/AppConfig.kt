@@ -70,3 +70,11 @@ enum class PackageType(val value: Int) {
         }
     }
 }
+
+@Keep
+@Serializable
+enum class AddressType(val value: Int) {
+    HOME(1),
+    WORK(2),
+    Other(3)
+}

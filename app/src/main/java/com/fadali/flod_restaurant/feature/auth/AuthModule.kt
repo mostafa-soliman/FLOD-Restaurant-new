@@ -4,12 +4,9 @@ import com.fadali.flod_restaurant.feature.auth.data.AuthRepoImpl
 import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthRemoteDataSource
 import com.fadali.flod_restaurant.feature.auth.data.datasource.remote.AuthRemoteDataSourceImpl
 import com.fadali.flod_restaurant.feature.auth.domain.AuthRepo
-import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetAuthTokensUseCase
-import com.fadali.flod_restaurant.feature.auth.domain.usecase.GetUserIdUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.LoginUseCase
+import com.fadali.flod_restaurant.feature.auth.domain.usecase.LogoutUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.RefreshTokenUseCase
-import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveAuthTokensUseCase
-import com.fadali.flod_restaurant.feature.auth.domain.usecase.SaveUserIdUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.SignUpUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidateOtpUseCase
 import com.fadali.flod_restaurant.feature.auth.domain.usecase.ValidatePhoneNumberUseCase
@@ -28,45 +25,12 @@ val authModule = module {
         AuthRepoImpl(get())
     }
 
-    factory<LoginUseCase> {
-        LoginUseCase(get())
-    }
-    factory<ValidatePhoneNumberUseCase> {
-        ValidatePhoneNumberUseCase()
-    }
-    factory<SignUpUseCase> {
-        SignUpUseCase(get())
-    }
-    factory<ValidateOtpUseCase> {
-        ValidateOtpUseCase(get())
-    }
-    single<GetAuthTokensUseCase> {
-        GetAuthTokensUseCase(
-            tokenStorage = get(),
-            context = get()
-        )
-    }
-    single<SaveAuthTokensUseCase> {
-        SaveAuthTokensUseCase(
-            tokenStorage = get(),
-            context = get()
-        )
-    }
-    single<SaveUserIdUseCase> {
-        SaveUserIdUseCase(
-            context = get(),
-            dispatchers = get(),
-        )
-    }
-    single<GetUserIdUseCase> {
-        GetUserIdUseCase(
-            context = get(),
-            dispatchers = get(),
-        )
-    }
-    single<RefreshTokenUseCase> {
-        RefreshTokenUseCase(get())
-    }
+    factory { LoginUseCase(get()) }
+    factory { ValidatePhoneNumberUseCase() }
+    factory { SignUpUseCase(get()) }
+    factory { ValidateOtpUseCase(get()) }
+    factory { LogoutUseCase(get()) }
+    factory { RefreshTokenUseCase(get()) }
 
     viewModel<SplashViewModel> {
         SplashViewModel(
@@ -81,7 +45,6 @@ val authModule = module {
             validatePhoneNumberUseCase = get(),
             loginUseCase = get(),
             saveUserIdUseCase = get(),
-            userPrefsUseCase = get(),
             dispatchers = get(),
             defaultExceptionHandler = get(),
         )
@@ -97,6 +60,7 @@ val authModule = module {
         OTPVerificationViewModel(
             validateOtpUseCase = get(),
             saveAuthTokensUseCase = get(),
+            userPrefsUseCase = get(),
             dispatchers = get(),
             defaultExceptionHandler = get()
         )

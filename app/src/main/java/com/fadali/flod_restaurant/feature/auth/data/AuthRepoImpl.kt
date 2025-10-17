@@ -39,4 +39,8 @@ class AuthRepoImpl(
     override suspend fun refreshToken(request: RefreshTokenRequestDomainModel): RefreshTokenResponseDomainModel {
         return authRemoteDataSource.refreshToken(request = request.toDataModel()).toDomainModel()
     }
+
+    override suspend fun logout(): Boolean {
+        return authRemoteDataSource.logout()
+    }
 }

@@ -3,9 +3,11 @@ package com.fadali.flod_restaurant.app
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivityResultRegistryOwner
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.CompositionLocalProvider
 import com.fadali.flod_restaurant.core.permissions.PermissionRequester
 import com.fadali.flod_restaurant.i18n.ContextUtils
 import com.fadali.flod_restaurant.core.datastore.preferences.language.LanguageManager
@@ -31,6 +33,12 @@ class MainActivity : ComponentActivity() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge()
-        setContent { App() }
+        setContent { 
+            CompositionLocalProvider(
+                LocalActivityResultRegistryOwner provides this
+            ) {
+                App()
+            }
+        }
     }
 }

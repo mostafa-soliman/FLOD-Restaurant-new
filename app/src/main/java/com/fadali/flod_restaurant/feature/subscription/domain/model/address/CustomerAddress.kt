@@ -14,7 +14,8 @@ data class CustomerAddress(
     val city: String,
     val district: String,
     val landmark: String,
-    val additionalNotes: String,
+    val additionalNotes: String?,
+    val displayName: String = "$city, $district, $streetName",
     val latitude: Double,
     val longitude: Double,
 ) {
@@ -29,6 +30,7 @@ data class CustomerAddress(
             district = "",
             landmark = "",
             additionalNotes = "",
+            displayName = "",
             latitude = 0.0,
             longitude = 0.0,
         )

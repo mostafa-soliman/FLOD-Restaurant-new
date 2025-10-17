@@ -6,4 +6,8 @@ plugins {
     alias(libs.plugins.hilt.android) apply false
     // App Core
     alias(libs.plugins.core.network) apply false
+    // Kotlin KSP
+    alias(libs.plugins.kotlin.ksp) apply false
+    // Kotlin parcelize
+    alias(libs.plugins.kotlin.parcelize) apply false
 }

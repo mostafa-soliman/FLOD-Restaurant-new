@@ -12,11 +12,13 @@ data class MainState(
 ) : UiState
 
 sealed interface MainEvent : UiEvent{
-    object CheckLoginStatus : MainEvent
-    object OnToggleLanguage : MainEvent
+    data object CheckLoginStatus : MainEvent
+    data object OnToggleLanguage : MainEvent
+    data object OnLogout : MainEvent
 }
 
 sealed interface MainEffect : UiEffect {
-    object LanguageToggled : MainEffect
+    data object LanguageToggled : MainEffect
+    data object NavigateToLogin : MainEffect
     data class ShowError(val dialogState: ErrorDialogState? = null) : MainEffect
 }
