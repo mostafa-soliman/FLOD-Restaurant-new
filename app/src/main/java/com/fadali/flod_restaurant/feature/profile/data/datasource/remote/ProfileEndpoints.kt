@@ -6,4 +6,5 @@ object ProfileEndpoints {
     const val ENDPOINT_GET_ALLERGIES_LOOKUP = "api/CustomerSpecifications/GetAllergiesLookup"
     const val ENDPOINT_COMPLETE_USER_DATA = "api/MobileAccount/ProfileData"
     const val ENDPOINT_UPDATE_USER_ALLERGIES = "api/MobileAccount/CustomerAllergies"
+    const val ENDPOINT_GET_USER_PROFILE = "api/MobileAccount/Profile"
 }

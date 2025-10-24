@@ -79,8 +79,47 @@ annotation class LargeDevicePreview
 annotation class DeviceSizePreviews
 
 /**
+ * Preview annotation for system medium font scale
+ */
+@Preview(
+    name = "Medium Font Scale",
+    showSystemUi = true,
+    locale = "en",
+    device = "id:pixel_7_pro",
+    fontScale = 1.5f
+)
+annotation class MediumFontScalePreview
+
+/**
+ * Preview annotation for system medium font scale on small device
+ */
+@Preview(
+    name = "Medium Font Scale - Small Device",
+    showSystemUi = true,
+    locale = "en",
+    device = "id:small_phone",
+    fontScale = 1.5f
+)
+annotation class MediumFontScaleSmallDevicePreview
+
+/**
+ * Preview annotation for system large font scale
+ */
+@Preview(
+    name = "Large Font Scale",
+    showSystemUi = true,
+    locale = "en",
+    device = "id:pixel_7_pro",
+    fontScale = 2.0f
+)
+annotation class LargeFontScalePreview
+
+/**
  * Multi-preview annotation that combines all common preview configurations
  */
+@MediumFontScalePreview
+@MediumFontScaleSmallDevicePreview
+@LargeFontScalePreview
 @EnglishLightPreview
 @ArabicLightPreview
 @EnglishDarkPreview

@@ -18,5 +18,3 @@ val ColorScheme.onErrorText: Color get() = OnErrorText
 
 // Bottom Nav Bar
 val ColorScheme.navBarBorder: Color get() = NavBarBorder
-
-val ColorScheme.calories: Color get() = Calories

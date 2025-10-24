@@ -13,7 +13,7 @@ data class PackageDetails(
     val durationDays: Int,
     val mealsPerDay: Int,
     val imageUrl: String?,
-    val nutritionInfo: NutritionInfo,
+    val nutritionInfo: NutritionInfo?,
     val branches: List<PackageDetailsBranch>
 )
 
@@ -23,15 +23,4 @@ data class PackageDetailsBranch(
     val id: String,
     val title: String,
     val deliveryArea: String,
-)
-
-@Keep
-@Serializable
-data class NutritionInfo(
-    val id: String,
-    val title: String,
-    val calories: Int,
-    val protein: Double,
-    val carbohydrates: Double,
-    val fats: Double,
 )

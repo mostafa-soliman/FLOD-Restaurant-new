@@ -25,9 +25,9 @@ object SubscriptionMockData {
         id = "1",
         title = "Chicken Nutrition",
         calories = 500,
-        protein = 30.0,
-        carbohydrates = 50.0,
-        fats = 20.0
+        protein = 30,
+        carbohydrates = 50,
+        fats = 20
     )
 
     val packages = listOf(

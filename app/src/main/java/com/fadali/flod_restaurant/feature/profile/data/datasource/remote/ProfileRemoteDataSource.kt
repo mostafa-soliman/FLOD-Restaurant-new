@@ -5,6 +5,7 @@ import com.fadali.flod_restaurant.feature.profile.data.model.AllergiesLookupResp
 import com.fadali.flod_restaurant.feature.profile.data.model.GoalsLookupResponse
 import com.fadali.flod_restaurant.feature.profile.domain.model.CompleteUserDataRequest
 import com.fadali.flod_restaurant.feature.profile.domain.model.UpdateUserAllergiesRequest
+import com.fadali.flod_restaurant.feature.profile.domain.model.UserProfile
 
 interface ProfileRemoteDataSource {
     suspend fun getActivitiesLookup(): ActivitiesLookupResponse
@@ -12,4 +13,5 @@ interface ProfileRemoteDataSource {
     suspend fun getAllergiesLookup(query: String? = null): AllergiesLookupResponse
     suspend fun completeUserData(request: CompleteUserDataRequest): Boolean
     suspend fun updateUserAllergies(request: UpdateUserAllergiesRequest): Boolean
+    suspend fun getUserProfile(): UserProfile
 }

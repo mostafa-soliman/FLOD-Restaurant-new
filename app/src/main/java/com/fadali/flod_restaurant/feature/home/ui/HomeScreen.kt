@@ -138,7 +138,7 @@ private fun HomeScreenContentPreview() {
                     ServicesUiModel(
                         imageModel = R.drawable.home_img3,
                         title = R.string.meal_diet,
-                        actionText = R.string.select_plan,
+                        actionText = R.string.callToAction_select_plan,
                         serviceId = "1"
                     )
                 )

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -129,7 +130,7 @@ fun SelectPlanScreenContent(
         modifier = Modifier.padding(top = 47.dp),
         topBar = {
             AppTopBar(
-                title = stringResource(R.string.select_plan),
+                title = stringResource(R.string.callToAction_select_plan),
                 onBackClick = { sendEvent(SelectPlanEvent.OnBackBtnClicked) }
             )
         },
@@ -233,7 +234,7 @@ fun SelectPlanScreenContent(
                                 selected = state.selectedPackageDuration == duration,
                                 onClick = { sendEvent(SelectPlanEvent.OnDurationSelected(duration)) },
                                 modifier = Modifier
-                                    .height(36.dp)
+                                    .heightIn(min = 36.dp)
                                     .align(Alignment.CenterVertically)
                             ) {
                                 Row(
@@ -282,7 +283,7 @@ fun SelectPlanScreenContent(
                                 selected = state.selectedNumberOfMeals == mealCount,
                                 onClick = { sendEvent(SelectPlanEvent.OnMealsCountSelected(mealCount)) },
                                 modifier = Modifier
-                                    .height(36.dp)
+                                    .heightIn(min = 36.dp)
                                     .align(Alignment.CenterVertically)
                             ) {
                                 Text(
@@ -314,8 +315,12 @@ fun SelectPlanScreenContent(
                         state.filteredPackages.forEach { planPackage ->
                             AppPackageCard(
                                 planPackage = planPackage.toPlanPackage(),
-                                onBtnClicked = { /* TODO */ },
-                                onCardClicked = {}
+                                onBtnClicked = {
+                                    sendEvent(SelectPlanEvent.OnPackageSelected(planPackage))
+                                },
+                                onCardClicked = {
+                                    sendEvent(SelectPlanEvent.OnPackageCardClicked(planPackage))
+                                }
                             )
                         }
                     }

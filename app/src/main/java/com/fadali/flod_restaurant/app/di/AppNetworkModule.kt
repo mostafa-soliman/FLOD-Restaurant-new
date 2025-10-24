@@ -13,9 +13,7 @@ val appNetworkModule = module {
         networkModule
     )
     single<DefaultExceptionHandler> {
-        AppDefaultExceptionHandler(
-            networkClientManager = get(),
-        )
+        AppDefaultExceptionHandler()
     }
     single<FLODNetworkConfig> {
         FLODNetworkConfig(

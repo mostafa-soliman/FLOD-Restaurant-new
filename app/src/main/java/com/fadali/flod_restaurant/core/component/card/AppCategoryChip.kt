@@ -3,11 +3,15 @@ package com.fadali.flod_restaurant.core.component.card
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -21,13 +25,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fadali.flod_restaurant.core.component.image.AppNetworkImage
+import com.fadali.flod_restaurant.core.component.preview.AppPreviews
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 
 @Composable
@@ -48,13 +52,15 @@ fun AppCategoryChip(
         color = backgroundColor,
         border = stroke,
         modifier = Modifier
-            .width(79.dp)
-            .height(79.dp)
+            .width(IntrinsicSize.Max)
+            .height(IntrinsicSize.Max)
+            .widthIn(min = 80.dp)
+            .heightIn(min = 80.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
+                .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -66,28 +72,37 @@ fun AppCategoryChip(
                 shape = CircleShape
             )
             Text(
+                modifier = Modifier.padding(top = 9.dp),
                 text = label,
-                style = TextStyle(
-                    fontSize = 14.sp,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,
                 ),
-                maxLines = 1
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
 }
 
-@Preview(showBackground = true)
+@AppPreviews
 @Composable
-fun CategoryChipPreview() {
+private fun CategoryChipPreview() {
     FLODRestaurantTheme {
         var quantity by remember { mutableIntStateOf(0) }
-        AppCategoryChip(
-            imageUrl = "https://images.unsplash.com/photo-1560000021-3e4b7b252d0a?w=1200",
-            label = "Beverages",
-            selected = quantity % 2 == 0,
-            onClick = { quantity++ }
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+                .padding(20.dp)
+        ) {
+            AppCategoryChip(
+                imageUrl = "https://images.unsplash.com/photo-1560000021-3e4b7b252d0a?w=1200",
+                label = "Beverages",
+                selected = quantity % 2 == 0,
+                onClick = { quantity++ }
+            )
+        }
     }
 }

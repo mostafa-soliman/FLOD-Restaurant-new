@@ -39,7 +39,7 @@ class HomeViewModel(
                 ServicesUiModel(
                     imageModel = R.drawable.home_img3,
                     title = R.string.meal_diet,
-                    actionText = R.string.select_plan,
+                    actionText = R.string.callToAction_select_plan,
                     serviceId = "diet"
                 )
             )
@@ -61,7 +61,7 @@ class HomeViewModel(
     private fun handlePlanSelection(planId: String) {
         val selectedMeal = currentState.services.find { meal -> meal.serviceId == planId }
 
-        if (selectedMeal?.actionText == R.string.select_plan) {
+        if (selectedMeal?.actionText == R.string.callToAction_select_plan) {
             sendEffect(HomeEffect.NavigateToSelectPlan(planId))
         }
     }

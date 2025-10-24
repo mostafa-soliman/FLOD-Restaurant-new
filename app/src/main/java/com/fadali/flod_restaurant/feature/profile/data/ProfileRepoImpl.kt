@@ -8,6 +8,7 @@ import com.fadali.flod_restaurant.feature.profile.domain.model.AllergiesLookupMo
 import com.fadali.flod_restaurant.feature.profile.domain.model.CompleteUserDataRequest
 import com.fadali.flod_restaurant.feature.profile.domain.model.GoalsLookupModel
 import com.fadali.flod_restaurant.feature.profile.domain.model.UpdateUserAllergiesRequest
+import com.fadali.flod_restaurant.feature.profile.domain.model.UserProfile
 
 class ProfileRepoImpl(
     private val remoteDataSource: ProfileRemoteDataSource
@@ -30,5 +31,9 @@ class ProfileRepoImpl(
 
     override suspend fun updateUserAllergies(request: UpdateUserAllergiesRequest): Boolean {
         return remoteDataSource.updateUserAllergies(request = request)
+    }
+
+    override suspend fun getUserProfile(): UserProfile {
+        return remoteDataSource.getUserProfile()
     }
 }

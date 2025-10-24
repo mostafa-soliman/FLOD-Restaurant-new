@@ -26,7 +26,10 @@ val coreDataStoreModule = module {
         ToggleLanguageUseCase(languageManager = get()) 
     }
     factory<GetCurrentLanguageUseCase> { 
-        GetCurrentLanguageUseCase(languageManager = get()) 
+        GetCurrentLanguageUseCase(
+            languageManager = get(),
+            context = get()
+        )
     }
     factory<ThemeUseCase> { 
         ThemeUseCase(appPreferences = get()) 

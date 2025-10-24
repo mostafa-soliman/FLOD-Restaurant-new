@@ -42,6 +42,8 @@ sealed interface SelectPlanEvent : UiEvent {
     data class OnDurationSelected(val duration: Int) : SelectPlanEvent
     data class OnMealsCountSelected(val numberOfMeals: Int) : SelectPlanEvent
     data object OnEditAddressClicked : SelectPlanEvent
+    data class OnPackageSelected(val packageDetails: PackageDetails) : SelectPlanEvent
+    data class OnPackageCardClicked(val packageDetails: PackageDetails) : SelectPlanEvent
 }
 
 sealed interface SelectPlanEffect : UiEffect {

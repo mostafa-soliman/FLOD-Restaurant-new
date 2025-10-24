@@ -8,6 +8,7 @@ import com.fadali.flod_restaurant.feature.profile.domain.usecase.CompleteUserDat
 import com.fadali.flod_restaurant.feature.profile.domain.usecase.GetActivitiesLookupUseCase
 import com.fadali.flod_restaurant.feature.profile.domain.usecase.GetAllergiesLookupUseCase
 import com.fadali.flod_restaurant.feature.profile.domain.usecase.GetGoalsLookupUseCase
+import com.fadali.flod_restaurant.feature.profile.domain.usecase.GetUserProfileUseCase
 import com.fadali.flod_restaurant.feature.profile.domain.usecase.UpdateUserAllergiesUseCase
 import com.fadali.flod_restaurant.feature.profile.ui.allergies.AllergiesViewModel
 import com.fadali.flod_restaurant.feature.profile.ui.completeuserdata.CompleteUserDataViewModel
@@ -36,6 +37,7 @@ val profileModule = module {
     factory<UpdateUserAllergiesUseCase> {
         UpdateUserAllergiesUseCase(repo = get())
     }
+    factory { GetUserProfileUseCase(get()) }
 
     viewModel<CompleteUserDataViewModel> {
         CompleteUserDataViewModel(

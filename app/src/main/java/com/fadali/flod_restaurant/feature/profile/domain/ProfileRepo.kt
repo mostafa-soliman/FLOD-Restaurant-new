@@ -5,6 +5,7 @@ import com.fadali.flod_restaurant.feature.profile.domain.model.AllergiesLookupMo
 import com.fadali.flod_restaurant.feature.profile.domain.model.CompleteUserDataRequest
 import com.fadali.flod_restaurant.feature.profile.domain.model.GoalsLookupModel
 import com.fadali.flod_restaurant.feature.profile.domain.model.UpdateUserAllergiesRequest
+import com.fadali.flod_restaurant.feature.profile.domain.model.UserProfile
 
 interface ProfileRepo {
     suspend fun getActivitiesLookup(): ActivitiesLookupModel
@@ -12,4 +13,5 @@ interface ProfileRepo {
     suspend fun getAllergiesLookup(query: String? = null): AllergiesLookupModel
     suspend fun completeUserData(request: CompleteUserDataRequest): Boolean
     suspend fun updateUserAllergies(request: UpdateUserAllergiesRequest): Boolean
+    suspend fun getUserProfile(): UserProfile
 }

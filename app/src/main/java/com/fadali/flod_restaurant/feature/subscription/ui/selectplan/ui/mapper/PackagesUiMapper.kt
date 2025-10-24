@@ -8,5 +8,5 @@ fun PackageDetails.toPlanPackage() = PlanPackage(
     description = description ?: "",
     price = price,
     image = imageUrl ?: "",
-    calories = nutritionInfo.calories
+    calories = nutritionInfo?.calories
 )

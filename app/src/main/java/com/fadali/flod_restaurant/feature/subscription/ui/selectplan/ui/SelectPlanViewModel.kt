@@ -39,6 +39,8 @@ class SelectPlanViewModel(
             is SelectPlanEvent.OnCategorySelected -> onCategorySelected(event)
             is SelectPlanEvent.OnDurationSelected -> onDurationSelected(event)
             is SelectPlanEvent.OnMealsCountSelected -> onMealsCountSelected(event)
+            is SelectPlanEvent.OnPackageSelected -> onPackageSelected(event)
+            is SelectPlanEvent.OnPackageCardClicked -> onPackageCardClicked(event)
             SelectPlanEvent.OnEditAddressClicked -> onEditAddressClicked()
         }
     }
@@ -105,7 +107,7 @@ class SelectPlanViewModel(
         val request = GetPackagesRequest(
             packageType = currentState.packageType.value,
             productCategoryId = currentState.selectedCategory?.id ?: throw NetworkException.ClientException(),
-            customerAddressId = currentState.selectedDeliveryAddress?.id ?: throw NetworkException.ClientException(),
+            customerAddressId = currentState.selectedDeliveryAddress?.id,
             branchId = currentState.selectedBranch?.id ?: throw NetworkException.ClientException(),
         )
         val packages = getPackagesUseCase(request)
@@ -252,6 +254,34 @@ class SelectPlanViewModel(
                 }
             }
         }
+    }
+
+    private fun onPackageSelected(event: SelectPlanEvent.OnPackageSelected) {
+        val route = SubscriptionRoutes.PlanStartingDate(
+            productCategory = currentState.selectedCategory!!,
+            packageDetails = event.packageDetails,
+            packageType = currentState.packageType,
+            deliveryAddress = if (currentState.packageType == PackageType.DELIVERY) {
+                currentState.selectedDeliveryAddress
+            } else null,
+            pickupBranch = if (currentState.packageType == PackageType.PICKUP) {
+                currentState.selectedBranch
+            } else null,
+        )
+
+        sendEffect(SelectPlanEffect.NavigateToNextScreen(route = route))
+    }
+
+    private fun onPackageCardClicked(event: SelectPlanEvent.OnPackageCardClicked) {
+        val route = SubscriptionRoutes.ViewPackage(
+            packageDetails = event.packageDetails,
+            productCategory = currentState.selectedCategory!!,
+            packageType = currentState.packageType,
+            deliveryAddress = currentState.selectedDeliveryAddress,
+            pickupBranch = currentState.selectedBranch
+        )
+
+        sendEffect(SelectPlanEffect.NavigateToNextScreen(route = route))
     }
 
     override fun handleException(throwable: Throwable) {

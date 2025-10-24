@@ -17,20 +17,31 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.fadali.flod_restaurant.BuildConfig
 import com.fadali.flod_restaurant.presentation.ui.components.ShimmerBox
 
 @Composable
 fun AppNetworkImage(
     model: Any?,
     modifier: Modifier = Modifier,
+    addResourceBaseUrl: Boolean = true,
     shape: Shape? = RoundedCornerShape(6.dp),
     contentScale: ContentScale = ContentScale.Crop,
     contentDescription: String? = null,
 ) {
+    val image = if (
+        addResourceBaseUrl &&
+        model is String &&
+        model.startsWith(BuildConfig.RESOURCES_BASE_URL).not()
+    ) {
+        "${BuildConfig.RESOURCES_BASE_URL}$model"
+    } else {
+        model
+    }
     val context = LocalContext.current
     val request = remember(model) {
         ImageRequest.Builder(context)
-            .data(model)
+            .data(image)
             .crossfade(true)
             .diskCachePolicy(CachePolicy.ENABLED)
             .memoryCachePolicy(CachePolicy.ENABLED)

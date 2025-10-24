@@ -6,12 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -45,7 +44,7 @@ fun PlanCard(
 
     Box(
         modifier = modifier
-            .height(181.dp)
+            .height(185.dp)
             .clip(RoundedCornerShape(6.dp))
             .then(
                 if (onCardClick != null) Modifier.clickable { onCardClick() } else Modifier
@@ -62,7 +61,6 @@ fun PlanCard(
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .padding(12.dp)
-                .height(48.dp)
         ) {
             BlurScrim(
                 Modifier.matchParentSize(),
@@ -70,18 +68,16 @@ fun PlanCard(
             )
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
+                    modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        title,
+                        text = title,
                         style = MaterialTheme.typography.labelMedium.copy(
                             fontSize = 16.sp,
                             color = colorScheme.onPrimary,
@@ -98,8 +94,7 @@ fun PlanCard(
                 }
                 Button(
                     onClick = onActionClick,
-                    modifier = Modifier
-                        .height(30.dp),
+                    modifier = Modifier.heightIn(min = 30.dp),
                     shape = RoundedCornerShape(6.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = colorScheme.primary,
@@ -113,7 +108,7 @@ fun PlanCard(
                     )
                 ) {
                     Text(
-                        actionText,
+                        text = actionText,
                         style = MaterialTheme.typography.bodyMedium.copy(
                             fontSize = 16.sp,
                             lineHeight = 22.sp,

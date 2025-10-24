@@ -7,8 +7,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -36,10 +37,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fadali.flod_restaurant.R
+import com.fadali.flod_restaurant.core.component.preview.AppPreviews
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 import com.fadali.flod_restaurant.presentation.ui.theme.appText
 
@@ -62,7 +63,8 @@ fun AppTextField(
     readOnly: Boolean = false,
     placeholder: String? = null,
     errorMessage: String? = null,
-    @DrawableRes errorMessageIcon: Int = R.drawable.ic_error_required_icon,
+    supportingTextColor: Color = MaterialTheme.colorScheme.error,
+    @DrawableRes errorMessageIcon: Int? = R.drawable.ic_error_required_icon,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     prefix: @Composable (() -> Unit)? = null,
@@ -80,7 +82,7 @@ fun AppTextField(
     var isFocused by remember { mutableStateOf(false) }
 
     val enhancedKeyboardActions = KeyboardActions(
-        onDone = { 
+        onDone = {
             focusManager.clearFocus()
             onDone?.invoke()
         },
@@ -92,15 +94,15 @@ fun AppTextField(
             onPrevious?.invoke()
             focusManager.moveFocus(FocusDirection.Up)
         },
-        onSearch = { 
+        onSearch = {
             focusManager.clearFocus()
             onSearch?.invoke()
         },
-        onSend = { 
+        onSend = {
             focusManager.clearFocus()
             onSend?.invoke()
         },
-        onGo = { 
+        onGo = {
             focusManager.clearFocus()
             onGo?.invoke()
         }
@@ -126,8 +128,8 @@ fun AppTextField(
     Column {
         OutlinedTextField(
             modifier = modifier
-                .height(
-                    if (label == null) 60.dp
+                .heightIn(
+                    min = if (label == null) 60.dp
                     else if (enabled) 68.dp
                     else 60.dp
                 )
@@ -195,30 +197,35 @@ fun AppTextField(
                 focusedContainerColor = MaterialTheme.colorScheme.surface,
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
-                cursorColor = MaterialTheme.colorScheme.primary
+                cursorColor = MaterialTheme.colorScheme.primary,
+                errorBorderColor = supportingTextColor,
+                errorTextColor = supportingTextColor,
+                errorLabelColor = supportingTextColor,
             )
         )
-        
+
         // Supporting text outside the TextField to maintain consistent height
         Row(
             modifier = Modifier
-                .height(20.dp)
+                .heightIn(min = 20.dp)
                 .padding(top = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (errorMessage != null) {
-                Image(
-                    modifier = Modifier.padding(start = 5.dp),
-                    imageVector = ImageVector.vectorResource(id = errorMessageIcon),
-                    contentDescription = null
-                )
+                errorMessageIcon?.let {
+                    Image(
+                        modifier = Modifier.padding(start = 5.dp),
+                        imageVector = ImageVector.vectorResource(id = errorMessageIcon),
+                        contentDescription = null
+                    )
+                }
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 5.dp),
                     text = errorMessage,
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = MaterialTheme.colorScheme.error,
+                        color = supportingTextColor,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium
                     )
@@ -228,12 +235,19 @@ fun AppTextField(
     }
 }
 
-@Preview(showBackground = true)
+@AppPreviews
 @Composable
 private fun AppTextFieldPreview() {
     FLODRestaurantTheme {
-        Column {
+        Column(
+            modifier = Modifier
+                .statusBarsPadding()
+                .fillMaxWidth()
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             AppTextField(
+                Modifier.fillMaxWidth(),
                 value = "",
                 onValueChange = {},
                 keyboardType = KeyboardType.Phone,
@@ -247,6 +261,7 @@ private fun AppTextFieldPreview() {
                 }
             )
             AppTextField(
+                Modifier.fillMaxWidth(),
                 value = "123@abc.com",
                 onValueChange = {},
                 keyboardType = KeyboardType.Email,
@@ -254,6 +269,7 @@ private fun AppTextFieldPreview() {
                 errorMessage = "This field is required",
             )
             AppTextField(
+                Modifier.fillMaxWidth(),
                 value = "123@abc.com",
                 onValueChange = {},
                 keyboardType = KeyboardType.Email,
@@ -262,6 +278,7 @@ private fun AppTextFieldPreview() {
                 errorMessage = "This field is required",
             )
             AppTextField(
+                Modifier.fillMaxWidth(),
                 value = "Short text",
                 onValueChange = {},
                 label = "Limited Input",

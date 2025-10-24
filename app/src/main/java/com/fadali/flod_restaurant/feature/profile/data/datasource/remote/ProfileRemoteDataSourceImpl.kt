@@ -8,6 +8,7 @@ import com.fadali.flod_restaurant.feature.profile.data.model.AllergiesLookupResp
 import com.fadali.flod_restaurant.feature.profile.data.model.GoalsLookupResponse
 import com.fadali.flod_restaurant.feature.profile.domain.model.CompleteUserDataRequest
 import com.fadali.flod_restaurant.feature.profile.domain.model.UpdateUserAllergiesRequest
+import com.fadali.flod_restaurant.feature.profile.domain.model.UserProfile
 import com.smyvo.core.network.NetworkHandler
 
 class ProfileRemoteDataSourceImpl(
@@ -65,6 +66,14 @@ class ProfileRemoteDataSourceImpl(
         val response = networkHandler.put<ResponseModel<Boolean>>(
             url = url,
             data = request
+        )
+        return response.data!!
+    }
+
+    override suspend fun getUserProfile(): UserProfile {
+        val url = "${BuildConfig.BASE_URL}${ProfileEndpoints.ENDPOINT_GET_USER_PROFILE}"
+        val response = networkHandler.get<ResponseModel<UserProfile>>(
+            url = url,
         )
         return response.data!!
     }

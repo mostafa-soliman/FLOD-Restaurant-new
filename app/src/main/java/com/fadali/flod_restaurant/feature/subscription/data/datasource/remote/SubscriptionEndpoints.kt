@@ -8,4 +8,11 @@ object SubscriptionEndpoints {
     const val ENDPOINT_UPDATE_CUSTOMER_ADDRESS = "api/CustomerManagement/UpdateCustomerAddress"
     const val ENDPOINT_DELETE_CUSTOMER_ADDRESS = "api/CustomerManagement/DeleteCustomerAddress"
     const val ENDPOINT_GET_PACKAGES = "api/PackagesMobile/GetClassifiedPackages"
+    const val ENDPOINT_GET_PACKAGE_BY_ID = "api/PackagesMobile/GetById"
+    const val ENDPOINT_GET_DELIVERY_TIME_SLOTS = "api/TimeSlotMobile/GetTimeSlotsMobileByAddressId"
+    const val ENDPOINT_GET_ADDONS = "api/AddOnsMobile/GetList"
+    const val ENDPOINT_VALIDATE_PROMO_CODE = "api/PromoCodeMobile/CheckCode"
+    const val ENDPOINT_CREATE_SUBSCRIPTION = "api/SubscriptionMobile/Create"
+    const val ENDPOINT_CREATE_GEIDEA_PAYMENT = "api/GeideaPayment/Create"
+    const val ENDPOINT_TERMS_AND_CONDITIONS = ""
 }
