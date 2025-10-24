@@ -50,7 +50,7 @@ android {
             )
             applicationIdSuffix = ".staging"
             versionNameSuffix = "-staging"
-            isDebuggable = true
+            isDebuggable = false
             signingConfig = signingConfigs.getByName("debug")
         }
     }
