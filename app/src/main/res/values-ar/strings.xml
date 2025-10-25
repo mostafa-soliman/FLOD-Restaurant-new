@@ -221,11 +221,19 @@
     <string name="payment_cancelled">تم إلغاء الدفع</string>
     <string name="plan_menu_day_group">يوم %s</string>
     <string name="package_plan"> تفاصيل الباقه</string>
+    <string name="subscription_status_title">حالة الاشتراك</string>
+    <string name="tab_active">نشط</string>
+    <string name="tab_expired">منتهي</string>
+    <string name="tab_cancelled">ملغي</string>
+    <string name="no_active_plans_message">لا توجد خطط نشطة حتى الآن , اشترك في واحدة وابدأ رحلتك !</string>
+    <string name="no_expired_plans_message">لا توجد خطط منتهية حتى الآن , اشترك في واحدة وابدأ رحلتك !</string>
+    <string name="no_cancelled_plans_message">لا توجد خطط ملغية حتى الآن , اشترك في واحدة وابدأ رحلتك !</string>
+    <string name="subscribe_now">اشترك الآن</string>
     <string name="error_subscription_id_missing">معرف الاشتراك مفقود</string>
     <string name="customize">تخصيص</string>
     <string name="add_ons">الإضافات</string>
     <string name="today_menu">قائمة اليوم</string>
     <string name="menu_for_day">%1$s %2$s قائمة</string>
     <string name="freeze_package">ايقاف الباقة</string>
-
+    <string name="order_again">اطلب مرة أخرى</string>
 </resources>

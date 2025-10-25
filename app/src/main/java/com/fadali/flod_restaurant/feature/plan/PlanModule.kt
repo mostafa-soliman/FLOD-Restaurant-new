@@ -6,6 +6,7 @@ import com.fadali.flod_restaurant.feature.plan.data.datasource.remote.PlanRemote
 import com.fadali.flod_restaurant.feature.plan.domain.PlanRepo
 import com.fadali.flod_restaurant.feature.plan.domain.usecase.GetPackageDetailsUseCase
 import com.fadali.flod_restaurant.feature.plan.ui.packagedetails.PackageDetailsViewModel
+import com.fadali.flod_restaurant.feature.plan.ui.myplans.MyPlansViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -18,6 +19,13 @@ val planModule = module {
     viewModel {
         PackageDetailsViewModel(
             getPackageDetailsUseCase = get(),
+            dispatchers = get(),
+            defaultExceptionHandler = get()
+        )
+    }
+
+    viewModel {
+        MyPlansViewModel(
             dispatchers = get(),
             defaultExceptionHandler = get()
         )

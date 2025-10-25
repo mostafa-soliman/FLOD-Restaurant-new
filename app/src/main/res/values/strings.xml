@@ -219,11 +219,20 @@
     <string name="failure">Failure</string>
     <string name="payment_cancelled">Payment is Cancelled</string>
     <string name="plan_menu_day_group">Day %s</string>
+    <string name="subscription_status_title">Subscription Status</string>
+    <string name="tab_active">Active</string>
+    <string name="tab_expired">Expired</string>
+    <string name="tab_cancelled">Cancelled</string>
+    <string name="no_active_plans_message">No active plans yet , Subscribe to one and start your journey !</string>
+    <string name="no_expired_plans_message">No expired plans yet , Subscribe to one and start your journey !</string>
+    <string name="no_cancelled_plans_message">No cancelled plans yet , Subscribe to one and start your journey !</string>
+    <string name="subscribe_now">Subscribe Now</string>
+    <string name="freeze_package">Freeze Package</string>
+    <string name="order_again">Order Again</string>
     <string name="package_plan">Package Plan</string>
     <string name="error_subscription_id_missing">Subscription id is missing</string>
     <string name="customize">Customize</string>
     <string name="add_ons">Add-ons</string>
     <string name="today_menu">Today\'s Menu</string>
     <string name="menu_for_day">%1$s %2$s Menu</string>
-    <string name="freeze_package">Freeze Package</string>
 </resources>
