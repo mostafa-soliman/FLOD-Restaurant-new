@@ -220,4 +220,12 @@
     <string name="failure">فشل</string>
     <string name="payment_cancelled">تم إلغاء الدفع</string>
     <string name="plan_menu_day_group">يوم %s</string>
+    <string name="package_plan"> تفاصيل الباقه</string>
+    <string name="error_subscription_id_missing">معرف الاشتراك مفقود</string>
+    <string name="customize">تخصيص</string>
+    <string name="add_ons">الإضافات</string>
+    <string name="today_menu">قائمة اليوم</string>
+    <string name="menu_for_day">%1$s %2$s قائمة</string>
+    <string name="freeze_package">ايقاف الباقة</string>
+
 </resources>

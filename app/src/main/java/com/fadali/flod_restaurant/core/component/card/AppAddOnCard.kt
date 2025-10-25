@@ -51,12 +51,13 @@ import com.fadali.flod_restaurant.presentation.ui.theme.nutrientColors
 @Composable
 fun AppAddOnCard(
     modifier: Modifier = Modifier,
-    imageUrl: String,
+    imageUrl: Any,
     name: String,
     calories: Int?,
     price: Double,
     quantity: Int,
-    onQuantityChange: (Int) -> Unit
+    onQuantityChange: (Int) -> Unit,
+    hideQuantityControls: Boolean = false
 ) {
     val counterSize = 17.dp
     val displayedPrice = price * quantity
@@ -118,87 +119,104 @@ fun AppAddOnCard(
                             )
                         }
                     }
-                }
-                Row(
-                    modifier = Modifier.padding(
-                        end = 3.dp,
-                        top = 6.dp
-                    ),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = "🔥 $calories Cal",
-                        modifier = Modifier
-                            .alpha(if (calories != null) 1f else 0f)
-                            .border(
-                                width = 1.dp,
-                                color = MaterialTheme.colorScheme.surface,
-                                shape = RoundedCornerShape(6.dp)
-                            )
-                            .padding(
-                                horizontal = 4.dp,
-                                vertical = 3.dp
-                            ),
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            fontSize = 9.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = MaterialTheme.colorScheme.nutrientColors.calories,
-                        ),
-                        maxLines = 1
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Row(
-                        modifier = Modifier.padding(start = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(5.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .widthIn(min = counterSize)
-                                .heightIn(min = counterSize)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
-                                .clickable { if (quantity > 0) onQuantityChange(quantity - 1) },
-                            contentAlignment = Alignment.Center
-                        ) {
+                    if (hideQuantityControls) {
+                        calories?.let {
                             Text(
-                                text = "-",
-                                modifier = Modifier.align(Alignment.Center),
+                                text = "Add-One no ($calories) ",
+                                modifier = Modifier
+                                    .border(1.dp, Color.White, RoundedCornerShape(6.dp))
+                                    .padding(start = 4.dp, top = 3.dp, end = 4.dp, bottom = 2.dp),
                                 style = TextStyle(
-                                    fontSize = 8.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    color = MaterialTheme.colorScheme.surface
-                                )
+                                    fontSize = 9.sp,
+                                    fontWeight = FontWeight(400),
+                                    color = Color(0xFFFF5619),
+                                ),
+                                maxLines = 1
                             )
                         }
-                        Text(
-                            text = quantity.toString(),
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        )
-                        Box(
-                            modifier = Modifier
-                                .widthIn(min = counterSize)
-                                .heightIn(min = counterSize)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
-                                .clickable { onQuantityChange(quantity + 1) },
-                            contentAlignment = Alignment.Center
+                    } else {
+                        Row(
+                            modifier = Modifier.padding(
+                                end = 3.dp,
+                                top = 6.dp
+                            ),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
-                                text = "+",
-                                modifier = Modifier.align(Alignment.Center),
-                                style = TextStyle(
-                                    fontSize = 8.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    color = MaterialTheme.colorScheme.surface
-                                )
+                                text = "🔥 $calories Cal",
+                                modifier = Modifier
+                                    .alpha(if (calories != null) 1f else 0f)
+                                    .border(
+                                        width = 1.dp,
+                                        color = MaterialTheme.colorScheme.surface,
+                                        shape = RoundedCornerShape(6.dp)
+                                    )
+                                    .padding(
+                                        horizontal = 4.dp,
+                                        vertical = 3.dp
+                                    ),
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    fontSize = 9.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    color = MaterialTheme.colorScheme.nutrientColors.calories,
+                                ),
+                                maxLines = 1
                             )
+                            Spacer(modifier = Modifier.weight(1f))
+                            Row(
+                                modifier = Modifier.padding(start = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .widthIn(min = counterSize)
+                                        .heightIn(min = counterSize)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                                        .clickable { if (quantity > 0) onQuantityChange(quantity - 1) },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "-",
+                                        modifier = Modifier.align(Alignment.Center),
+                                        style = TextStyle(
+                                            fontSize = 8.sp,
+                                            fontWeight = FontWeight.Medium,
+                                            color = MaterialTheme.colorScheme.surface
+                                        )
+                                    )
+                                }
+                                Text(
+                                    text = quantity.toString(),
+                                    modifier = Modifier.align(Alignment.CenterVertically),
+                                    style = TextStyle(
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .widthIn(min = counterSize)
+                                        .heightIn(min = counterSize)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                                        .clickable { onQuantityChange(quantity + 1) },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "+",
+                                        modifier = Modifier.align(Alignment.Center),
+                                        style = TextStyle(
+                                            fontSize = 8.sp,
+                                            fontWeight = FontWeight.Medium,
+                                            color = MaterialTheme.colorScheme.surface
+                                        )
+                                    )
+                                }
+                            }
                         }
                     }
                 }

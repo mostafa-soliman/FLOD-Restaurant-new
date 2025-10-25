@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -44,7 +45,10 @@ fun AppCategoryChip(
     val colorScheme = MaterialTheme.colorScheme
     val shape = RoundedCornerShape(5.dp)
     val backgroundColor = if (selected) colorScheme.primary else colorScheme.surface
-    val stroke = if (selected) BorderStroke(1.dp, colorScheme.primary) else BorderStroke(1.dp, colorScheme.outline)
+    val stroke = if (selected) BorderStroke(1.dp, colorScheme.primary) else BorderStroke(
+        1.dp,
+        colorScheme.outline
+    )
 
     Surface(
         onClick = onClick,
@@ -74,13 +78,13 @@ fun AppCategoryChip(
             Text(
                 modifier = Modifier.padding(top = 9.dp),
                 text = label,
-                style = MaterialTheme.typography.bodyLarge.copy(
+                style =MaterialTheme.typography.bodyLarge.copy(
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,
                 ),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
             )
         }
     }

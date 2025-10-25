@@ -52,6 +52,7 @@ fun SubscriptionTermsAndConditionsScreen(
                 navController.popBackStack()
                 navController.navigate(effect.route)
             }
+
             SubscriptionTermsAndConditionsUiEffect.NavigateBack -> {
                 navController.navigateUp()
             }

@@ -54,7 +54,7 @@ enum class NutrientType(
 fun AppNutrientCard(
     modifier: Modifier = Modifier,
     value: String,
-    nutrientType: NutrientType
+    nutrientType: NutrientType,
 ) {
     val nutrientColors = MaterialTheme.colorScheme.nutrientColors
     val textColor = when (nutrientType) {

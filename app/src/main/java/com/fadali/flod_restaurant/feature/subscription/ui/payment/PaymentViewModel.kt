@@ -22,7 +22,7 @@ class PaymentViewModel(
 
     override fun handleEvent(event: PaymentEvent) {
         when (event) {
-            is PaymentEvent.LoadPaymentUrl -> loadPaymentUrl(event.paymentUrl)
+            is PaymentEvent.LoadPaymentUrl -> loadPaymentUrl(event.paymentUrl, event.subscriptionId)
             is PaymentEvent.OnUrlChanged -> handleUrlChange(event.url)
             PaymentEvent.OnPageStartedLoading -> onPageStartedLoading()
             PaymentEvent.OnPageFinishedLoading -> onPageFinishedLoading()
@@ -31,12 +31,13 @@ class PaymentViewModel(
         }
     }
 
-    private fun loadPaymentUrl(paymentUrl: String) {
+    private fun loadPaymentUrl(paymentUrl: String, subscriptionId: String) {
         val isValidUrl = paymentUrl.isNotEmpty()
         if (isValidUrl) {
             setState {
                 copy(
                     paymentUrl = paymentUrl,
+                    subscriptionId = subscriptionId,
                     isLoading = true,
                     showWebView = true,
                 )
@@ -72,7 +73,9 @@ class PaymentViewModel(
                         result = BottomSheetResult.Success(
                             message = DeferredString.StringResource(R.string.view_package_sheet_text),
                             primaryActionText = DeferredString.StringResource(R.string.view_package_button),
-                            onPrimaryActionClicked = { sendEffect(PaymentEffect.NavigateToNextScreen) },
+                            onPrimaryActionClicked = {
+                                sendEffect(PaymentEffect.NavigateToPackageDetails(currentState.subscriptionId))
+                            },
                         )
                     )
                 )

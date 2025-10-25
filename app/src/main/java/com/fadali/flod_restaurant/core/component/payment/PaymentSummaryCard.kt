@@ -51,7 +51,13 @@ fun PaymentSummaryCard(
     val paymentItems = listOfNotNull(
         PaymentItem(label = stringResource(R.string.plan_price), price = planPrice),
         PaymentItem(label = stringResource(R.string.add_on_price), price = addOnPrice),
-        promoDiscount?.let { PaymentItem(label = stringResource(R.string.promo_code), price = it, isDiscount = true) },
+        promoDiscount?.let {
+            PaymentItem(
+                label = stringResource(R.string.promo_code),
+                price = it,
+                isDiscount = true
+            )
+        },
     )
 
     Card(
@@ -119,7 +125,9 @@ private fun PaymentRow(
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = if (isTotal) colorScheme.appText else MaterialTheme.colorScheme.appText.copy(alpha = 0.6f),
+                color = if (isTotal) colorScheme.appText else MaterialTheme.colorScheme.appText.copy(
+                    alpha = 0.6f
+                ),
                 fontWeight = if (isTotal) FontWeight.Medium else FontWeight.SemiBold,
                 fontSize = 18.sp,
             )

@@ -105,7 +105,7 @@ private fun ReviewScreenContent(
     sendEvent: (SubscriptionReviewEvent) -> Unit
 ) {
     AppLoadingDialog(isVisible = state.isLoading)
-    Column (
+    Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {

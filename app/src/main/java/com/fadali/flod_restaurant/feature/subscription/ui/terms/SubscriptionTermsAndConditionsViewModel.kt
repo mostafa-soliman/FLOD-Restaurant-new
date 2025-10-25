@@ -16,19 +16,27 @@ class SubscriptionTermsAndConditionsViewModel(
 ) {
     override fun initialState(): SubscriptionTermsAndConditionsState =
         SubscriptionTermsAndConditionsState()
+
     override fun handleEvent(event: SubscriptionTermsAndConditionsUiEvent) {
         when (event) {
             is SubscriptionTermsAndConditionsUiEvent.LoadData -> loadTermsAndConditions(event.args)
-            is SubscriptionTermsAndConditionsUiEvent.OnScrollPositionChanged -> onScrollPositionChanged(event)
+            is SubscriptionTermsAndConditionsUiEvent.OnScrollPositionChanged -> onScrollPositionChanged(
+                event
+            )
+
             SubscriptionTermsAndConditionsUiEvent.OnAcceptButtonClicked -> {
                 currentState.args?.let { args ->
                     sendEffect(
                         SubscriptionTermsAndConditionsUiEffect.NavigateToPayment(
-                            SubscriptionRoutes.Payment(paymentUrl = args.paymentUrl)
+                            SubscriptionRoutes.Payment(
+                                paymentUrl = args.paymentUrl,
+                                subscriptionId = args.subscriptionId
+                            )
                         )
                     )
                 }
             }
+
             SubscriptionTermsAndConditionsUiEvent.OnBackPressed -> {
                 sendEffect(SubscriptionTermsAndConditionsUiEffect.NavigateBack)
             }

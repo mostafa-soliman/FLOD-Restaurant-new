@@ -9,10 +9,11 @@ data class PaymentState(
     val isLoading: Boolean = false,
     val paymentUrl: String = "",
     val showWebView: Boolean = false,
+    val subscriptionId: String = "",
 ) : UiState
 
 sealed interface PaymentEvent : UiEvent {
-    data class LoadPaymentUrl(val paymentUrl: String) : PaymentEvent
+    data class LoadPaymentUrl(val paymentUrl: String, val subscriptionId: String) : PaymentEvent
     data class OnUrlChanged(val url: String) : PaymentEvent
     object OnPageStartedLoading : PaymentEvent
     object OnPageFinishedLoading : PaymentEvent
@@ -23,5 +24,6 @@ sealed interface PaymentEvent : UiEvent {
 sealed interface PaymentEffect : UiEffect {
     data class ShowResultSheet(val result: BottomSheetResult) : PaymentEffect
     object NavigateBack : PaymentEffect
+    data class NavigateToPackageDetails(val subscriptionId: String) : PaymentEffect
     object NavigateToNextScreen : PaymentEffect
 }

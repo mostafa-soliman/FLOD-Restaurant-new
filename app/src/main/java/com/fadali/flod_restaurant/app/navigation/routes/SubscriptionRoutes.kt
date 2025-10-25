@@ -65,11 +65,13 @@ sealed class SubscriptionRoutes(
     @Serializable
     data class TermsAndConditions(
         val paymentUrl: String,
+        val subscriptionId: String,
     ) : SubscriptionRoutes(showBottomBar = false)
 
     @Serializable
     data class Payment(
         val paymentUrl: String,
+        val subscriptionId: String,
     ) : SubscriptionRoutes(showBottomBar = false)
 
 }

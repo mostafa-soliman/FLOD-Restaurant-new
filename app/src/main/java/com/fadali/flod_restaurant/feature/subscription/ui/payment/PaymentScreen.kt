@@ -28,6 +28,7 @@ import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.navigation.navigateAndClearBackStack
 import com.fadali.flod_restaurant.app.navigation.navigateBack
 import com.fadali.flod_restaurant.app.navigation.routes.BottomNavRoutes
+import com.fadali.flod_restaurant.app.navigation.routes.PlanRoutes
 import com.fadali.flod_restaurant.app.navigation.routes.SubscriptionRoutes
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
 import com.fadali.flod_restaurant.core.component.preview.AppPreviews
@@ -48,7 +49,7 @@ fun PaymentScreen(
     var bottomSheetResult: BottomSheetResult by remember { mutableStateOf(BottomSheetResult.None) }
 
     LaunchedEffect(Unit) {
-        viewModel.sendEvent(PaymentEvent.LoadPaymentUrl(args.paymentUrl))
+        viewModel.sendEvent(PaymentEvent.LoadPaymentUrl(args.paymentUrl, args.subscriptionId))
     }
     HandleState(viewModel.state) { state ->
         PaymentScreenContent(
@@ -59,9 +60,16 @@ fun PaymentScreen(
     HandleEffects(viewModel.effect) { effect ->
         when (effect) {
             PaymentEffect.NavigateBack -> navController.navigateBack()
+            is PaymentEffect.NavigateToPackageDetails -> {
+                navController.navigate(PlanRoutes.PackageDetails(subscriptionId = effect.subscriptionId)) {
+                    popUpTo(BottomNavRoutes.Home) { inclusive = false }
+                }
+            }
+
             PaymentEffect.NavigateToNextScreen -> {
                 navController.navigateAndClearBackStack(BottomNavRoutes.Home)
             }
+
             is PaymentEffect.ShowResultSheet -> {
                 bottomSheetResult = effect.result
                 showResultBottomSheet = true
@@ -162,7 +170,10 @@ private fun PaymentWebView(
                         return false
                     }
 
-                    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                    override fun shouldOverrideUrlLoading(
+                        view: WebView?,
+                        request: WebResourceRequest?
+                    ): Boolean {
                         request?.url?.toString()?.let { onUrlChanged(it) }
                         return false
                     }

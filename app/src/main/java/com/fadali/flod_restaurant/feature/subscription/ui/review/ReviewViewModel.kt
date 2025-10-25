@@ -43,6 +43,7 @@ class ReviewViewModel(
                 event.index,
                 event.quantity
             )
+
             is SubscriptionReviewEvent.OnPromoCodeChange -> onPromoCodeChange(event.promoCode)
             is SubscriptionReviewEvent.OnTermsToggled -> setState { copy(isTermsAccepted = event.accepted) }
             SubscriptionReviewEvent.OnBackClicked -> sendEffect(SubscriptionReviewEffect.NavigateBack)
@@ -207,11 +208,19 @@ class ReviewViewModel(
             }
             val nextScreenRoute = when (nextScreen) {
                 SubscriptionRoutes.TermsAndConditions::class -> {
-                    SubscriptionRoutes.TermsAndConditions(paymentUrl = paymentUrl)
+                    SubscriptionRoutes.TermsAndConditions(
+                        paymentUrl = paymentUrl,
+                        subscriptionId = subscriptionId
+                    )
                 }
+
                 SubscriptionRoutes.Payment::class -> {
-                    SubscriptionRoutes.Payment(paymentUrl = paymentUrl)
+                    SubscriptionRoutes.Payment(
+                        paymentUrl = paymentUrl,
+                        subscriptionId = subscriptionId
+                    )
                 }
+
                 else -> null
             }
             nextScreenRoute?.let {
@@ -228,6 +237,7 @@ class ReviewViewModel(
             is UiException -> {
                 sendEffect(SubscriptionReviewEffect.ShowError(throwable.dialogState))
             }
+
             else -> {
                 val errorMessage = if (throwable.message.isNullOrEmpty()) {
                     ErrorDialogState.default.message

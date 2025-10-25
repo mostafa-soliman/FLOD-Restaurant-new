@@ -75,12 +75,15 @@ fun PaymentSection(
                     PromoCodeValidationState.EMPTY -> {
                         stringResource(R.string.promo_code_empty)
                     }
+
                     PromoCodeValidationState.INVALID -> {
                         stringResource(R.string.promo_code_invalid)
                     }
+
                     PromoCodeValidationState.VALID -> {
                         stringResource(R.string.promo_code_valid)
                     }
+
                     else -> {
                         null
                     }
@@ -90,7 +93,7 @@ fun PaymentSection(
                 } else {
                     R.drawable.ic_error_required_icon
                 },
-                supportingTextColor =  if(promoCodeValidationState == PromoCodeValidationState.VALID) {
+                supportingTextColor = if (promoCodeValidationState == PromoCodeValidationState.VALID) {
                     Color(0xFF4CAF50)
                 } else {
                     MaterialTheme.colorScheme.error

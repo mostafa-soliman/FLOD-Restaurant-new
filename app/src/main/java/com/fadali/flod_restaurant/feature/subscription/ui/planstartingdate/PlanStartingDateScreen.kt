@@ -169,7 +169,13 @@ private fun PlanStartingDateScreenContent(
                 DeliveryTimeSelectionSection(
                     selectedTimeSlotIndex = state.selectedTimeSlotIndex,
                     onTimeSlotSelected = { sendEvent(PlanStartingDateUiEvent.OnTimeSlotSelected(it)) },
-                    timeSlots = state.timeSlots.map { stringResource(id = R.string.time_slot, it.startTime, it.endTime) }
+                    timeSlots = state.timeSlots.map {
+                        stringResource(
+                            id = R.string.time_slot,
+                            it.startTime,
+                            it.endTime
+                        )
+                    }
                 )
             }
             Spacer(modifier = Modifier.weight(1f))

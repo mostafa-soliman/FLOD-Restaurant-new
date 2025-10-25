@@ -219,4 +219,11 @@
     <string name="failure">Failure</string>
     <string name="payment_cancelled">Payment is Cancelled</string>
     <string name="plan_menu_day_group">Day %s</string>
+    <string name="package_plan">Package Plan</string>
+    <string name="error_subscription_id_missing">Subscription id is missing</string>
+    <string name="customize">Customize</string>
+    <string name="add_ons">Add-ons</string>
+    <string name="today_menu">Today\'s Menu</string>
+    <string name="menu_for_day">%1$s %2$s Menu</string>
+    <string name="freeze_package">Freeze Package</string>
 </resources>
