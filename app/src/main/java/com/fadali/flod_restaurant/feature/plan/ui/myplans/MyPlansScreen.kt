@@ -45,16 +45,14 @@ import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.navigation.navigateBack
 import com.fadali.flod_restaurant.core.component.button.AppPrimaryButton
-import com.fadali.flod_restaurant.core.component.card.AppMenuPackageCard
-import com.fadali.flod_restaurant.core.component.card.PackageCardType
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.AppErrorDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.ErrorDialogState
 import com.fadali.flod_restaurant.core.component.preview.AppPreviews
 import com.fadali.flod_restaurant.core.component.topBar.AppTopBar
 import com.fadali.flod_restaurant.core.util.resolve
-import com.fadali.flod_restaurant.feature.plan.domain.model.PlanItem
-import com.fadali.flod_restaurant.feature.plan.domain.model.PlanStatus
+import com.fadali.flod_restaurant.feature.plan.ui.myplans.model.PlanItem
+import com.fadali.flod_restaurant.feature.plan.ui.myplans.model.PlanStatus
 import com.fadali.flod_restaurant.presentation.ui.theme.FLODRestaurantTheme
 import com.smyvo.core.ui.mvi.HandleEffects
 import com.smyvo.core.ui.mvi.HandleState
@@ -136,7 +134,6 @@ private fun MyPlansScreenContent(
         ) {
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Tab Row
             MyPlansTabRow(
                 selectedTab = state.selectedTab,
                 onTabSelected = { tab ->
@@ -147,7 +144,6 @@ private fun MyPlansScreenContent(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Content based on selected tab
             val currentList = when (state.selectedTab) {
                 PlanStatus.ACTIVE -> state.activePlans
                 PlanStatus.EXPIRED -> state.expiredPlans
@@ -169,11 +165,10 @@ private fun MyPlansScreenContent(
                     items(currentList) { plan ->
                         when (state.selectedTab) {
                             PlanStatus.ACTIVE -> {
-                                // ACTIVE: Show card without button, with timeline
                                 ActivePlanCard(plan = plan)
                             }
+
                             PlanStatus.EXPIRED, PlanStatus.CANCELLED -> {
-                                // EXPIRED/CANCELLED: Show card with "Order Again" button, no timeline
                                 InactivePlanCard(
                                     plan = plan,
                                     onOrderAgainClick = {
@@ -208,7 +203,7 @@ private fun MyPlansTabRow(
             isSelected = selectedTab == PlanStatus.ACTIVE,
             selectedColor = Color(0xFF4CAF50),
             onClick = { onTabSelected(PlanStatus.ACTIVE) },
-            enabled = true, // Always enabled
+            enabled = true,
             modifier = Modifier.weight(1f)
         )
 
@@ -218,7 +213,7 @@ private fun MyPlansTabRow(
             isSelected = selectedTab == PlanStatus.EXPIRED,
             selectedColor = Color(0xFF9E9E9E),
             onClick = { onTabSelected(PlanStatus.EXPIRED) },
-            enabled = state.expiredPlans.isNotEmpty(), // Disable if empty
+            enabled = state.expiredPlans.isNotEmpty(),
             modifier = Modifier.weight(1f)
         )
 
@@ -228,7 +223,7 @@ private fun MyPlansTabRow(
             isSelected = selectedTab == PlanStatus.CANCELLED,
             selectedColor = Color(0xFFFF5252),
             onClick = { onTabSelected(PlanStatus.CANCELLED) },
-            enabled = state.cancelledPlans.isNotEmpty(), // Disable if empty
+            enabled = state.cancelledPlans.isNotEmpty(),
             modifier = Modifier.weight(1f)
         )
     }
@@ -242,7 +237,7 @@ private fun MyPlansTab(
     selectedColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true // New parameter
+    enabled: Boolean = true
 ) {
     val backgroundColor = if (isSelected) selectedColor else Color.White
     val contentColor = if (isSelected) Color.White else selectedColor
@@ -260,7 +255,7 @@ private fun MyPlansTab(
                 color = borderColor,
                 shape = RoundedCornerShape(24.dp)
             )
-            .clickable(enabled = enabled) { onClick() } // Use enabled parameter
+            .clickable(enabled = enabled) { onClick() }
             .padding(horizontal = 16.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -359,7 +354,6 @@ private fun ActivePlanCard(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // Image
         androidx.compose.foundation.Image(
             painter = painterResource(id = if (plan.imageUrl.isEmpty()) R.drawable.startingdate_img else R.drawable.startingdate_img),
             contentDescription = null,
@@ -370,13 +364,10 @@ private fun ActivePlanCard(
         )
 
         Spacer(modifier = Modifier.width(12.dp))
-
-        // Content
         Column(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Title
             Text(
                 text = plan.title,
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -387,7 +378,6 @@ private fun ActivePlanCard(
                 maxLines = 1
             )
 
-            // Date Range and Meals Count
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -420,7 +410,6 @@ private fun ActivePlanCard(
                 )
             }
 
-            // Timeline
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
@@ -430,7 +419,6 @@ private fun ActivePlanCard(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // Timeline dots and line
                     Column(
                         modifier = Modifier.width(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -438,7 +426,10 @@ private fun ActivePlanCard(
                         Box(
                             modifier = Modifier
                                 .size(8.dp)
-                                .background(Color(0xFF0AA6B5), androidx.compose.foundation.shape.CircleShape)
+                                .background(
+                                    Color(0xFF0AA6B5),
+                                    androidx.compose.foundation.shape.CircleShape
+                                )
                         )
                         com.fadali.flod_restaurant.core.component.dashedline.DashedDivider(
                             modifier = Modifier
@@ -452,11 +443,13 @@ private fun ActivePlanCard(
                         Box(
                             modifier = Modifier
                                 .size(8.dp)
-                                .background(Color(0xFF0AA6B5), androidx.compose.foundation.shape.CircleShape)
+                                .background(
+                                    Color(0xFF0AA6B5),
+                                    androidx.compose.foundation.shape.CircleShape
+                                )
                         )
                     }
 
-                    // Timeline labels
                     Column(verticalArrangement = Arrangement.spacedBy(11.dp)) {
                         Text(
                             text = plan.startDate,
@@ -477,7 +470,7 @@ private fun ActivePlanCard(
                     }
                 }
 
-                // Pickup/Delivery icon
+
                 Icon(
                     painter = painterResource(id = if (plan.isPickup) R.drawable.ic_pickup else R.drawable.ic_delivery_car),
                     contentDescription = null,
@@ -502,7 +495,6 @@ private fun InactivePlanCard(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // Image
         androidx.compose.foundation.Image(
             painter = painterResource(id = if (plan.imageUrl.isEmpty()) R.drawable.startingdate_img else R.drawable.startingdate_img),
             contentDescription = null,
@@ -513,13 +505,10 @@ private fun InactivePlanCard(
         )
 
         Spacer(modifier = Modifier.width(12.dp))
-
-        // Content
         Column(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Title
             Text(
                 text = plan.title.uppercase(),
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -529,8 +518,6 @@ private fun InactivePlanCard(
                 ),
                 maxLines = 1
             )
-
-            // Date Range and Meals Count
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -563,7 +550,6 @@ private fun InactivePlanCard(
                 )
             }
 
-            // Order Again Button
             AppPrimaryButton(
                 onClick = onOrderAgainClick,
                 text = stringResource(R.string.order_again),

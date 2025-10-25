@@ -5,8 +5,9 @@ import com.fadali.flod_restaurant.feature.plan.data.datasource.remote.PlanRemote
 import com.fadali.flod_restaurant.feature.plan.data.datasource.remote.PlanRemoteDataSourceImpl
 import com.fadali.flod_restaurant.feature.plan.domain.PlanRepo
 import com.fadali.flod_restaurant.feature.plan.domain.usecase.GetPackageDetailsUseCase
-import com.fadali.flod_restaurant.feature.plan.ui.packagedetails.PackageDetailsViewModel
+import com.fadali.flod_restaurant.feature.plan.domain.usecase.GetSubscriptionListUseCase
 import com.fadali.flod_restaurant.feature.plan.ui.myplans.MyPlansViewModel
+import com.fadali.flod_restaurant.feature.plan.ui.packagedetails.PackageDetailsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -15,6 +16,7 @@ val planModule = module {
     factory<PlanRepo> { PlanRepoImpl(get()) }
 
     factory { GetPackageDetailsUseCase(get()) }
+    factory { GetSubscriptionListUseCase(get()) }
 
     viewModel {
         PackageDetailsViewModel(
@@ -26,6 +28,7 @@ val planModule = module {
 
     viewModel {
         MyPlansViewModel(
+            getSubscriptionListUseCase = get(),
             dispatchers = get(),
             defaultExceptionHandler = get()
         )

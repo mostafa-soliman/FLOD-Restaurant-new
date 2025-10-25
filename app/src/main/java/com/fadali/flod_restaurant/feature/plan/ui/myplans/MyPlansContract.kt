@@ -1,8 +1,8 @@
 package com.fadali.flod_restaurant.feature.plan.ui.myplans
 
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.ErrorDialogState
-import com.fadali.flod_restaurant.feature.plan.domain.model.PlanItem
-import com.fadali.flod_restaurant.feature.plan.domain.model.PlanStatus
+import com.fadali.flod_restaurant.feature.plan.ui.myplans.model.PlanItem
+import com.fadali.flod_restaurant.feature.plan.ui.myplans.model.PlanStatus
 import com.smyvo.core.ui.mvi.UiEffect
 import com.smyvo.core.ui.mvi.UiEvent
 import com.smyvo.core.ui.mvi.UiState
@@ -27,4 +27,3 @@ sealed interface MyPlansEffect : UiEffect {
     data object NavigateToSubscriptionPlans : MyPlansEffect
     data class ShowError(val dialogState: ErrorDialogState?) : MyPlansEffect
 }
-
