@@ -10,6 +10,14 @@ data class GetSubscriptionListRequest(
     val paymentMethod: Int? = null,
     val packageId: String? = null,
     val skip: Int = 0,
-    val rowCount: Int = 100
-)
+    val rowCount: Int = 100,
+    val startDateFrom: String? = null,
+    val startDateTo: String? = null,
+    val endDateFrom: String? = null,
+    val endDateTo: String? = null,
+    val createDateFrom: String? = null,
+    val createDateTo: String? = null,
+    val sorting: String? = null,
+    val sortingType: String? = null,
+    )
 

@@ -24,6 +24,6 @@ sealed interface MyPlansEvent : UiEvent {
 
 sealed interface MyPlansEffect : UiEffect {
     data object NavigateBack : MyPlansEffect
-    data object NavigateToSubscriptionPlans : MyPlansEffect
+    data object NavigateToSelectPlan : MyPlansEffect
     data class ShowError(val dialogState: ErrorDialogState?) : MyPlansEffect
 }

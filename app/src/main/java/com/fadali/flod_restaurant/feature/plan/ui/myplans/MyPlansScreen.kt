@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fadali.flod_restaurant.R
 import com.fadali.flod_restaurant.app.navigation.navigateBack
+import com.fadali.flod_restaurant.app.navigation.routes.SubscriptionRoutes
 import com.fadali.flod_restaurant.core.component.button.AppPrimaryButton
 import com.fadali.flod_restaurant.core.component.dialog.AppLoadingDialog
 import com.fadali.flod_restaurant.core.component.dialog.errordialog.AppErrorDialog
@@ -80,8 +81,8 @@ fun MyPlansScreen(
     HandleEffects(viewModel.effect) { effect ->
         when (effect) {
             MyPlansEffect.NavigateBack -> navController.navigateBack()
-            MyPlansEffect.NavigateToSubscriptionPlans -> {
-                // TODO: Navigate to subscription plans screen
+            MyPlansEffect.NavigateToSelectPlan -> {
+                navController.navigate(SubscriptionRoutes.SelectPlan)
             }
 
             is MyPlansEffect.ShowError -> {

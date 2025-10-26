@@ -73,10 +73,9 @@ fun BottomNavBar(
                 selected = isSelected,
                 onClick = {
                     if (!isSelected) {
-                        navController.navigate(item.graph) {
-                            popUpTo(Graph.HomeGraph.startDestination) {
+                        navController.navigate(item.graph.startDestination) {
+                            popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
-                                inclusive = false
                             }
                             launchSingleTop = true
                             restoreState = true

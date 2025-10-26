@@ -27,7 +27,7 @@ class MyPlansViewModel(
             MyPlansEvent.LoadPlans -> loadPlans()
             is MyPlansEvent.OnTabSelected -> onTabSelected(event)
             MyPlansEvent.OnBackClicked -> sendEffect(MyPlansEffect.NavigateBack)
-            MyPlansEvent.OnSubscribeNowClicked -> sendEffect(MyPlansEffect.NavigateToSubscriptionPlans)
+            MyPlansEvent.OnSubscribeNowClicked -> sendEffect(MyPlansEffect.NavigateToSelectPlan)
         }
     }
 
