@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -166,7 +167,10 @@ private fun MyPlansScreenContent(
                     items(currentList) { plan ->
                         when (state.selectedTab) {
                             PlanStatus.ACTIVE -> {
-                                ActivePlanCard(plan = plan)
+                                ActivePlanCard(plan = plan,
+                                    onClick = {
+                                       // sendEvent(MyPlansEvent.OnPlanClicked(plan.id))
+                                    })
                             }
 
                             PlanStatus.EXPIRED, PlanStatus.CANCELLED -> {
@@ -342,14 +346,15 @@ private fun EmptyStateContent(
     }
 }
 
-@AppPreviews
 @Composable
 private fun ActivePlanCard(
-    plan: PlanItem
+    plan: PlanItem,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClick() }
             .background(color = Color(0xFFECECEC), shape = RoundedCornerShape(size = 15.dp))
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -564,6 +569,7 @@ private fun InactivePlanCard(
     }
 }
 
+@AppPreviews
 @Composable
 fun MyPlansScreenPreview() {
     FLODRestaurantTheme {
